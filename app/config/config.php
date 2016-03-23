@@ -8,7 +8,7 @@ return new \Phalcon\Config(array(
         'host'        => 'localhost',
         'username'    => 'root',
         'password'    => 'picoromz2509',
-        'dbname'      => 'testphalcon',
+        'dbname'      => 'rmaker',
         'charset'     => 'utf8',
     ),
     'application' => array(
