@@ -1,2 +1,3 @@
-# Phalcontest
-Repository to test phalcon php
+# Restaurant Maker
+
+CMS for restaurants using Phalcon php framework

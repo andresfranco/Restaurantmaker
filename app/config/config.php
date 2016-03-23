@@ -22,6 +22,6 @@ return new \Phalcon\Config(array(
         'messagesDir'    => APP_PATH . '/app/messages/',
         'formsDir'       => APP_PATH . '/app/forms/',
         'filesDir'       => APP_PATH.'/public/metronic/assets/global/plugins/jquery-file-upload/server/php/files',
-        'baseUri'        => '/Phalcontest/',
+        'baseUri'        => '/Restaurantmaker/',
     )
 ));
