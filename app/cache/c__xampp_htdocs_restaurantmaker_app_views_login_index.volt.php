@@ -14,93 +14,65 @@
 <meta content="" name="description"/>
 <meta content="" name="author"/>
 
-
-<link href="<?php echo $this->url->getStatic('metronic/assets/admin/layout/css/googleapifonts.css'); ?>" rel="stylesheet" type="text/css"/>
-<link href="<?php echo $this->url->getStatic('metronic/assets/global/plugins/font-awesome/css/font-awesome.min.css'); ?>" rel="stylesheet" type="text/css"/>
-<link href="<?php echo $this->url->getStatic('metronic/assets/global/plugins/simple-line-icons/simple-line-icons.min.css'); ?>" rel="stylesheet" type="text/css"/>
-<link href="<?php echo $this->url->getStatic('metronic/assets/global/plugins/bootstrap/css/bootstrap.min.css'); ?>" rel="stylesheet" type="text/css"/>
-<link href="<?php echo $this->url->getStatic('metronic/assets/global/plugins/uniform/css/uniform.default.css'); ?>" rel="stylesheet" type="text/css"/>
-
-<link href="<?php echo $this->url->getStatic('metronic/assets/global/plugins/select2/select2.css'); ?>" rel="stylesheet" type="text/css"/>
-<link href="<?php echo $this->url->getStatic('metronic/assets/admin/pages/css/login3.css'); ?>" rel="stylesheet" type="text/css"/>
-
-<link href="<?php echo $this->url->getStatic('metronic/assets/global/css/components.css'); ?>" id="style_components" rel="stylesheet" type="text/css"/>
-<link href="<?php echo $this->url->getStatic('metronic/assets/global/css/plugins.css'); ?>" rel="stylesheet" type="text/css"/>
-<link href="<?php echo $this->url->getStatic('metronic/assets/admin/layout/css/layout.css'); ?>" rel="stylesheet" type="text/css"/>
-<link href="<?php echo $this->url->getStatic('metronic/assets/admin/layout/css/themes/darkblue.css'); ?>" rel="stylesheet" type="text/css" id="style_color"/>
-<link href="<?php echo $this->url->getStatic('metronic/assets/admin/layout/css/custom.css'); ?>" rel="stylesheet" type="text/css"/>
-
+<link rel="stylesheet" type="text/css" href="<?php echo $this->url->getStatic('/tools/bootstrap/css/bootstrap.css'); ?>">
+<link rel="stylesheet" type="text/css" href="<?php echo $this->url->getStatic('/tools/font-awesome/css/font-awesome.min.css'); ?>">
+<link rel="stylesheet" type="text/css" href="<?php echo $this->url->getStatic('/stylesheets/login/login.css'); ?>">
 <link rel="shortcut icon" href="favicon.ico"/>
 </head>
 <!-- END HEAD -->
 <!-- BEGIN BODY -->
 <body class="login">
-<!-- BEGIN LOGO -->
-<div class="logo">
-<span class="btn btn-lg black" style ="color:white;"><i class="fa fa-cutlery"></i> <?php echo 'RESTAURANT MAKER'; ?></span>
-</div>
-<!-- END LOGO -->
 <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
 <div class="menu-toggler sidebar-toggler">
 </div>
 <!-- END SIDEBAR TOGGLER BUTTON -->
 <!-- BEGIN LOGIN -->
-<div class="content">
-	<!-- BEGIN LOGIN FORM -->
-    <?php echo $this->tag->form(array('class' => 'login-form', 'id' => 'appform')); ?>
-		<h4><i class="fa fa-lock fa-2x"></i> Administración</h4>
-      <?php $errorvar = $this->getContent(); ?>
-		<?php if (!empty($errorvar)) { ?><div class="alert alert-danger">
-      <button class="close" data-close="alert"></button>
-      <?php echo $this->getContent(); ?>
-    </div><?php } ?>
 
+  <div class="panel panel-primary login-panel">
+  <div class="panel-heading">
+    <h3 class="panel-title"><i class="fa fa-lock fa-2x"></i> Administración</h3>
+  </div>
+	<div class="panel-body">
+	<?php $errorvar = $this->getContent(); ?>
+	<?php if (!empty($errorvar)) { ?><div class="alert alert-danger">
+	<button class="close" data-close="alert"></button>
+	<?php echo $this->getContent(); ?>
+	</div><?php } ?>
+
+     <?php echo $this->tag->form(array('id' => 'appform')); ?>
 		<div class="form-group">
-      <?php echo $form->label('username', array('class' => 'control-label visible-ie8 visible-ie9')); ?>
-			<div class="input-icon">
-				<i class="fa fa-user"></i>
-          <?php echo $form->render('username', array('class' => 'form-control placeholder-no-fix', 'autocompete' => 'off', 'placeholder' => 'Usuario')); ?>
-			</div>
+	    <?php echo $form->label('username', array('class' => 'control-label visible-ie8 visible-ie9')); ?>
+		<div class="input-group">
+        <span class="input-group-addon" id="basic-addon1"><i class="fa fa-user"></i></span>
+       <?php echo $form->render('username', array('class' => 'form-control placeholder-no-fix', 'autocompete' => 'off')); ?>
+        </div>
+        <label id="errorusername"><label>	
 		</div>
 		<div class="form-group">
-			<div class="input-icon">
-				<i class="fa fa-lock"></i>
         <?php echo $form->label('password', array('class' => 'control-label visible-ie8 visible-ie9')); ?>
-        <?php echo $form->render('password', array('class' => 'form-control placeholder-no-fix', 'autocompete' => 'off', 'placeholder' => 'Password')); ?>
-			</div>
-		</div>
+		<div class="input-group">
+        <span class="input-group-addon" id="basic-addon1"><i class="fa fa-lock"></i></span>
+        <?php echo $form->render('password', array('class' => 'form-control placeholder-no-fix', 'autocompete' => 'off')); ?>
+        </div>
+        <label id="errorpassword"><label>	
+        </div>
 		<div class="form-actions" style="padding-bottom:50px;padding-top:30px;">
-			<button type="submit" class="btn green-haze pull-right" >
+			<button type="submit" class="btn btn-primary" >
 			Iniciar Sesión <i class="m-icon-swapright m-icon-white"></i>
 			</button>
 		</div>
 	</form>
+  </div>
 </div>
-<div class="copyright"> 2015 © Restaurant Maker </div>
- <script src="<?php echo $this->url->getStatic('metronic/assets/global/plugins/jquery.min.js'); ?>" type="text/javascript"></script>
-<script src="<?php echo $this->url->getStatic('metronic/assets/global/plugins/jquery-migrate.min.js'); ?>" type="text/javascript"></script>
-<script src="<?php echo $this->url->getStatic('metronic/assets/global/plugins/bootstrap/js/bootstrap.min.js'); ?>" type="text/javascript"></script>
-<script src="<?php echo $this->url->getStatic('metronic/assets/global/plugins/jquery.blockui.min.js'); ?>" type="text/javascript"></script>
-<script src="<?php echo $this->url->getStatic('metronic/assets/global/plugins/uniform/jquery.uniform.min.js'); ?>" type="text/javascript"></script>
-<script src="<?php echo $this->url->getStatic('metronic/assets/global/plugins/jquery.cokie.min.js'); ?>" type="text/javascript"></script>
-
-<script src="<?php echo $this->url->getStatic('metronic/assets/global/plugins/jquery-validation/js/jquery.validate.min.js'); ?>" type="text/javascript"></script>
+</div>
+<footer class="footer">
+     <p align="center" style="padding-top:25px;"><?php echo '2016 &copy; Restaurant Maker'; ?></p>   
+</footer>
+  <script src="<?php echo $this->url->getStatic('tools/jquery/jquery2.2.0/jquery.min.js'); ?>"></script>
+  <script src="<?php echo $this->url->getStatic('tools/bootstrap/js/bootstrap.min.js'); ?>"></script> 
+  <script src="<?php echo $this->url->getStatic('metronic/assets/global/plugins/jquery-validation/js/jquery.validate.min.js'); ?>" type="text/javascript"></script>
+ <script src="<?php echo $this->url->getStatic('js/login/validatelogin.js'); ?>"></script>  
 <script type="text/javascript" src="<?php echo $this->url->getStatic('metronic/assets/global/plugins/select2/select2.min.js'); ?>"></script>
-
-<script src="<?php echo $this->url->getStatic('metronic/assets/global/scripts/metronic.js'); ?>" type="text/javascript"></script>
-<script src="<?php echo $this->url->getStatic('metronic/assets/admin/layout/scripts/layout.js'); ?>" type="text/javascript"></script>
-<script src="<?php echo $this->url->getStatic('metronic/assets/admin/layout/scripts/demo.js'); ?>" type="text/javascript"></script>
-<script src="<?php echo $this->url->getStatic('metronic/assets/admin/pages/scripts/login.js'); ?>" type="text/javascript"></script>
-<!-- END PAGE LEVEL SCRIPTS -->
-<script>
-jQuery(document).ready(function() {
-  Metronic.init(); // init metronic core components
-  Layout.init(); // init current layout
-  Login.init();
-  Demo.init();
-});
-</script>
-<!-- END JAVASCRIPTS -->
 </body>
 <!-- END BODY -->
 </html>

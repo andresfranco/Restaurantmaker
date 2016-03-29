@@ -1,5 +1,57 @@
-.login-form {
-    width: 25rem;
+body
+{
+ background-color:gray; 	
+}
+
+@media only screen and (min-width: 360px) {
+    /* For desktop: */
+    .login-panel {
+    width: 35rem;
+    height: 39.75rem;
+    position: fixed;
+    background-color: #ffffff;
+    top: 35%;
+    margin-top: -9.375rem;
+    left: 36%;
+    margin-left: -12.5rem;
+}
+ 
+}
+
+@media only screen and (min-width: 768px) {
+    /* For desktop: */
+    .login-panel {
+    width: 45rem;
+    height: 39.75rem;
+    position: fixed;
+    background-color: #ffffff;
+    top: 35%;
+    margin-top: -9.375rem;
+    left: 35%;
+    margin-left: -12.5rem;
+}
+ 
+}
+
+@media only screen and (min-width: 1280px) {
+    /* For desktop: */
+    .login-panel {
+    width: 45rem;
+    height: 39.75rem;
+    position: fixed;
+    background-color: #ffffff;
+    top: 25%;
+    margin-top: -9.375rem;
+    left: 43%;
+    margin-left: -12.5rem;
+}
+ 
+}
+
+
+.login-form
+{
+	width: 35rem;
     height: 24.75rem;
     position: fixed;
     background-color: #ffffff;
@@ -10,5 +62,12 @@
 }
 .error
 {
-  color: red;
+  color: #A94442;
 }
+input[type='text'].error ,textarea.error,input[type='password'].error {
+  border-color: #A94442 ;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+.footer{position: absolute;bottom: 0;width: 100%;height:60px;background-color: #011c5f;}
+.footer p {color:white;padding-top:25px;}
