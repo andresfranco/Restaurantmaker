@@ -90,7 +90,7 @@ class UserRoleController extends ControllerBase
   {
     $order=$this->set_grid_order();
     var_dump($order);
-    $grid_values =$this->set_grid_parameters('userrole/list/'.$userid);
+    $grid_values =$this->set_grid_parameters($userid,'userrole/list/'.$userid);
     $query= $this->modelsManager->createBuilder()
              ->columns(array('ur.userid as userid','ur.roleid as roleid','u.username as username','r.role as role'))
              ->from(array('ur' => 'UserRole'))
@@ -119,7 +119,7 @@ class UserRoleController extends ControllerBase
 
     $order=$this->set_grid_order();
 
-    $grid_values =$this->set_grid_parameters('userrole/search');
+    $grid_values =$this->set_grid_parameters($userid,'userrole/list/'.$userid);
 
     $search_values =array(array('name'=>'role','value'=>$this->request->getPost("role")));
 

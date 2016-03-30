@@ -1,7 +1,8 @@
 {% extends "layouts/masterpage_standard.volt" %}
 
 {% block content %}
-   <h3 class="page-title" align ="left">{{title|t}}</h3>
+   <h3 class="page-title" align ="left">{{title|t}} ({{username}})</h3>
+   <div align="right"><a href ="{{url('user/list')}}" class="btn btn blue">{{'Usuarios'|t}} <i class="fa fa-arrow-right "></i> </a></div>
 	<hr/>
   <!-- GRID SEARCH -->
 	<div align="left" >
@@ -27,7 +28,7 @@
   <!-- END GRID SEARCH-->
 
 	 <!-- NEW ITEM ICON-->
-	<div align="left">{{ link_to(newroute,'<i class="fa fa-plus fa-lg"></i>')}}</div>
+	<div align="left">{{ link_to(newroute~'/'~userid,'<i class="fa fa-plus fa-lg"></i>')}}</div>
 
 	<br>
 	{% if noitems ==""%}
