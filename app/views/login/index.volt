@@ -1,3 +1,4 @@
+{%set languages = globalobj.get_languages() %}
 <!DOCTYPE html>
 <!--[if IE 8]> <html lang="en" class="ie8 no-js') }}"> <![endif]-->
 <!--[if IE 9]> <html lang="en" class="ie9 no-js') }}"> <![endif]-->
@@ -30,7 +31,35 @@
 
   <div class="panel panel-primary login-panel">
   <div class="panel-heading">
-    <h3 class="panel-title"><i class="fa fa-lock fa-2x"></i> Administración</h3>
+    <div class="row">
+       <div class="col-md-7 col-xs-6 col-sm-7" style="padding-top:10px;">
+        <h3 class="panel-title"><i class="fa fa-lock"></i> {{'Administración'|t}}</h3></div>
+      <div class="col-md-5 col-xs-6 col-sm-5">
+      <ul class="dropdown" style="padding-top:10px;">
+      <li style ="list-style:none;">
+        {#Default language spanish#}
+           {% set flag ='es.png' %}
+           {% set languagename ='Spanish' %}
+           {% for item in languages %}
+             {% if session.get('language')== item.code %}
+                 {% set flag = item.flag %}
+                 {% set languagename = item.language %}
+             {% endif %}
+          {% endfor %}
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" style="color:white;"> <img src="{{static_url('img/flags/'~flag)}}" alt="">{{' '}}{{languagename|t}}<span class="caret"></span></a>
+      <ul class="dropdown-menu">
+        {% for item in languages %}
+        <li>
+        <a href="{{ url('setlang')~'/'~item.code}}">
+        <img src="{{static_url('img/flags/'~item.flag)}}" alt="">{{' '}}{{item.language|t}} </a>
+        </li>
+        {% endfor %}
+      </ul>
+      </li>
+      </ul>
+    </div>
+    </div>  
+     
   </div>
 	<div class="panel-body">
 	{% set errorvar = content() %}
@@ -56,9 +85,9 @@
         </div>
         <label id="errorpassword"><label>	
         </div>
-		<div class="form-actions" style="padding-bottom:50px;padding-top:30px;">
+		<div class="form-actions">
 			<button type="submit" class="btn btn-primary" >
-			Iniciar Sesión <i class="m-icon-swapright m-icon-white"></i>
+			{{'Iniciar Sesión'|t}} <i class="m-icon-swapright m-icon-white"></i>
 			</button>
 		</div>
 	</form>
@@ -68,11 +97,15 @@
 <footer class="footer">
      <p align="center" style="padding-top:25px;">{{'2016 &copy; Restaurant Maker'}}</p>   
 </footer>
-  <script src="{{static_url('tools/jquery/jquery2.2.0/jquery.min.js')}}"></script>
-  <script src="{{static_url('tools/bootstrap/js/bootstrap.min.js')}}"></script> 
-  <script src="{{static_url( 'metronic/assets/global/plugins/jquery-validation/js/jquery.validate.min.js')}}" type="text/javascript"></script>
- <script src="{{static_url('js/login/validatelogin.js')}}"></script>  
+<script>
+var validatemessages = {user:'{{"user.required"|t}}',key:'{{"password.required"|t}}'};
+</script>
+<script src="{{static_url('tools/jquery/jquery2.2.0/jquery.min.js')}}"></script>
+<script src="{{static_url('tools/bootstrap/js/bootstrap.min.js')}}"></script> 
+<script src="{{static_url( 'metronic/assets/global/plugins/jquery-validation/js/jquery.validate.min.js')}}" type="text/javascript"></script>
+<script src="{{static_url('js/login/validatelogin.js')}}"></script>  
 <script type="text/javascript" src="{{static_url('metronic/assets/global/plugins/select2/select2.min.js')}}"></script>
+
 </body>
 <!-- END BODY -->
 </html>

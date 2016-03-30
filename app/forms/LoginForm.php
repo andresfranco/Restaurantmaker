@@ -20,13 +20,13 @@ class LoginForm extends Form
 		//añadimos la validación para un campo de tipo username y como campo requerido
 		$username->addValidators(array(
 			new PresenceOf(array(
-				'message' => 'El username es requerido'
+				'message' => $this->di->get('translate')->_('El username es requerido')
 			))
 
 		));
 
 		//label para el username
-		$username->setLabel('Username');
+		$username->setLabel($this->di->get('translate')->_('Username'));
 
 		//hacemos que se pueda llamar a nuestro campo username
 		$this->add($username);
@@ -37,12 +37,12 @@ class LoginForm extends Form
 		//añadimos la validación como campo requerido al password
 		$password->addValidator(
 			new PresenceOf(array(
-				'message' => 'El password es requerido'
+				'message' => $this->di->get('translate')->_('El password es requerido')
 			))
 		);
 
 		//label para el Password
-		$password->setLabel('Password');
+		$password->setLabel($this->di->get('translate')->_('Password'));
 
 		//hacemos que se pueda llamar a nuestro campo password
 		$this->add($password);
@@ -51,20 +51,6 @@ class LoginForm extends Form
 		//<input value="dcf7192995748a80780b9cc99a530b58" name="csrf" id="csrf" type="hidden" />
 		$randomsting = new Hidden('randomsting');
 
-		//añadimos la validación para prevenir csrf
-	 /*$csrf->addValidator(
-			new Identical(array(
-				'value' => $this->security->getSessionToken(),
-				'message' => '¡La validación CSRF ha fallado! '.$this->security->getSessionToken()
-			))
-		);
-		*/
-		//hacemos que se pueda llamar a nuestro campo csrf
-		$this->add($randomsting);
-
-		//añadimos un botón de tipo submit
-		$submit = $this->add(new Submit('Login', array(
-			'class' => 'button primary'
-		)));
+	
 	}
 }

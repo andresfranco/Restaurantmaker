@@ -98,7 +98,7 @@ class StateController extends ControllerBase
                    ->columns(array('s.id as id','s.state as state','c.country as country'))
                    ->from(array('s' => 'State'))
                    ->join('Country', 'c.id = s.countryid', 'c')
-                   ->orderBy('c.country,s.state')
+                   ->orderBy($order)
                    ->getQuery()
                    ->execute();
     $this->set_grid_values($query,$grid_values);
@@ -140,7 +140,7 @@ class StateController extends ControllerBase
                    ->join('Country', 'c.id = s.countryid', 'c')
                    ->Where('s.state LIKE :state:', array('state' => '%' . $params_query['state']. '%'))
                    ->AndWhere('c.country LIKE :country:', array('country' => '%' . $params_query['country']. '%'))
-                   ->orderBy('c.country,s.state')
+                   ->orderBy($order)
                    ->getQuery()
                    ->execute();
     $this->set_grid_values($query,$grid_values);

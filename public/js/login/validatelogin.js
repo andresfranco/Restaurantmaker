@@ -32,11 +32,11 @@ $(function() {
         // Specify the validation error messages
         messages: {
             username:{
-                required:"You must enter a username"
+                required:validatemessages.user
 
             },
              password:{
-                required:"You must enter a password",
+                required:validatemessages.key
 
             }
 

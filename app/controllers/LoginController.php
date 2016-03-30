@@ -61,18 +61,18 @@ if ($this->request->isPost())
             else
             {
 
-              $this->flash->error("Usuario o contraseña inválida");
+              $this->flash->error($this->di->get('translate')->_('Usuario o contraseña inválida'));
             }
         }
         else
         {
 
-          $this->flash->error("Usuario o contraseña inválida");
+          $this->flash->error($this->di->get('translate')->_('Usuario o contraseña inválida'));
         }
   }
 }
 else {
-$this->flash->error("Se ha encontrado un problema en la autenticación");
+$this->flash->error($this->di->get('translate')->_('Se ha encontrado un problema en la autenticación'));
 }
 
 }
