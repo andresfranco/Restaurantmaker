@@ -137,6 +137,7 @@ class AddressController extends ControllerBase
                  ->join('City', 'c2.id =a.cityid', 'c2')
                  ->join('Township', 't.id =a.townshipid', 't')
                  ->join('Neighborhood', 'n.id =a.neighborhoodid', 'n')
+                 ->orderBy($order)
                  ->getQuery()
                  ->execute();
     $this->set_grid_values($query,$grid_values);
@@ -169,6 +170,7 @@ class AddressController extends ControllerBase
 
     $search_values =array(
      array('name'=>'country','value'=>$this->request->getPost("address"))
+    ,array('name'=>'country','value'=>$this->request->getPost("country")) 
     ,array('name'=>'state','value'=>$this->request->getPost("state"))
     ,array('name'=>'city','value'=>$this->request->getPost("city"))
     ,array('name'=>'township','value'=>$this->request->getPost("township"))
@@ -192,12 +194,13 @@ class AddressController extends ControllerBase
                  ->join('City', 'c2.id =a.cityid', 'c2')
                  ->join('Township', 't.id =a.townshipid', 't')
                  ->join('Neighborhood', 'n.id =a.neighborhoodid', 'n')
-                 ->where('c.country LIKE :country:', array('Neighborhood' => '%' . $params_query['Neighborhood']. '%'))
+                 ->where('c.country LIKE :country:', array('country' => '%' . $params_query['country']. '%'))
                  ->andWhere('s.state LIKE :state:', array('state' => '%' . $params_query['state'] . '%'))
                  ->andWhere('c.city LIKE :city:', array('city' => '%' . $params_query['city']. '%'))
                  ->andWhere('t.township LIKE :township:', array('township' => '%' . $params_query['township']. '%'))
                  ->andWhere('n.neighborhood LIKE :neighborhood:', array('neighborhood' => '%' . $params_query['neighborhood']. '%'))
                  ->andWhere('a.address LIKE :address:', array('address' => '%' . $params_query['address']. '%'))
+                 ->orderBy($order)
                  ->getQuery()
                  ->execute();
     $this->set_grid_values($query,$grid_values);

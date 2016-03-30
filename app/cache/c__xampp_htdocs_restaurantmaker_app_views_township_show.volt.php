@@ -562,9 +562,13 @@
 
 <!-- javaScripts --> 
   
+
   <script src="<?php echo $this->url->getStatic('tools/jquery/jquery2.2.0/jquery.min.js'); ?>"></script>
   <script src="<?php echo $this->url->getStatic('tools/bootstrap/js/bootstrap.min.js'); ?>"></script> 
   
+<?php echo $this->assets->outputJs('validate_forms_js'); ?>
+<?php echo $this->assets->outputJs('validatejs'); ?>
+
   <!-- End JavaScripts --> 
 </body>
 </html>

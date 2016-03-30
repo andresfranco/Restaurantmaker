@@ -83,7 +83,7 @@
 		{% for entity in page.items %}
 			<tr>
 			{% for index,item in headercolumns %}
-				<td width ="20%">{{ entity.readAttribute(item['column_name'])}}</td>
+				<td width ="15%">{{ entity.readAttribute(item['column_name'])}}</td>
 			{% endfor %}
 			<td width ="2%">
 				{% if permissions['edit']=='Y' %}

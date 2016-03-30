@@ -108,6 +108,7 @@ class CityController extends ControllerBase
                 ->from(array('c2' => 'City'))
                 ->join('Country', 'c.id = c2.countryid', 'c')
                 ->join('State', 's.id = c2.stateid', 's')
+                ->orderBy($order)
                 ->getQuery()
                 ->execute();
     $this->set_grid_values($query,$grid_values);
@@ -153,6 +154,7 @@ class CityController extends ControllerBase
                 ->where('c.country LIKE :country:', array('country' => '%' . $params_query['country'] . '%'))
                 ->andWhere('s.state LIKE :state:', array('state' => '%' . $params_query['state'] . '%'))
                 ->andWhere('c2.city LIKE :city:', array('city' => '%' . $params_query['city'] . '%'))
+                ->orderBy($order)
                 ->getQuery()
                 ->execute();
     $this->set_grid_values($query,$grid_values);

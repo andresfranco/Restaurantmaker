@@ -120,6 +120,7 @@ class TownshipController extends ControllerBase
                  ->join('City', 'c.id =t.cityid', 'c')
                  ->join('Country', 'c2.id =c.countryid', 'c2')
                  ->join('State', 's.id =c.stateid', 's')
+                 ->orderBy($order)
                  ->getQuery()
                  ->execute();
     $this->set_grid_values($query,$grid_values);
@@ -168,6 +169,7 @@ class TownshipController extends ControllerBase
                  ->andWhere('t.township LIKE :township:', array('township' => '%' . $params_query['township']. '%'))
                  ->andWhere('c2.country LIKE :country:', array('country' => '%' . $params_query['country']. '%'))
                  ->andWhere('s.state LIKE :state:', array('state' => '%' . $params_query['state'] . '%'))
+                 ->orderBy($order)
                  ->getQuery()
                  ->execute();
     $this->set_grid_values($query,$grid_values);

@@ -528,16 +528,17 @@
 		<div class="form-group">
 		<label name="<?php echo $item['name']; ?>" id ="item['name']" class="control-label col-md-1 align_label_left">
 		<?php echo $this->getDI()->get("translate")->_($item['label']); ?>
+		<?php echo $item['required']; ?>
         </label>
 		<div class="col-md-4">
-			<?php echo $form->render($item['name'], array('class' => 'form-control', 'disabled' => '""')); ?>
+		<?php echo $form->render($item['name'], array('class' => 'form-control')); ?>
 		<!-- LOAD CONTROL ERROR LABEL-->
 		<?php echo $this->getDI()->get("translate")->_($item['label_error']); ?>
 		</div>
 		</div>
 	<?php } ?>
        <div class="col-md-offset-1 col-md-3" style="padding-left:0;">
-       	<button class="btn btn-danger"><?php echo $this->getDI()->get("translate")->_($delete_button_name); ?></button>
+       	<input type="submit" class="btn btn-primary" value="<?php echo $this->getDI()->get("translate")->_('Guardar'); ?>"></input>
 		<?php echo $this->tag->linkTo(array($routelist, $this->getDI()->get("translate")->_($cancel_button_name), 'class' => 'btn btn-default')); ?>
        </div>
     </div>   
@@ -562,9 +563,18 @@
 
 <!-- javaScripts --> 
   
+
   <script src="<?php echo $this->url->getStatic('tools/jquery/jquery2.2.0/jquery.min.js'); ?>"></script>
   <script src="<?php echo $this->url->getStatic('tools/bootstrap/js/bootstrap.min.js'); ?>"></script> 
   
+<?php echo $this->assets->outputJs('validate_forms_js'); ?>
+<?php echo $this->assets->outputJs('validatejs'); ?>
+<script>
+var validatemessages = {
+city:'<?php echo $this->getDI()->get("translate")->_('city.required'); ?>'
+};
+</script>
+
   <!-- End JavaScripts --> 
 </body>
 </html>

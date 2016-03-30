@@ -589,7 +589,7 @@
 		<?php foreach ($page->items as $entity) { ?>
 			<tr>
 			<?php foreach ($headercolumns as $index => $item) { ?>
-				<td width ="20%"><?php echo $entity->readAttribute($item['column_name']); ?></td>
+				<td width ="15%"><?php echo $entity->readAttribute($item['column_name']); ?></td>
 			<?php } ?>
 			<td width ="2%">
 				<?php if ($permissions['edit'] == 'Y') { ?>
