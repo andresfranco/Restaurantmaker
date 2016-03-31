@@ -106,7 +106,7 @@ class FilesController extends ControllerBase
   public function listAction()
   {
     $order=$this->set_grid_order();
-    $grid_values =$this->set_grid_parameters('action/list');
+    $grid_values =$this->set_grid_parameters('files/list');
     $query= $this->modelsManager->createBuilder()
              ->columns(array('f.id ','f.name','f.type','round(f.size/1024/1024,4) as size','f.path'))
              ->from(array('f' => 'File'))

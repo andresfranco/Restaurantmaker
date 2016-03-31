@@ -8,7 +8,6 @@
 {% endblock %}
 {% block javascripts %}
 {{super()}}
-<script src="{{static_url('tools/jquery/jquery2.2.0/jquery.min.js')}}"></script>  
 <script type="text/javascript" src="{{static_url('tools/fancybox//lib/jquery.mousewheel-3.0.6.pack.js')}}"></script>
 <link rel="stylesheet" type="text/css" href="{{static_url('tools/fancybox/source/jquery.fancybox.css')}}" />
 <script type="text/javascript" src="{{static_url('tools/fancybox/source/jquery.fancybox.js')}}"></script>
@@ -18,6 +17,7 @@
 <script type="text/javascript" src="{{static_url('tools/fancybox/source/helpers/jquery.fancybox-media.js')}}"></script>
 <link rel="stylesheet" type="text/css" src="{{static_url('tools/fancybox/source/helpers/jquery.fancybox-thumbs.css')}}"/>
 <script type="text/javascript" src="{{static_url('tools/fancybox/source/helpers/jquery.fancybox-thumbs.js')}}"></script>
+<script type="text/javascript" src="{{static_url('js/validate_gallery/delete_image_modal.js')}}"></script>
     <!-- Optionally add helpers - button, thumbnail and/or media -->
 <script>
  jQuery(document).ready(function(){$(".zoom").fancybox({openEffect : 'elastic',closeEffect : 'elastic',helpers : {title : {type : 'inside'}}}); });

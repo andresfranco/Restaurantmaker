@@ -560,18 +560,18 @@
 						<div class="row fileupload-buttonbar">
 							<div class="col-lg-10">
 								<!-- The fileinput-button span is used to style the file input field as button -->
-								<span class="btn green fileinput-button">
+								<span class="btn  btn-primary fileinput-button">
 								<i class="fa fa-plus"></i>
 								<span>
 								<?php echo $this->getDI()->get("translate")->_($title_tags['add_files_title']); ?><?php echo '...'; ?> </span>
 								<input type="file" name="files[]" multiple="">
 								</span>
-								<button type="submit" class="btn blue start">
+								<button type="submit" class="btn btn-success start">
 								<i class="fa fa-upload"></i>
 								<span>
 								<?php echo $this->getDI()->get("translate")->_($title_tags['start_upload_title']); ?></span>
 								</button>
-								<button type="reset" class="btn warning cancel">
+								<button type="reset" class="btn btn-default cancel">
 								<i class="fa fa-ban-circle"></i>
 								<span>
 								<?php echo $this->getDI()->get("translate")->_($title_tags['cancel_upload_title']); ?> </span>
@@ -659,13 +659,13 @@
         </td>
         <td>
             <?php echo '{%'; ?> if (!i && !o.options.autoUpload) { <?php echo '%}'; ?>
-                <button class="btn blue start" disabled>
+                <button class="btn btn-success start" disabled>
                     <i class="fa fa-upload"></i>
                     <span><?php echo $this->getDI()->get("translate")->_($title_tags['start_button_title']); ?></span>
                 </button>
             <?php echo '{%'; ?> } <?php echo '%}'; ?>
             <?php echo '{%'; ?>if (!i) { <?php echo '%}'; ?>
-                <button class="btn red cancel">
+                <button class="btn btn-danger cancel">
                     <i class="fa fa-ban"></i>
                     <span><?php echo $this->getDI()->get("translate")->_($title_tags['cancel_button_title']); ?></span>
                 </button>

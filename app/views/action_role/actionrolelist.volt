@@ -1,11 +1,12 @@
 {% extends "layouts/masterpage_standard.volt" %}
 
 {% block content %}
-   <h3 class="page-title" align ="left">{{title|t}}</h3>
+   <h3 class="page-title" align ="left">{{title|t}} ({{role}})</h3>
+     <div align="right"><a href ="{{url('role/list')}}" class="btn btn blue">{{'Roles'|t}} <i class="fa fa-arrow-right "></i> </a></div>
 	<hr/>
   <!-- GRID SEARCH -->
 	<div align="left" >
-	{{ form(searchroute, "method":"post", "autocomplete" : "off") }}
+	{{ form(searchroute~'/'~roleid, "method":"post", "autocomplete" : "off") }}
 	<div class="row">
 	<div class="form-group col-md-10" style="padding-left:0;">
 	{% for index,item in searchcolumns %}
@@ -27,7 +28,7 @@
   <!-- END GRID SEARCH-->
 
 	 <!-- NEW ITEM ICON-->
-	<div align="left">{{ link_to(newroute,'<i class="fa fa-plus fa-lg"></i>')}}</div>
+	<div align="left">{{ link_to(newroute~'/'~roleid,'<i class="fa fa-plus fa-lg"></i>')}}</div>
 
 	<br>
 	{% if noitems ==""%}
@@ -54,7 +55,7 @@
 	<!-- GRID HEADER-->
 	<ul class="dropdown-menu pull-right" role="menu">
 	<li class="ms-hover">
-	<a href="{{ '..'~ router.getRewriteUri() ~'?page='~page.current~'&order='~item['column_name']~' asc'}}">
+	<a href="{{url('actionrole/list')~'/'~roleid~'?page='~page.current~'&order='~item['column_name']~' asc'}}">
 	<i class="fa fa-arrow-up"></i>
 	{{' Asc'}}
 	</a>
@@ -62,7 +63,7 @@
 	<li class="divider">
 	</li>
 	<li class="ms-hover">
-	<a href="{{ '..'~ router.getRewriteUri() ~'?page='~page.current~'&order='~item['column_name']~' desc'}}">
+	<a href="{{url('actionrole/list')~'/'~roleid~'?page='~page.current~'&order='~item['column_name']~' desc'}}">
 	<i class="fa fa-arrow-down"></i>
 	{{' Desc'}}
 	</a>

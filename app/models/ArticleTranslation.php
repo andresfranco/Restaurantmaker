@@ -26,7 +26,7 @@ class ArticleTranslation extends \Phalcon\Mvc\Model
      *
      * @var string
      */
-    protected $title;
+    protected $title_translation;
 
     /**
      *
@@ -98,14 +98,14 @@ class ArticleTranslation extends \Phalcon\Mvc\Model
     }
 
     /**
-     * Method to set the value of field title
+     * Method to set the value of field title_translation
      *
-     * @param string $title
+     * @param string $title_translation
      * @return $this
      */
-    public function setTitle($title)
+    public function setTitle_translation($title_translation)
     {
-        $this->title = $title;
+        $this->title_translation = $title_translation;
 
         return $this;
     }
@@ -206,13 +206,13 @@ class ArticleTranslation extends \Phalcon\Mvc\Model
     }
 
     /**
-     * Returns the value of field title
+     * Returns the value of field title_translation
      *
      * @return string
      */
-    public function getTitle()
+    public function getTitle_translation()
     {
-        return $this->title;
+        return $this->title_translation;
     }
 
     /**
@@ -318,7 +318,7 @@ class ArticleTranslation extends \Phalcon\Mvc\Model
             'id' => 'id',
             'languagecode' => 'languagecode',
             'articleid' => 'articleid',
-            'title' => 'title',
+            'title' => 'title_translation',
             'content' => 'content',
             'createuser' => 'createuser',
             'modifyuser' => 'modifyuser',
@@ -329,7 +329,7 @@ class ArticleTranslation extends \Phalcon\Mvc\Model
     public function validation()
     {
       $this->validate(new PresenceOf(array('field' => 'languagecode')));
-      $this->validate(new PresenceOf(array('field' => 'title' )));
+      $this->validate(new PresenceOf(array('field' => 'title_translation' )));
       $this->validate(new Uniqueness(array('field' => array('articleid','languagecode'))));
 
 
@@ -351,7 +351,7 @@ class ArticleTranslation extends \Phalcon\Mvc\Model
                   case 'languagecode':
                    $txtmessage = $this->di->get('translate')->_('article_translation.language.required');
                   break;
-                  case 'title':
+                  case 'title_translation':
                    $txtmessage = $this->di->get('translate')->_('article_translation.title.required');
                   break;
                  }

@@ -51,7 +51,7 @@ class ArticleTranslationController extends ControllerBase
       {
         $this->tag->setDefault("articleid", $entity_object->getArticleid());
         $this->tag->setDefault("languagecode", $entity_object->getLanguagecode());
-        $this->tag->setDefault("title", $entity_object->getTitle());
+        $this->tag->setDefault("title", $entity_object->getTitle_translation());
         $this->tag->setDefault("content", $entity_object->getContent());
       }
     }
@@ -60,7 +60,7 @@ class ArticleTranslationController extends ControllerBase
     {
       $entity->setArticleid($articleid);
       $entity->setLanguagecode($this->request->getPost("languagecode"));
-      $entity->setTitle($this->request->getPost("title"));
+      $entity->setTitle_translation($this->request->getPost("title"));
       $entity->setContent($this->request->getPost("articlecontent"));
     }
 
@@ -81,11 +81,11 @@ class ArticleTranslationController extends ControllerBase
     ,'header_columns'=>array(
       array('column_name' => 'article','title' => 'Article Name','class'=>'')
       ,array('column_name' => 'language','title' => 'Language','class'=>'')
-      ,array('column_name' => 'title','title' => 'Translate title','class'=>''))
+      ,array('column_name' => 'translation','title' => 'Translate title','class'=>''))
     ,'search_columns'=>array(
       array('name' => 'article','title' => 'Article Name','size'=>30,'div_class'=>"input-control full-size",'label_class'=>'search')
       ,array('name' => 'language','title' => 'Language','size'=>30,'div_class'=>"input-control full-size",'label_class'=>'search')
-      ,array('name' => 'title','title' => 'Translate title','size'=>30,'div_class'=>"input-control full-size",'label_class'=>'search')
+      ,array('name' => 'translation','title' => 'Translate title','size'=>30,'div_class'=>"input-control full-size",'label_class'=>'search')
 
     )
   ];
@@ -101,7 +101,7 @@ class ArticleTranslationController extends ControllerBase
     $order=$this->set_grid_order();
     $grid_values =$this->set_grid_parameters('article_translation/list');
     $query= $this->modelsManager->createBuilder()
-             ->columns(array('at.id as id','at.articleid as articleid','at.languagecode as languagecode','l.language as language','a.title as article','at.title as title'))
+             ->columns(array('at.id as id','at.articleid as articleid','at.languagecode as languagecode','l.language as language','a.title as article','at.title_translation as translation'))
              ->from(array('at' => 'ArticleTranslation'))
              ->join('Article', 'a.id = at.articleid', 'a')
              ->join('Language', 'l.code = at.languagecode', 'l')
@@ -143,20 +143,20 @@ class ArticleTranslationController extends ControllerBase
     $search_values =array(array('name'=>'article','value'=>$this->request->getPost("article"))
 
     ,array('name'=>'language','value'=>$this->request->getPost("language"))
-    ,array('name'=>'title','value'=>$this->request->getPost("title"))
+    ,array('name'=>'title','value'=>$this->request->getPost("translation"))
      );
 
     $params_query =$this->set_search_grid_post_values($search_values);
 
     $query =$this->modelsManager->createBuilder()
-             ->columns(array('at.id as id','at.articleid as articleid','at.languagecode as languagecode','l.language as language','a.title as article','at.title'))
+             ->columns(array('at.id as id','at.articleid as articleid','at.languagecode as languagecode','l.language as language','a.title as article','at.title_translation as translation'))
              ->from(array('at' => 'ArticleTranslation'))
              ->join('Article', 'a.id = at.articleid', 'a')
              ->join('Language', 'l.code = at.languagecode', 'l')
              ->where('at.articleid = :articleid:', array('articleid' =>$articleid))
              ->AndWhere('a.title LIKE :article:', array('article' => '%' . $params_query['article']. '%'))
              ->AndWhere('l.language LIKE :language:', array('language' => '%' . $params_query['language']. '%'))
-             ->AndWhere('at.title LIKE :title:', array('title' => '%' . $params_query['title']. '%'))
+             ->AndWhere('at.title_translation LIKE :title:', array('title' => '%' . $params_query['title']. '%'))
              ->orderBy($order)
              ->getQuery()
              ->execute();

@@ -146,7 +146,7 @@ class LanguageController extends ControllerBase
             ->columns(array('l.code as code','l.language as language','l.flag as flag'))
             ->from(array('l' => 'Language'))
              ->Where('l.code LIKE :code:', array('code' => '%' . $params_query['code']. '%'))
-             ->AndWhere('l.language LIKE :language:', array('language' => '%' . $params_query['language']. '%'))
+             ->AndWhere('l.language LIKE :language:', array('language' => '%'.$params_query['language'].'%'))
              ->orderBy($order)
              ->getQuery()
              ->execute();
