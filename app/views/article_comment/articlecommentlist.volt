@@ -83,7 +83,16 @@
 		{% for entity in page.items %}
 			<tr>
 			{% for index,item in headercolumns %}
-				<td width ="20%">{{ entity.readAttribute(item['column_name'])}}</td>
+			{% if item['column_name']=='active_status'%}
+			{% if entity.readAttribute(item['column_name']) =="Y"%}
+			<td width ="15%">{{'Yes'|t}}</td>
+			{% elseif  entity.readAttribute(item['column_name']) =="N" %}
+			<td width ="15%">{{'No'|t}}</td>
+			{% endif %}
+			{% else %}
+			<td width ="15%">{{ entity.readAttribute(item['column_name'])}}</td>
+			{% endif %}
+
 			{% endfor %}
 			<td width ="2%">
 				{% if permissions['edit']=='Y' %}

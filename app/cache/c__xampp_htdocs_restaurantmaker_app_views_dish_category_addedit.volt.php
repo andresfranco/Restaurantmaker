@@ -5,7 +5,6 @@
 <html lang="en">
 <!-- BEGIN HEAD -->
 
- 
 <head>
   <!-- Stylesheets --> 
   <link rel="stylesheet" type="text/css" href="<?php echo $this->url->getStatic('/tools/bootstrap/css/bootstrap.css'); ?>">
@@ -14,8 +13,6 @@
   <!-- End Stylesheets --> 
 </head>
  
-	<link href="<?php echo $this->url->getStatic('tools/bootstrap-summernote/summernote.css'); ?>" rel="stylesheet" type="text/css" />
-
 <body>
  <!-- Main Row Container --> 
 <div class="row">
@@ -510,14 +507,19 @@
   <div class="col-sm-12 col-md-10 col-xs-12 col-lg-10 column_content">
   <div class="main_content">
   
-<div class="row row_container_form">
-	<div class="row">
-     <h3><?php echo $this->getDI()->get("translate")->_($title); ?></h3>
+<div class="row">
+<div class="col-md-12">
+<!-- BEGIN PORTLET-->
+<div class="portlet box blue">
+	<div class="portlet-title">
+	<div class="caption">
+	<?php echo $this->getDI()->get("translate")->_($title); ?>
 	</div>
-	<hr></hr>
-	<div class="row">
+	</div>
+	<div class="portlet-body form">
 	<!-- BEGIN FORM-->
 	<?php echo $this->tag->form(array($routeform, 'method' => 'post', 'id' => 'appform', 'role' => 'form', 'class' => 'form-horizontal')); ?>
+	<div class="form-body">
 	<!-- FORM ERROR MESSAGES-->
 	<?php $errorvar = $this->getContent(); ?>
 	<?php if (!empty($errorvar)) { ?>
@@ -526,32 +528,38 @@
 	<?php echo $this->getDI()->get("translate")->_($this->getContent()); ?>
 	</div>
 	<?php } ?>
-	<!-- LOAD FORM CONTROLS-->
+		<!-- LOAD FORM CONTROLS-->
 	<?php foreach ($formcolumns as $index => $item) { ?>
 		<div class="form-group">
-		<label name="<?php echo $item['name']; ?>" id ="item['name']" class="control-label col-md-1 align_label_left" style="padding-right:0;">
+		<label name="<?php echo $item['name']; ?>" id ="item['name']" class="control-label col-md-3 formlabel">
 		<?php echo $this->getDI()->get("translate")->_($item['label']); ?>
 		<?php echo $item['required']; ?>
-        </label>
+                </label>
 		<div class="col-md-4">
 		<?php echo $form->render($item['name'], array('class' => 'form-control')); ?>
 		<!-- LOAD CONTROL ERROR LABEL-->
-		 <?php if ($item['name'] == 'comment') { ?>
-        <label id="lblcomment" name ="lblcomment"></label>
-        <?php } ?>
 		<?php echo $this->getDI()->get("translate")->_($item['label_error']); ?>
 		</div>
 		</div>
 	<?php } ?>
-	   <textarea id ="comment_content" name= "comment_content" style="visibility:hidden;height:0;"></textarea>
-       <div class="col-md-offset-1 col-md-3" style="padding-left:0;">
-       	<input type="submit" class="btn btn-primary" value="<?php echo $this->getDI()->get("translate")->_('Guardar'); ?>"></input>
-		<?php echo $this->tag->linkTo(array($routelist, $this->getDI()->get("translate")->_($cancel_button_name), 'class' => 'btn btn-default')); ?>
-       </div>
-    </div>	
+	</div>
+	<!-- FORM ACTION BUTTONS-->
+	<div class="form-actions">
+	<div class="row">
+	<div class="col-md-offset-2 col-md-4">
+		<input type="submit" class="btn blue-madison" value="<?php echo $this->getDI()->get("translate")->_('Guardar'); ?>"></input>
+		<?php echo $this->tag->linkTo(array($routelist, $this->getDI()->get("translate")->_($cancel_button_name), 'class' => 'btn grey-cascade')); ?>
+	</div>
+	</div>
+	</div>
 	</form>
-	<!-- END FORM-->	
+	<!-- END FORM-->
+	</div>
 </div>
+<!-- END PORTLET-->
+</div>
+</div>
+
 
   </div>
   </div>
@@ -572,30 +580,12 @@
   <script src="<?php echo $this->url->getStatic('tools/jquery/jquery2.2.0/jquery.min.js'); ?>"></script>
   <script src="<?php echo $this->url->getStatic('tools/bootstrap/js/bootstrap.min.js'); ?>"></script> 
   
-<script src="<?php echo $this->url->getStatic('tools/bootstrap-summernote/summernote.min.js'); ?>"></script>
 <?php echo $this->assets->outputJs('validate_forms_js'); ?>
 <?php echo $this->assets->outputJs('validatejs'); ?>
-
 <script>
 var validatemessages = {
-name:'<?php echo $this->getDI()->get("translate")->_('article_comment.name.required'); ?>',
-email:'<?php echo $this->getDI()->get("translate")->_('article_comment.email.required'); ?>',
-valid_email:'<?php echo 'article_comment.email'; ?>',
-comment:'<?php echo $this->getDI()->get("translate")->_('article_comment.comment.required'); ?>'
+category:'<?php echo $this->getDI()->get("translate")->_('category.required'); ?>'
 };
-</script>
-<script type="text/javascript">
-$(document).ready(function() {
-$('#comment_content').val($('#summernote').code());	
-$('#summernote').summernote({
-	height: "250px",
-	width:"600px",
-  onChange:function() {
-  $('#comment_content').val($('#summernote').code());
-  }
-
-});
-});
 </script>
 
   <!-- End JavaScripts --> 

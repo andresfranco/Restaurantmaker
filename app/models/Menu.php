@@ -21,7 +21,7 @@ class Menu extends \Phalcon\Mvc\Model
      *
      * @var string
      */
-    protected $name;
+    protected $menu_name;
 
     /**
      *
@@ -80,14 +80,14 @@ class Menu extends \Phalcon\Mvc\Model
     }
 
     /**
-     * Method to set the value of field name
+     * Method to set the value of field menu_name
      *
-     * @param string $name
+     * @param string $menu_name
      * @return $this
      */
-    public function setName($name)
+    public function setMenu_name($menu_name)
     {
-        $this->name = $name;
+        $this->menu_name = $menu_name;
 
         return $this;
     }
@@ -178,13 +178,13 @@ class Menu extends \Phalcon\Mvc\Model
     }
 
     /**
-     * Returns the value of field name
+     * Returns the value of field menu_name
      *
      * @return string
      */
-    public function getName()
+    public function getMenu_name()
     {
-        return $this->name;
+        return $this->menu_name;
     }
 
     /**
@@ -289,7 +289,7 @@ class Menu extends \Phalcon\Mvc\Model
         return array(
             'id' => 'id',
             'restaurantid' => 'restaurantid',
-            'name' => 'name',
+            'name' => 'menu_name',
             'active' => 'active',
             'createuser' => 'createuser',
             'modifyuser' => 'modifyuser',
@@ -306,7 +306,7 @@ class Menu extends \Phalcon\Mvc\Model
        public function validation()
        {
            $this->validate(new PresenceOf(array('field'=>'restaurantid')));
-           $this->validate(new PresenceOf(array('field'=>'name')));
+           $this->validate(new PresenceOf(array('field'=>'menu_name')));
            if ($this->validationHasFailed() == true) {return false;}
            return true;
        }
@@ -323,7 +323,7 @@ class Menu extends \Phalcon\Mvc\Model
 
                        switch ($message->getField()) {
                            case 'restaurantid':$txtmessage = $this->di->get('translate')->_('menu.restaurant.required');break;
-                           case 'name':$txtmessage = $this->di->get('translate')->_('menu.name.required');break;
+                           case 'menu_name':$txtmessage = $this->di->get('translate')->_('menu.name.required');break;
                        }
                        $messages[] =$txtmessage;
                        break;

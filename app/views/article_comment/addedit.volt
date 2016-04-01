@@ -1,9 +1,8 @@
 {% extends "layouts/masterpage_standard.volt" %}
 {% block head %}
-{{super()}}
-<link href="{{static_url('metronic/assets/global/plugins/bootstrap-summernote/summernote.css') }}" rel="stylesheet" type="text/css" />
+ {{super()}}
+	<link href="{{static_url('tools/bootstrap-summernote/summernote.css') }}" rel="stylesheet" type="text/css" />
 {% endblock %}
-
 {% block javascripts %}
 {{super() }}
 <script src="{{static_url('tools/bootstrap-summernote/summernote.min.js')}}"></script>
@@ -20,6 +19,7 @@ comment:'{{"article_comment.comment.required"|t}}'
 </script>
 <script type="text/javascript">
 $(document).ready(function() {
+$('#comment_content').val($('#summernote').code());	
 $('#summernote').summernote({
 	height: "250px",
 	width:"600px",
@@ -32,19 +32,14 @@ $('#summernote').summernote({
 </script>
 {% endblock %}
 {% block content %}
-<div class="row">
-<div class="col-md-12">
-<!-- BEGIN PORTLET-->
-<div class="portlet box blue">
-	<div class="portlet-title">
-	<div class="caption">
-	{{title|t}}
+<div class="row row_container_form">
+	<div class="row">
+     <h3>{{title|t}}</h3>
 	</div>
-	</div>
-	<div class="portlet-body form">
+	<hr></hr>
+	<div class="row">
 	<!-- BEGIN FORM-->
 	{{ form(routeform, "method":"post","id":"appform","role":"form","class":"form-horizontal") }}
-	<div class="form-body">
 	<!-- FORM ERROR MESSAGES-->
 	{% set errorvar = content() %}
 	{% if errorvar is not empty %}
@@ -53,41 +48,30 @@ $('#summernote').summernote({
 	{{ content()|t}}
 	</div>
 	{% endif %}
-		<!-- LOAD FORM CONTROLS-->
+	<!-- LOAD FORM CONTROLS-->
 	{% for index,item in formcolumns %}
 		<div class="form-group">
-		<label name="{{item['name']}}" id ="item['name']" class="control-label col-md-3 formlabel">
+		<label name="{{item['name']}}" id ="item['name']" class="control-label col-md-1 align_label_left" style="padding-right:0;">
 		{{item['label']|t}}
 		{{item['required']}}
-                </label>
+        </label>
 		<div class="col-md-4">
-		{{ form.render(item['name']) }}
+		{{ form.render(item['name'],["class":"form-control"]) }}
 		<!-- LOAD CONTROL ERROR LABEL-->
-    {% if item['name']=='comment'%}
-     <label id="lblcomment" name ="lblcomment"></label>
-    {% endif %}
+		 {% if item['name']=='comment'%}
+        <label id="lblcomment" name ="lblcomment"></label>
+        {% endif %}
 		{{item['label_error']|t}}
 		</div>
 		</div>
 	{% endfor %}
-
-	</div>
-	<!-- FORM ACTION BUTTONS-->
-	<div class="form-actions">
-	<div class="row">
-	<div class="col-md-offset-2 col-md-4">
-  <input id ="savebutton" type="submit" class="btn blue-madison" value="{{'Guardar'|t}}"></input>
-		{{ link_to(routelist,cancel_button_name|t,"class":"btn grey-cascade") }}
-	</div>
-	</div>
-	</div>
-  <textarea id ="comment_content" name= "comment_content" style="visibility: hidden; height: 0;"></textarea>
+	   <textarea id ="comment_content" name= "comment_content" style="visibility:hidden;height:0;"></textarea>
+       <div class="col-md-offset-1 col-md-3" style="padding-left:0;">
+       	<input type="submit" class="btn btn-primary" value="{{'Guardar'|t}}"></input>
+		{{ link_to(routelist,cancel_button_name|t,"class":"btn btn-default") }}
+       </div>
+    </div>	
 	</form>
-	<!-- END FORM-->
-	</div>
+	<!-- END FORM-->	
 </div>
-<!-- END PORTLET-->
-</div>
-</div>
-
 {% endblock %}

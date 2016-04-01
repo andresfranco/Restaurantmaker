@@ -38,7 +38,7 @@ class ArticleCommentForm extends Form
         $comment->setLabel('Comment');
         $this->add($comment);
 
-        $active = new Select("active"
+        $active = new Select("active_status"
         ,array('Y' => $this->di->get('translate')->_('Yes'),'N' => $this->di->get('translate')->_('No'))
         ,array('class' =>'form-control'));
         $active->setLabel('active');

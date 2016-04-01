@@ -5,6 +5,7 @@
 <html lang="en">
 <!-- BEGIN HEAD -->
 
+ 
 <head>
   <!-- Stylesheets --> 
   <link rel="stylesheet" type="text/css" href="<?php echo $this->url->getStatic('/tools/bootstrap/css/bootstrap.css'); ?>">
@@ -13,6 +14,8 @@
   <!-- End Stylesheets --> 
 </head>
  
+	<link href="<?php echo $this->url->getStatic('tools/bootstrap-summernote/summernote.css'); ?>" rel="stylesheet" type="text/css" />
+
 <body>
  <!-- Main Row Container --> 
 <div class="row">
@@ -533,16 +536,19 @@
 		<div class="col-md-4">
 		<?php echo $form->render($item['name'], array('class' => 'form-control')); ?>
 		<!-- LOAD CONTROL ERROR LABEL-->
+		 <?php if ($item['name'] == 'content') { ?>
+        <label id="lblcontent" name ="lblcontent"></label>
+        <?php } ?>
 		<?php echo $this->getDI()->get("translate")->_($item['label_error']); ?>
 		</div>
 		</div>
 	<?php } ?>
+	   <textarea id ="articlecontent" name="articlecontent" style="visibility:hidden;height:0;"></textarea>
        <div class="col-md-offset-1 col-md-3" style="padding-left:0;">
        	<input type="submit" class="btn btn-primary" value="<?php echo $this->getDI()->get("translate")->_('Guardar'); ?>"></input>
 		<?php echo $this->tag->linkTo(array($routelist . '/' . $articleid, $this->getDI()->get("translate")->_($cancel_button_name), 'class' => 'btn btn-default')); ?>
        </div>
-    </div>   
-	<!-- FORM ACTION BUTTONS-->
+    </div>	
 	</form>
 	<!-- END FORM-->	
 </div>
@@ -566,6 +572,7 @@
   <script src="<?php echo $this->url->getStatic('tools/jquery/jquery2.2.0/jquery.min.js'); ?>"></script>
   <script src="<?php echo $this->url->getStatic('tools/bootstrap/js/bootstrap.min.js'); ?>"></script> 
   
+<script src="<?php echo $this->url->getStatic('tools/bootstrap-summernote/summernote.min.js'); ?>"></script>
 <?php echo $this->assets->outputJs('validate_forms_js'); ?>
 <?php echo $this->assets->outputJs('validatejs'); ?>
 <script>
@@ -576,13 +583,13 @@ var validatemessages = {
 </script>
 <script type="text/javascript">
 $(document).ready(function() {
+ $('#articlecontent').val($('#summernote').code());	
 $('#summernote').summernote({
 	height: "250px",
 	width:"600px",
   onChange:function() {
-  $('#articlecontent').val($('#summernote').code());
-  }
-
+   $('#articlecontent').val($('#summernote').code());
+    }
 });
 });
 </script>

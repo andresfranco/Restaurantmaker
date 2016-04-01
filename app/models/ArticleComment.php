@@ -39,7 +39,7 @@ class ArticleComment extends \Phalcon\Mvc\Model
      *
      * @var string
      */
-    protected $active;
+    protected $active_status;
 
 
     /**
@@ -108,14 +108,14 @@ class ArticleComment extends \Phalcon\Mvc\Model
     }
 
     /**
-     * Method to set the value of field active
+     * Method to set the value of field active_status
      *
-     * @param string $active
+     * @param string $active_status
      * @return $this
      */
-    public function setActive($active)
+    public function setActive_status($active_status)
     {
-        $this->active = $active;
+        $this->active_status = $active_status;
 
         return $this;
     }
@@ -176,9 +176,9 @@ class ArticleComment extends \Phalcon\Mvc\Model
      *
      * @return string
      */
-    public function getActive()
+    public function getActive_status()
     {
-        return $this->active;
+        return $this->active_status;
     }
 
 
@@ -237,7 +237,7 @@ class ArticleComment extends \Phalcon\Mvc\Model
             'name' => 'name',
             'email' => 'email',
             'comment' => 'comment',
-            'active' => 'active'
+            'active' => 'active_status'
         );
     }
 

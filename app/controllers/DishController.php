@@ -93,13 +93,11 @@ class DishController extends ControllerBase
     ,'noitems_message'=>'dish.notfound'
     ,'title' =>'dish.list.title'
     ,'header_columns'=>array(
-      array('column_name' => 'menu','title' => 'Menu','class'=>''),
       array('column_name'=>'category','title' => 'Category','class'=>''),
       array('column_name'=>'name','title' => 'Name','class'=>''),
       array('column_name'=>'price','title' => 'Price','class'=>'')
     )
     ,'search_columns'=>array(
-      array('name' => 'menu','title' => 'Menu','size'=>30,'div_class'=>"input-control full-size",'label_class'=>'search'),
       array('name' => 'category','title' => 'Category','size'=>30,'div_class'=>"input-control full-size",'label_class'=>'search'),
       array('name' => 'price','title' => 'Price','size'=>30,'div_class'=>"input-control full-size",'label_class'=>'search'),
       array('name' => 'name','title' => 'Name','size'=>30,'div_class'=>"input-control full-size",'label_class'=>'search')
@@ -117,7 +115,7 @@ class DishController extends ControllerBase
     $order=$this->set_grid_order();
     $grid_values =$this->set_grid_parameters('dish/list');
     $query= $this->modelsManager->createBuilder()
-             ->columns(array('d.id','d.menuid as menuid','m.name as menu','d.name as name','dc.category as category','d.price as price'))
+             ->columns(array('d.id','d.menuid as menuid','d.name as name','dc.category as category','d.price as price'))
              ->from(array('d' => 'Dish'))
              ->join('Menu', 'm.id = d.menuid', 'm')
              ->join('DishCategory', 'dc.id = d.categoryid', 'dc')
@@ -129,7 +127,9 @@ class DishController extends ControllerBase
     $this->check_all_permissions($this->session->get('userid'));
     $this->view->menuid = $menuid;
     $menu_data =$this->get_menudata_by_id($menuid);
-    $this->view->menu_name =$menu_data['name'];
+    $this->view->menu_name =$menu_data['menu_name'];
+    $restaurant_data =  $this->get_restaurantdata_by_id($menu_data['restaurantid']);
+    $this->view->restaurant_name = $restaurant_data['name']; 
 
   }
 
@@ -159,17 +159,18 @@ class DishController extends ControllerBase
     $search_values =array(array('name'=>'menu','value'=>$this->request->getPost("menu"))
     ,array('name'=>'category','value'=>$this->request->getPost("category"))
     ,array('name'=>'price','value'=>$this->request->getPost("price"))
+    ,array('name'=>'dish_name','value'=>$this->request->getPost("name"))
     );
 
     $params_query =$this->set_search_grid_post_values($search_values);
 
     $query =  $this->modelsManager->createBuilder()
-             ->columns(array('d.id','d.menuid as menuid','m.name as menu','dc.category as category','d.price as price'))
+             ->columns(array('d.id','d.menuid as menuid','m.menu_name as menu','d.name','dc.category as category','d.price as price'))
              ->from(array('d' => 'Dish'))
              ->join('Menu', 'm.id = d.menuid', 'm')
              ->join('DishCategory', 'dc.id = d.categoryid', 'dc')
              ->where('d.menuid = :menuid:', array('menuid' =>$menuid ))
-             ->AndWhere('m.name LIKE :menu:', array('menu' => '%' . $params_query['menu']. '%'))
+             ->AndWhere('d.name LIKE :name:', array('name' => '%' . $params_query['dish_name']. '%'))
              ->AndWhere('dc.category LIKE :category:', array('category' => '%' . $params_query['category']. '%'))
              ->AndWhere('d.price LIKE :price:', array('price' => '%' . $params_query['price']. '%'))
              ->orderBy($order)
@@ -178,8 +179,10 @@ class DishController extends ControllerBase
     $this->set_grid_values($query,$grid_values);
     $this->check_all_permissions($this->session->get('userid'));
     $menu_data =$this->get_menudata_by_id($menuid);
+    $restaurant_data =  $this->get_restaurantdata_by_id($menu_data['restaurantid']);
+    $this->view->restaurant_name = $restaurant_data['name']; 
     $this->view->menuid = $menuid;
-    $this->view->menu_name =$menu_data['name'];
+     $this->view->menu_name =$menu_data['menu_name'];
 
   }
 
@@ -202,7 +205,7 @@ class DishController extends ControllerBase
 
     $menu_data = $this->get_menudata_by_id($menuid);
     $restaurantid = $menu_data['restaurantid'];
-    $menu_name =$menu_data['name'];
+    $menu_name =$menu_data['menu_name'];
     $this->view->form = new DishForm($entity,array("restaurantid"=>$restaurantid));
     $this->view->routelist =$routelist;
     $this->view->routeform =$routeform;
@@ -228,6 +231,12 @@ class DishController extends ControllerBase
     $menu = Menu ::findFirst($menuid)->toArray();
      return $menu;
 
+  }
+
+  public function get_restaurantdata_by_id($restaurantid)
+  {
+    $restaurant = Restaurant ::findFirst($restaurantid)->toArray();
+    return $restaurant;
   }
 
   public function get_images()
@@ -280,7 +289,7 @@ class DishController extends ControllerBase
     $this->view->id = $entity->id;
 
     $this->set_form_routes_custom(
-    $this->crud_params['save_route'].$id
+    $this->crud_params['save_route'].$id.'/'.$menuid
     ,$this->crud_params['route_list']
     ,$this->crud_params['edit_title']
     ,$this->crud_params['add_edit_view']

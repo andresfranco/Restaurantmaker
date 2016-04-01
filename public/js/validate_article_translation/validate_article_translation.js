@@ -2,9 +2,15 @@ $(function() {
 
     // Setup form validation on the #register-form element
     $("#appform").validate({
+
          errorClass:'has-error',
           errorPlacement: function(error, element)
-        {if (element.attr("name") == "articlecontent" ) {error.appendTo('#lblcontent');}
+        { 
+          if (element.attr("name") == "articlecontent" ) 
+          {
+           error.appendTo('#lblcontent');
+       
+         }
         else{error.insertAfter(element);}},
         // Specify the validation rules
         rules: {

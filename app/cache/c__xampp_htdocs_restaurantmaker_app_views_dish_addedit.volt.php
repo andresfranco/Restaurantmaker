@@ -5,7 +5,6 @@
 <html lang="en">
 <!-- BEGIN HEAD -->
 
- 
 <head>
   <!-- Stylesheets --> 
   <link rel="stylesheet" type="text/css" href="<?php echo $this->url->getStatic('/tools/bootstrap/css/bootstrap.css'); ?>">
@@ -14,8 +13,6 @@
   <!-- End Stylesheets --> 
 </head>
  
-	<link href="<?php echo $this->url->getStatic('tools/bootstrap-summernote/summernote.css'); ?>" rel="stylesheet" type="text/css" />
-
 <body>
  <!-- Main Row Container --> 
 <div class="row">
@@ -512,7 +509,7 @@
   
 <div class="row row_container_form">
 	<div class="row">
-     <h3><?php echo $this->getDI()->get("translate")->_($title); ?></h3>
+     <h3><?php echo $this->getDI()->get("translate")->_($title); ?><?php echo ' - '; ?><?php echo $menu_name; ?></h3>
 	</div>
 	<hr></hr>
 	<div class="row">
@@ -528,29 +525,69 @@
 	<?php } ?>
 	<!-- LOAD FORM CONTROLS-->
 	<?php foreach ($formcolumns as $index => $item) { ?>
+	  <?php if ($item['name'] == 'image_path') { ?>
 		<div class="form-group">
-		<label name="<?php echo $item['name']; ?>" id ="item['name']" class="control-label col-md-1 align_label_left" style="padding-right:0;">
+		<label name="lbllogo" id="lblloko" class="control-label col-md-1 formlabel">
+			<a href="#ModalEditor" id="logourl"  data-toggle="modal" ><i class="fa fa-file-image-o"></i>
+				<?php echo ' '; ?><?php echo $this->getDI()->get("translate")->_('Image'); ?> </a>
+		</label>
+		<div class="col-md-2">
+		<?php echo $form->render($item['name'], array('class' => 'form-control')); ?>
+		</div>
+		<div id ="logo_image" class="col-md-2">
+			<?php if ($mode == 'edit' && $image_path != '') { ?>
+			<img id="theImg" src="<?php echo $this->url->get('files/images/' . $image_path); ?>" width="50px" heigh="50px"/>
+			<?php } ?>
+		</div>
+	</div>
+		<?php } else { ?>
+		<div class="form-group">
+		<label name="<?php echo $item['name']; ?>" id ="item['name']" class="control-label col-md-1 formlabel">
 		<?php echo $this->getDI()->get("translate")->_($item['label']); ?>
 		<?php echo $item['required']; ?>
-        </label>
+                </label>
 		<div class="col-md-4">
 		<?php echo $form->render($item['name'], array('class' => 'form-control')); ?>
 		<!-- LOAD CONTROL ERROR LABEL-->
-		 <?php if ($item['name'] == 'comment') { ?>
-        <label id="lblcomment" name ="lblcomment"></label>
-        <?php } ?>
 		<?php echo $this->getDI()->get("translate")->_($item['label_error']); ?>
 		</div>
 		</div>
+		<?php } ?>
 	<?php } ?>
-	   <textarea id ="comment_content" name= "comment_content" style="visibility:hidden;height:0;"></textarea>
        <div class="col-md-offset-1 col-md-3" style="padding-left:0;">
        	<input type="submit" class="btn btn-primary" value="<?php echo $this->getDI()->get("translate")->_('Guardar'); ?>"></input>
-		<?php echo $this->tag->linkTo(array($routelist, $this->getDI()->get("translate")->_($cancel_button_name), 'class' => 'btn btn-default')); ?>
+		<?php echo $this->tag->linkTo(array($routelist . '/' . $menuid, $this->getDI()->get("translate")->_($cancel_button_name), 'class' => 'btn btn-default')); ?>
        </div>
-    </div>	
+    </div>   
+	<!-- FORM ACTION BUTTONS-->
 	</form>
 	<!-- END FORM-->	
+</div>
+<!-- Image Modal -->
+<div id="ModalEditor" class="modal fade"  tabindex="-1" data-width="760" >
+ <div class="modal-body">
+ <div class="col-md-12">
+ <div class="portlet box blue" >
+	 <div class="portlet-title">
+	 <div class="caption"><?php echo $this->getDI()->get("translate")->_('Images'); ?></div>
+	 </div>
+	 <div class="portlet-body form" >
+	 <div class="col-md-12" style="background-color:white;">
+	 <?php foreach ($images as $index => $item) { ?>
+	 <div class="col-md-1" style="padding-top:15px;">
+	 <img  class="modal_hover" id ="<?php echo $item['name']; ?>" src="<?php echo $this->url->get('files/images/' . $item['name']); ?>"  height="100" width="100" onclick="selectImage(this.id);">
+	 </div>
+	 <?php } ?>
+	 </div>
+	 <br><br>
+	 <div class="col-md-12" style="background-color:white; padding-left:30px;padding-top:30px;padding-bottom:30px;">
+	 <button type="button" data-dismiss="modal" class="btn btn-default"><?php echo $this->getDI()->get("translate")->_('Close'); ?></button>
+	 </div>
+	 </div>
+	</div>
+</div>
+ </div>
+
 </div>
 
   </div>
@@ -572,30 +609,15 @@
   <script src="<?php echo $this->url->getStatic('tools/jquery/jquery2.2.0/jquery.min.js'); ?>"></script>
   <script src="<?php echo $this->url->getStatic('tools/bootstrap/js/bootstrap.min.js'); ?>"></script> 
   
-<script src="<?php echo $this->url->getStatic('tools/bootstrap-summernote/summernote.min.js'); ?>"></script>
 <?php echo $this->assets->outputJs('validate_forms_js'); ?>
 <?php echo $this->assets->outputJs('validatejs'); ?>
-
 <script>
 var validatemessages = {
-name:'<?php echo $this->getDI()->get("translate")->_('article_comment.name.required'); ?>',
-email:'<?php echo $this->getDI()->get("translate")->_('article_comment.email.required'); ?>',
-valid_email:'<?php echo 'article_comment.email'; ?>',
-comment:'<?php echo $this->getDI()->get("translate")->_('article_comment.comment.required'); ?>'
+categoryid:'<?php echo $this->getDI()->get("translate")->_('dish.category.required'); ?>'
+,name:'<?php echo $this->getDI()->get("translate")->_('dish.name.required'); ?>'
+,price:'<?php echo $this->getDI()->get("translate")->_('dish.price.required'); ?>'
+,price_number:'<?php echo $this->getDI()->get("translate")->_('dish.price.number'); ?>'
 };
-</script>
-<script type="text/javascript">
-$(document).ready(function() {
-$('#comment_content').val($('#summernote').code());	
-$('#summernote').summernote({
-	height: "250px",
-	width:"600px",
-  onChange:function() {
-  $('#comment_content').val($('#summernote').code());
-  }
-
-});
-});
 </script>
 
   <!-- End JavaScripts --> 

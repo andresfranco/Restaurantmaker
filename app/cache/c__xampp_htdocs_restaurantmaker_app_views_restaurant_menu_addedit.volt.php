@@ -5,7 +5,6 @@
 <html lang="en">
 <!-- BEGIN HEAD -->
 
- 
 <head>
   <!-- Stylesheets --> 
   <link rel="stylesheet" type="text/css" href="<?php echo $this->url->getStatic('/tools/bootstrap/css/bootstrap.css'); ?>">
@@ -14,8 +13,6 @@
   <!-- End Stylesheets --> 
 </head>
  
-	<link href="<?php echo $this->url->getStatic('tools/bootstrap-summernote/summernote.css'); ?>" rel="stylesheet" type="text/css" />
-
 <body>
  <!-- Main Row Container --> 
 <div class="row">
@@ -536,19 +533,16 @@
 		<div class="col-md-4">
 		<?php echo $form->render($item['name'], array('class' => 'form-control')); ?>
 		<!-- LOAD CONTROL ERROR LABEL-->
-		 <?php if ($item['name'] == 'comment') { ?>
-        <label id="lblcomment" name ="lblcomment"></label>
-        <?php } ?>
 		<?php echo $this->getDI()->get("translate")->_($item['label_error']); ?>
 		</div>
 		</div>
 	<?php } ?>
-	   <textarea id ="comment_content" name= "comment_content" style="visibility:hidden;height:0;"></textarea>
        <div class="col-md-offset-1 col-md-3" style="padding-left:0;">
        	<input type="submit" class="btn btn-primary" value="<?php echo $this->getDI()->get("translate")->_('Guardar'); ?>"></input>
 		<?php echo $this->tag->linkTo(array($routelist, $this->getDI()->get("translate")->_($cancel_button_name), 'class' => 'btn btn-default')); ?>
        </div>
-    </div>	
+    </div>   
+	<!-- FORM ACTION BUTTONS-->
 	</form>
 	<!-- END FORM-->	
 </div>
@@ -572,30 +566,12 @@
   <script src="<?php echo $this->url->getStatic('tools/jquery/jquery2.2.0/jquery.min.js'); ?>"></script>
   <script src="<?php echo $this->url->getStatic('tools/bootstrap/js/bootstrap.min.js'); ?>"></script> 
   
-<script src="<?php echo $this->url->getStatic('tools/bootstrap-summernote/summernote.min.js'); ?>"></script>
 <?php echo $this->assets->outputJs('validate_forms_js'); ?>
 <?php echo $this->assets->outputJs('validatejs'); ?>
-
 <script>
 var validatemessages = {
-name:'<?php echo $this->getDI()->get("translate")->_('article_comment.name.required'); ?>',
-email:'<?php echo $this->getDI()->get("translate")->_('article_comment.email.required'); ?>',
-valid_email:'<?php echo 'article_comment.email'; ?>',
-comment:'<?php echo $this->getDI()->get("translate")->_('article_comment.comment.required'); ?>'
+name:'<?php echo $this->getDI()->get("translate")->_('menu.name.required'); ?>'
 };
-</script>
-<script type="text/javascript">
-$(document).ready(function() {
-$('#comment_content').val($('#summernote').code());	
-$('#summernote').summernote({
-	height: "250px",
-	width:"600px",
-  onChange:function() {
-  $('#comment_content').val($('#summernote').code());
-  }
-
-});
-});
 </script>
 
   <!-- End JavaScripts --> 

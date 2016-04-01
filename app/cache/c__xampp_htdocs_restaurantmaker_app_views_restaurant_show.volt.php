@@ -5,7 +5,6 @@
 <html lang="en">
 <!-- BEGIN HEAD -->
 
- 
 <head>
   <!-- Stylesheets --> 
   <link rel="stylesheet" type="text/css" href="<?php echo $this->url->getStatic('/tools/bootstrap/css/bootstrap.css'); ?>">
@@ -14,8 +13,6 @@
   <!-- End Stylesheets --> 
 </head>
  
-	<link href="<?php echo $this->url->getStatic('tools/bootstrap-summernote/summernote.css'); ?>" rel="stylesheet" type="text/css" />
-
 <body>
  <!-- Main Row Container --> 
 <div class="row">
@@ -527,28 +524,69 @@
 	</div>
 	<?php } ?>
 	<!-- LOAD FORM CONTROLS-->
-	<?php foreach ($formcolumns as $index => $item) { ?>
-		<div class="form-group">
-		<label name="<?php echo $item['name']; ?>" id ="item['name']" class="control-label col-md-1 align_label_left" style="padding-right:0;">
-		<?php echo $this->getDI()->get("translate")->_($item['label']); ?>
-		<?php echo $item['required']; ?>
-        </label>
-		<div class="col-md-4">
-		<?php echo $form->render($item['name'], array('class' => 'form-control')); ?>
-		<!-- LOAD CONTROL ERROR LABEL-->
-		 <?php if ($item['name'] == 'comment') { ?>
-        <label id="lblcomment" name ="lblcomment"></label>
-        <?php } ?>
-		<?php echo $this->getDI()->get("translate")->_($item['label_error']); ?>
+	<div class="form-group">
+			<label name="lblname" id="lblname" class="control-label col-md-1 formlabel">
+			<?php echo $this->getDI()->get("translate")->_('Name'); ?>
+			</label>
+			<div class="col-md-4">
+      <?php echo $this->tag->textField(array('name', 'type' => 'text', 'class' => 'form-control', 'readonly' => '')); ?>
+			</div>
+			</div>
+
+			<div class="form-group">
+			<label name="lblphone" id="lblphone" class="control-label col-md-1 formlabel">
+				<?php echo $this->getDI()->get("translate")->_('Phone'); ?>
+			</label>
+			<div class="col-md-4">
+			<?php echo $this->tag->textField(array('phone', 'type' => 'text', 'class' => 'form-control', 'readonly' => '')); ?>
+			</div>
+			</div>
+
+			<div class="form-group">
+			<label name="lbllogo" id="lblloko" class="control-label col-md-1 formlabel">
+			<?php echo $this->getDI()->get("translate")->_('Logo'); ?>
+			</label>
+			<div class="col-md-2">
+			<?php echo $this->tag->textField(array('logo', 'type' => 'text', 'class' => 'form-control', 'readonly' => '')); ?>
+			</div>
+			<div id ="logo_image" class="col-md-2">
+				<?php if ($mode == 'show' && $logo_path != '') { ?>
+				<img id="theImg" src="<?php echo $this->url->get('files/images/' . $logo_path); ?>" width="50px" heigh="50px"/>
+				<?php } ?>
+			</div>
 		</div>
-		</div>
-	<?php } ?>
-	   <textarea id ="comment_content" name= "comment_content" style="visibility:hidden;height:0;"></textarea>
+
+			<div class="form-group">
+			<label name="lbladdress" id="lbladdress" class="control-label col-md-1 formlabel">
+				<?php echo ' '; ?><?php echo $this->getDI()->get("translate")->_('Address'); ?>
+			</label>
+			<div class="col-md-4">
+			<?php echo $this->tag->textArea(array('rest_address', 'class' => 'form-control', 'readonly' => '')); ?>
+
+		  </div>
+		  </div>
+
+		  <div class="form-group">
+			<label name="email" id="lblemail" class="control-label col-md-1 formlabel">
+				<?php echo $this->getDI()->get("translate")->_('Email'); ?>
+			</label>
+			<div class="col-md-4">
+			<?php echo $this->tag->textField(array('email', 'type' => 'text', 'class' => 'form-control', 'readonly' => '')); ?>
+			</div>
+			</div>
+
+			<div class="form-group">
+			<label name="website" id="lblwebsite" class="control-label col-md-1 formlabel"><?php echo $this->getDI()->get("translate")->_('Website'); ?></label>
+			<div class="col-md-4">
+			<?php echo $this->tag->textField(array('website', 'type' => 'text', 'class' => 'form-control', 'readonly' => '')); ?>
+			</div>
+			</div>
        <div class="col-md-offset-1 col-md-3" style="padding-left:0;">
-       	<input type="submit" class="btn btn-primary" value="<?php echo $this->getDI()->get("translate")->_('Guardar'); ?>"></input>
-		<?php echo $this->tag->linkTo(array($routelist, $this->getDI()->get("translate")->_($cancel_button_name), 'class' => 'btn btn-default')); ?>
+       	<input id="save_restaurant_button"class="btn btn-danger" value="<?php echo $this->getDI()->get("translate")->_('Delete'); ?>" type="submit">
+			<a href="<?php echo $this->url->get('restaurant/list'); ?>" class="btn btn-default"><?php echo $this->getDI()->get("translate")->_('Cancel'); ?></a>	</div>
        </div>
-    </div>	
+    </div>   
+	<!-- FORM ACTION BUTTONS-->
 	</form>
 	<!-- END FORM-->	
 </div>
@@ -572,31 +610,9 @@
   <script src="<?php echo $this->url->getStatic('tools/jquery/jquery2.2.0/jquery.min.js'); ?>"></script>
   <script src="<?php echo $this->url->getStatic('tools/bootstrap/js/bootstrap.min.js'); ?>"></script> 
   
-<script src="<?php echo $this->url->getStatic('tools/bootstrap-summernote/summernote.min.js'); ?>"></script>
+<?php echo $this->assets->outputJs('validatejs'); ?>
 <?php echo $this->assets->outputJs('validate_forms_js'); ?>
 <?php echo $this->assets->outputJs('validatejs'); ?>
-
-<script>
-var validatemessages = {
-name:'<?php echo $this->getDI()->get("translate")->_('article_comment.name.required'); ?>',
-email:'<?php echo $this->getDI()->get("translate")->_('article_comment.email.required'); ?>',
-valid_email:'<?php echo 'article_comment.email'; ?>',
-comment:'<?php echo $this->getDI()->get("translate")->_('article_comment.comment.required'); ?>'
-};
-</script>
-<script type="text/javascript">
-$(document).ready(function() {
-$('#comment_content').val($('#summernote').code());	
-$('#summernote').summernote({
-	height: "250px",
-	width:"600px",
-  onChange:function() {
-  $('#comment_content').val($('#summernote').code());
-  }
-
-});
-});
-</script>
 
   <!-- End JavaScripts --> 
 </body>

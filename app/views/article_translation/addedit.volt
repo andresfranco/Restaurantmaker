@@ -1,6 +1,11 @@
 {% extends "layouts/masterpage_standard.volt" %}
+{% block head %}
+ {{super()}}
+	<link href="{{static_url('tools/bootstrap-summernote/summernote.css') }}" rel="stylesheet" type="text/css" />
+{% endblock %}
 {% block javascripts %}
 {{super() }}
+<script src="{{static_url('tools/bootstrap-summernote/summernote.min.js')}}"></script>
 {{assets.outputJs('validate_forms_js')}}
 {{assets.outputJs('validatejs')}}
 <script>
@@ -11,13 +16,13 @@ var validatemessages = {
 </script>
 <script type="text/javascript">
 $(document).ready(function() {
+ $('#articlecontent').val($('#summernote').code());	
 $('#summernote').summernote({
 	height: "250px",
 	width:"600px",
   onChange:function() {
-  $('#articlecontent').val($('#summernote').code());
-  }
-
+   $('#articlecontent').val($('#summernote').code());
+    }
 });
 });
 </script>
@@ -49,16 +54,19 @@ $('#summernote').summernote({
 		<div class="col-md-4">
 		{{ form.render(item['name'],["class":"form-control"]) }}
 		<!-- LOAD CONTROL ERROR LABEL-->
+		 {% if item['name']=='content'%}
+        <label id="lblcontent" name ="lblcontent"></label>
+        {% endif %}
 		{{item['label_error']|t}}
 		</div>
 		</div>
 	{% endfor %}
+	   <textarea id ="articlecontent" name="articlecontent" style="visibility:hidden;height:0;"></textarea>
        <div class="col-md-offset-1 col-md-3" style="padding-left:0;">
        	<input type="submit" class="btn btn-primary" value="{{'Guardar'|t}}"></input>
 		{{ link_to(routelist~'/'~articleid,cancel_button_name|t,"class":"btn btn-default") }}
        </div>
-    </div>   
-	<!-- FORM ACTION BUTTONS-->
+    </div>	
 	</form>
 	<!-- END FORM-->	
 </div>

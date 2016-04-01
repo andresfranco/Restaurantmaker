@@ -5,7 +5,6 @@
 <html lang="en">
 <!-- BEGIN HEAD -->
 
- 
 <head>
   <!-- Stylesheets --> 
   <link rel="stylesheet" type="text/css" href="<?php echo $this->url->getStatic('/tools/bootstrap/css/bootstrap.css'); ?>">
@@ -14,8 +13,6 @@
   <!-- End Stylesheets --> 
 </head>
  
-	<link href="<?php echo $this->url->getStatic('tools/bootstrap-summernote/summernote.css'); ?>" rel="stylesheet" type="text/css" />
-
 <body>
  <!-- Main Row Container --> 
 <div class="row">
@@ -527,31 +524,191 @@
 	</div>
 	<?php } ?>
 	<!-- LOAD FORM CONTROLS-->
-	<?php foreach ($formcolumns as $index => $item) { ?>
 		<div class="form-group">
-		<label name="<?php echo $item['name']; ?>" id ="item['name']" class="control-label col-md-1 align_label_left" style="padding-right:0;">
-		<?php echo $this->getDI()->get("translate")->_($item['label']); ?>
-		<?php echo $item['required']; ?>
-        </label>
+		<label name="lblname" id="lblname" class="control-label col-md-1 align_label_left">
+		<?php echo $this->getDI()->get("translate")->_('Name'); ?><span class="required" aria-required="true">* </span>
+		</label>
 		<div class="col-md-4">
-		<?php echo $form->render($item['name'], array('class' => 'form-control')); ?>
-		<!-- LOAD CONTROL ERROR LABEL-->
-		 <?php if ($item['name'] == 'comment') { ?>
-        <label id="lblcomment" name ="lblcomment"></label>
-        <?php } ?>
-		<?php echo $this->getDI()->get("translate")->_($item['label_error']); ?>
+		<?php echo $this->tag->textField(array('name', 'type' => 'text', 'class' => 'form-control')); ?>
 		</div>
 		</div>
-	<?php } ?>
-	   <textarea id ="comment_content" name= "comment_content" style="visibility:hidden;height:0;"></textarea>
+        <div class="form-group">
+			<label name="lblphone" id="lblphone" class="control-label col-md-1 align_label_left">
+				<?php echo $this->getDI()->get("translate")->_('Phone'); ?><span class="required" aria-required="true">* </span>
+			</label>
+			<div class="col-md-4">
+			<?php echo $this->tag->textField(array('phone', 'type' => 'text', 'class' => 'form-control')); ?>
+			</div>
+			</div>
+
+			<div class="form-group">
+			<label name="lbllogo" id="lblloko" class="control-label col-md-1 align_label_left">
+				<a href="#ModalEditor" id="logourl"  data-toggle="modal" ><i class="fa fa-file-image-o"></i>
+					<?php echo ' '; ?><?php echo $this->getDI()->get("translate")->_('Logo'); ?> </a>
+			</label>
+			<div class="col-md-2">
+			<?php echo $this->tag->textField(array('logo', 'type' => 'text', 'class' => 'form-control')); ?>
+			</div>
+			<div id ="logo_image" class="col-md-2">
+				<?php if ($mode == 'edit' && $logo_path != '') { ?>
+        <img id="theImg" src="<?php echo $this->url->get('files/images/' . $logo_path); ?>" width="50px" heigh="50px"/>
+				<?php } ?>
+			</div>
+		</div>
+
+			<div class="form-group">
+			<label name="lbladdress" id="lbladdress" class="control-label col-md-1 align_label_left" style="padding-right:0;">
+			<a href="#responsive" id="pencil"  data-toggle="modal" ><i class="fa fa-location-arrow"></i>
+				<?php echo ' '; ?><?php echo $this->getDI()->get("translate")->_('Address'); ?> </a><span class="required" aria-required="true">* </span>
+			</label>
+			<div class="col-md-4">
+			<?php echo $this->tag->textArea(array('rest_address', 'class' => 'form-control', 'readonly' => '')); ?>
+			<label id="erroraddress" name ="erroraddress"></label>
+			<?php echo $this->tag->textField(array('addressid', 'type' => 'text', 'class' => 'form-control', 'style' => 'display:none;')); ?>
+		  </div>
+		  </div>
+
+		  <div class="form-group">
+			<label name="email" id="lblemail" class="control-label col-md-1 align_label_left">
+				<?php echo $this->getDI()->get("translate")->_('Email'); ?><span class="required" aria-required="true">* </span>
+			</label>
+			<div class="col-md-4">
+			<?php echo $this->tag->textField(array('email', 'type' => 'text', 'class' => 'form-control')); ?>
+			</div>
+			</div>
+
+			<div class="form-group">
+			<label name="website" id="lblwebsite" class="control-label col-md-1 align_label_left"><?php echo $this->getDI()->get("translate")->_('Website'); ?></label>
+			<div class="col-md-4">
+			<?php echo $this->tag->textField(array('website', 'type' => 'text', 'class' => 'form-control')); ?>
+			</div>
+			</div> 
+
        <div class="col-md-offset-1 col-md-3" style="padding-left:0;">
-       	<input type="submit" class="btn btn-primary" value="<?php echo $this->getDI()->get("translate")->_('Guardar'); ?>"></input>
-		<?php echo $this->tag->linkTo(array($routelist, $this->getDI()->get("translate")->_($cancel_button_name), 'class' => 'btn btn-default')); ?>
-       </div>
-    </div>	
+       <input id="save_restaurant_button"class="btn btn-primary" value="<?php echo $this->getDI()->get("translate")->_('Save'); ?>" type="submit">
+	   <a href="<?php echo $this->url->get('restaurant/list'); ?>" class="btn btn-default"><?php echo $this->getDI()->get("translate")->_('Cancel'); ?></a>	</div>
+    </div>   
+	<!-- FORM ACTION BUTTONS-->
 	</form>
 	<!-- END FORM-->	
 </div>
+
+<!-- Modal Form-->
+<div id="responsive" class="modal fade" tabindex="-1" data-width="760" >
+<div id ="modalbody">
+<div class="row" style="background-color:white !important;">
+	   <div class="row" style="padding-bottom:10px; padding-left:20px; padding-right:20px;">
+       <h3><?php echo $this->getDI()->get("translate")->_('Restaurant Address'); ?></h3>
+        <hr></hr>
+	    </div>
+	    <div class="row"style="padding-bottom:10px; padding-left:20px; padding-right:20px;">
+ 		<form novalidate="novalidate" action="" id="modalform" class="form-horizontal" method="post" role="form">
+		<div class="form-group">
+		<label name="countryid" id="item['name']" class="control-label col-md-3 formlabel">
+		<?php echo $this->getDI()->get("translate")->_('Country'); ?>	<span class="required" aria-required="true">* </span>    </label>
+		<div class="col-md-4">
+		 <select id="countryid" name="countryid" class="form-control">
+		<option value=""> <?php echo $this->getDI()->get("translate")->_('Select a Country'); ?></option>
+		<?php foreach ($countries_data as $index => $item) { ?>
+		<option value="<?php echo $item['id']; ?>"> <?php echo $this->getDI()->get("translate")->_($item['country']); ?></option>
+		<?php } ?>
+		</select>
+		</div>
+		</div>
+
+		<div class="form-group">
+		<label name="stateid" id="item['name']" class="control-label col-md-3 formlabel">
+		<?php echo $this->getDI()->get("translate")->_('State'); ?><span class="required" aria-required="true">* </span>    </label>
+		<div class="col-md-4">
+		<select id="stateid" name="stateid" class="form-control">
+		<option value=""> <?php echo $this->getDI()->get("translate")->_('Select a State'); ?></option>
+		</select>
+		</div>
+		</div>
+
+		<div class="form-group">
+		<label name="cityid" id="item['name']" class="control-label col-md-3 formlabel">
+		<?php echo $this->getDI()->get("translate")->_('City'); ?><span class="required" aria-required="true">* </span>    </label>
+		<div class="col-md-4">
+		<select id="cityid" name="cityid" class="form-control">
+		<option value=""><?php echo $this->getDI()->get("translate")->_('Select a City'); ?></option>
+		</select>
+		</div>
+		</div>
+
+		<div class="form-group">
+		<label name="townshipid" id="item['name']" class="control-label col-md-3 formlabel">
+		<?php echo $this->getDI()->get("translate")->_('Township'); ?><span class="required" aria-required="true">* </span>    </label>
+		<div class="col-md-4">
+		 <select id="townshipid" name="townshipid" class="form-control">
+		<option value=""><?php echo $this->getDI()->get("translate")->_('Select a Township'); ?></option>
+		</select>
+		</div>
+		</div>
+
+		<div class="form-group">
+		<label name="neighborhoodid" id="item['name']" class="control-label col-md-3 formlabel">
+		<?php echo $this->getDI()->get("translate")->_('Neighborhood'); ?><span class="required" aria-required="true">* </span>    </label>
+		<div class="col-md-4">
+		<select id="neighborhoodid" name="neighborhoodid" class="form-control">
+		<option value=""><?php echo $this->getDI()->get("translate")->_('Select a Neighborhood'); ?></option>
+		</select>
+		</div>
+		</div>
+		<div class="form-group">
+		<label name="addresslbl" id="item['name']" class="control-label col-md-3 formlabel">
+		<?php echo $this->getDI()->get("translate")->_('Address'); ?><span class="required" aria-required="true">* </span>    </label>
+		<div class="col-md-4">
+		<textarea id="address" name="address" class="form-control" maxlength="400"></textarea>
+		</div>
+		</div>
+		
+
+		<div class="form-actions">
+		<div class="row">
+		<div class="col-md-offset-3 col-md-4" style="padding-left:0;">
+		<button type="button" data-dismiss="modal" class="btn btn-primary"><?php echo $this->getDI()->get("translate")->_('Close'); ?></button>
+		<button type="submit" id ="save_address_button" class="btn btn-default"><?php echo $this->getDI()->get("translate")->_('Save'); ?></button>
+		</div>
+	    </div>
+		</div>
+		</form>
+	    </div>
+ </div>
+ </div>
+ </div>
+ </div>
+
+ <!-- Image Modal -->
+ <div id="ModalEditor" class="modal fade"  tabindex="-1" data-width="760" >
+  <div class="modal-body">
+	<div class="col-md-12">
+	<div class="portlet box blue" >
+		<div class="portlet-title">
+		<div class="caption"><?php echo $this->getDI()->get("translate")->_('Images'); ?></div>
+		</div>
+		<div class="portlet-body form" >
+		<div class="col-md-12" style="background-color:white;">
+		<?php foreach ($images as $index => $item) { ?>
+		<div class="col-md-1" style="padding-top:15px;">
+	  <img  class="modal_hover" id ="<?php echo $item['name']; ?>" src="<?php echo $this->url->get('files/images/' . $item['name']); ?>"  height="100" width="100" onclick="selectImage(this.id);">
+		</div>
+		<?php } ?>
+	  </div>
+		<br><br>
+		<div class="col-md-12" style="background-color:white; padding-left:30px;padding-top:30px;padding-bottom:30px;">
+		<button type="button" data-dismiss="modal" class="btn btn-default"><?php echo $this->getDI()->get("translate")->_('Close'); ?></button>
+		</div>
+		</div>
+	 </div>
+ </div>
+	</div>
+
+ </div>
+</div>
+</div>
+</div>
+
 
   </div>
   </div>
@@ -572,30 +729,16 @@
   <script src="<?php echo $this->url->getStatic('tools/jquery/jquery2.2.0/jquery.min.js'); ?>"></script>
   <script src="<?php echo $this->url->getStatic('tools/bootstrap/js/bootstrap.min.js'); ?>"></script> 
   
-<script src="<?php echo $this->url->getStatic('tools/bootstrap-summernote/summernote.min.js'); ?>"></script>
 <?php echo $this->assets->outputJs('validate_forms_js'); ?>
 <?php echo $this->assets->outputJs('validatejs'); ?>
-
 <script>
 var validatemessages = {
-name:'<?php echo $this->getDI()->get("translate")->_('article_comment.name.required'); ?>',
-email:'<?php echo $this->getDI()->get("translate")->_('article_comment.email.required'); ?>',
-valid_email:'<?php echo 'article_comment.email'; ?>',
-comment:'<?php echo $this->getDI()->get("translate")->_('article_comment.comment.required'); ?>'
+name:'<?php echo $this->getDI()->get("translate")->_('restaurant.name.required'); ?>',
+address:'<?php echo $this->getDI()->get("translate")->_('restaurant.address.required'); ?>',
+phone:'<?php echo $this->getDI()->get("translate")->_('restaurant.phone.required'); ?>',
+email:'<?php echo $this->getDI()->get("translate")->_('restaurant.email.required'); ?>',
+valid_email:'<?php echo $this->getDI()->get("translate")->_('restaurant.email.valid'); ?>'
 };
-</script>
-<script type="text/javascript">
-$(document).ready(function() {
-$('#comment_content').val($('#summernote').code());	
-$('#summernote').summernote({
-	height: "250px",
-	width:"600px",
-  onChange:function() {
-  $('#comment_content').val($('#summernote').code());
-  }
-
-});
-});
 </script>
 
   <!-- End JavaScripts --> 

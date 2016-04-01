@@ -31,7 +31,7 @@ class MenuController extends ControllerBase
         array('name' => 'restaurantid','label'=>'Restaurant'
         ,'required'=>'<span class="required" aria-required="true">* </span>'
         ,'label_error'=>''),
-        array('name' => 'name','label'=>'Name','required'=>'<span class="required" aria-required="true">* </span>'
+        array('name' => 'menu_name','label'=>'Name','required'=>'<span class="required" aria-required="true">* </span>'
         ,'label_error'=>''),
         array('name' => 'active','label'=>'Active'  ,'required'=>'','label_error'=>'')
         );
@@ -45,7 +45,7 @@ class MenuController extends ControllerBase
       if($entity_object)
       {
       $this->tag->setDefault("restaurantid", $entity_object->getRestaurantid());
-      $this->tag->setDefault("name", $entity_object->getName());
+      $this->tag->setDefault("menu_name", $entity_object->getMenu_name());
       $this->tag->setDefault("active", $entity_object->getActive());
       }
     }
@@ -53,7 +53,7 @@ class MenuController extends ControllerBase
     public function set_post_values($entity)
     {
       $entity->setRestaurantid($this->request->getPost("restaurantid"));
-      $entity->setName($this->request->getPost("name"));
+      $entity->setMenu_name($this->request->getPost("menu_name"));
       $entity->setActive($this->request->getPost("active"));
     }
 
@@ -73,10 +73,10 @@ class MenuController extends ControllerBase
     ,'title' =>'menu.list.title'
     ,'header_columns'=>array(
       array('column_name' => 'restaurant','title' => 'Restaurant','class'=>''),
-      array('column_name'=>'name','title' => 'Name','class'=>''))
+      array('column_name'=>'menu_name','title' => 'Name','class'=>''))
     ,'search_columns'=>array(
       array('name' => 'restaurant','title' => 'Restaurant','size'=>30,'div_class'=>"input-control full-size",'label_class'=>'search'),
-      array('name' => 'name','title' => 'Name','size'=>30,'div_class'=>"input-control full-size",'label_class'=>'search')
+      array('name' => 'menu_name','title' => 'Name','size'=>30,'div_class'=>"input-control full-size",'label_class'=>'search')
     )
   ];
     return $grid_values;
@@ -91,7 +91,7 @@ class MenuController extends ControllerBase
     $order=$this->set_grid_order();
     $grid_values =$this->set_grid_parameters('menu/list');
     $query= $this->modelsManager->createBuilder()
-             ->columns(array('m.id ','r.name as restaurant','m.name','m.active'))
+             ->columns(array('m.id ','r.name as restaurant','m.menu_name','m.active'))
              ->from(array('m' => 'Menu'))
              ->join('Restaurant', 'r.id = m.restaurantid', 'r')
              ->orderBy($order)
@@ -128,17 +128,17 @@ class MenuController extends ControllerBase
 
     $search_values =array(
       array('name'=>'restaurant','value'=>$this->request->getPost("restaurant"))
-    ,array('name'=>'name','value'=>$this->request->getPost("name"))
+    ,array('name'=>'menu_name','value'=>$this->request->getPost("menu_name"))
   );
 
     $params_query =$this->set_search_grid_post_values($search_values);
 
     $query =  $query= $this->modelsManager->createBuilder()
-             ->columns(array('m.id ','r.name as restaurant','m.name','m.active'))
+             ->columns(array('m.id ','r.name as restaurant','m.menu_name','m.active'))
              ->from(array('m' => 'Menu'))
              ->join('Restaurant', 'r.id = m.restaurantid', 'r')
              ->Where('r.name LIKE :restaurant:', array('restaurant' => '%' . $params_query['restaurant']. '%'))
-             ->AndWhere('m.name LIKE :name:', array('name' => '%' . $params_query['name']. '%'))
+             ->AndWhere('m.menu_name LIKE :name:', array('name' => '%' . $params_query['menu_name']. '%'))
              ->orderBy($order)
              ->getQuery()
              ->execute();

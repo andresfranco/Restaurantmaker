@@ -5,7 +5,6 @@
 <html lang="en">
 <!-- BEGIN HEAD -->
 
- 
 <head>
   <!-- Stylesheets --> 
   <link rel="stylesheet" type="text/css" href="<?php echo $this->url->getStatic('/tools/bootstrap/css/bootstrap.css'); ?>">
@@ -14,8 +13,6 @@
   <!-- End Stylesheets --> 
 </head>
  
-	<link href="<?php echo $this->url->getStatic('tools/bootstrap-summernote/summernote.css'); ?>" rel="stylesheet" type="text/css" />
-
 <body>
  <!-- Main Row Container --> 
 <div class="row">
@@ -510,48 +507,137 @@
   <div class="col-sm-12 col-md-10 col-xs-12 col-lg-10 column_content">
   <div class="main_content">
   
-<div class="row row_container_form">
+   <h3 class="page-title" align ="left"><?php echo $this->getDI()->get("translate")->_($title); ?> (<?php echo $restaurant_name . '-' . $menu_name; ?>)</h3>
+   <div align="right"><a href ="<?php echo $this->url->get('menu/list'); ?>" class="btn btn blue"><?php echo $this->getDI()->get("translate")->_('Menus'); ?> <i class="fa fa-arrow-right "></i> </a></div>
+	<hr/>
+  <!-- GRID SEARCH -->
+	<div align="left" >
+	<?php echo $this->tag->form(array($searchroute . '/' . $menuid, 'method' => 'post', 'autocomplete' => 'off')); ?>
 	<div class="row">
-     <h3><?php echo $this->getDI()->get("translate")->_($title); ?></h3>
-	</div>
-	<hr></hr>
-	<div class="row">
-	<!-- BEGIN FORM-->
-	<?php echo $this->tag->form(array($routeform, 'method' => 'post', 'id' => 'appform', 'role' => 'form', 'class' => 'form-horizontal')); ?>
-	<!-- FORM ERROR MESSAGES-->
-	<?php $errorvar = $this->getContent(); ?>
-	<?php if (!empty($errorvar)) { ?>
-	<div class="alert alert-danger">
-	<button data-close="alert" class="close"></button>
-	<?php echo $this->getDI()->get("translate")->_($this->getContent()); ?>
+	<div class="form-group col-md-10" style="padding-left:0;">
+	<?php foreach ($searchcolumns as $index => $item) { ?>
+	<div class="col-md-4 col-sm-4" style="padding-left:0;">
+	<label><?php echo $this->getDI()->get("translate")->_($item['title']); ?></label>
+	<?php echo $this->tag->textField(array($item['name'], 'size' => $item['size'], 'class' => 'form-control', 'placeholder' => '')); ?>
 	</div>
 	<?php } ?>
-	<!-- LOAD FORM CONTROLS-->
-	<?php foreach ($formcolumns as $index => $item) { ?>
-		<div class="form-group">
-		<label name="<?php echo $item['name']; ?>" id ="item['name']" class="control-label col-md-1 align_label_left" style="padding-right:0;">
-		<?php echo $this->getDI()->get("translate")->_($item['label']); ?>
-		<?php echo $item['required']; ?>
-        </label>
-		<div class="col-md-4">
-		<?php echo $form->render($item['name'], array('class' => 'form-control')); ?>
-		<!-- LOAD CONTROL ERROR LABEL-->
-		 <?php if ($item['name'] == 'comment') { ?>
-        <label id="lblcomment" name ="lblcomment"></label>
-        <?php } ?>
-		<?php echo $this->getDI()->get("translate")->_($item['label_error']); ?>
-		</div>
-		</div>
-	<?php } ?>
-	   <textarea id ="comment_content" name= "comment_content" style="visibility:hidden;height:0;"></textarea>
-       <div class="col-md-offset-1 col-md-3" style="padding-left:0;">
-       	<input type="submit" class="btn btn-primary" value="<?php echo $this->getDI()->get("translate")->_('Guardar'); ?>"></input>
-		<?php echo $this->tag->linkTo(array($routelist, $this->getDI()->get("translate")->_($cancel_button_name), 'class' => 'btn btn-default')); ?>
-       </div>
-    </div>	
+	</div>
+	</div>
+	<div class="row search_button">
+	<div class="col-md-1" style="padding-left:0;">
+	<?php echo $this->tag->submitButton(array($this->getDI()->get("translate")->_('Buscar'), 'class' => 'btn btn-primary')); ?>
+	</div>
+	
+	</div>
 	</form>
-	<!-- END FORM-->	
-</div>
+	</div>
+  <!-- END GRID SEARCH-->
+
+	<?php if ($permissions['create'] == 'Y') { ?>
+	 <!-- NEW ITEM ICON-->
+	<div align="left"><?php echo $this->tag->linkTo(array($newroute . '/' . $menuid, '<i class="fa fa-plus fa-lg"></i>')); ?></div>
+  <?php } ?>
+	<br>
+	<?php if ($noitems == '') { ?>
+	<table class="table table-bordered table-striped table-condensed flip-content">
+	<thead>
+	<tr>
+	<!-- GRID HEADER-->
+	<?php foreach ($headercolumns as $index => $item) { ?>
+	<th style="background-color:#eee;">
+	<span><?php echo $this->getDI()->get("translate")->_($item['title']); ?></span>
+	<div class="btn-group pull-right">
+	<button aria-expanded="false" type="button" class="btn btn-fit-height gray dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="1000" data-close-others="true">
+	<?php if ($order == 'asc') { ?>
+		<?php $order_class = 'fa fa-arrow-up'; ?>
+	<?php } else { ?>
+		<?php if ($order == 'desc') { ?>
+			<?php $order_class = 'fa fa-arrow-down'; ?>
+		<?php } else { ?>
+			<?php $order_class = 'fa fa-sort'; ?>
+		<?php } ?>
+	<?php } ?>
+	<i class="<?php echo $order_class; ?>"></i>
+	</button>
+	<!-- GRID HEADER-->
+	<ul class="dropdown-menu pull-right" role="menu">
+	<li class="ms-hover">
+	<a href="<?php echo $this->url->get('dish/list') . '/' . $menuid . '?page=' . $page->current . '&order=' . $item['column_name'] . ' asc'; ?>">
+	<i class="fa fa-arrow-up"></i>
+	<?php echo ' Asc'; ?>
+	</a>
+	</li>
+	<li class="divider">
+	</li>
+	<li class="ms-hover">
+	<a href="<?php echo $this->url->get('dish/list') . '/' . $menuid . '?page=' . $page->current . '&order=' . $item['column_name'] . ' desc'; ?>">
+	<i class="fa fa-arrow-down"></i>
+	<?php echo ' Desc'; ?>
+	</a>
+	</li>
+	</ul>
+	</div>
+	</th>
+	<?php } ?>
+	<th></th>
+	<th></th>
+	</tr>
+	</thead>
+	<!-- END HEADER-->
+	<!-- GRID BODY -->
+	<tbody>
+	<?php if (isset($page->items)) { ?>
+		<?php foreach ($page->items as $entity) { ?>
+			<tr>
+			<?php foreach ($headercolumns as $index => $item) { ?>
+				<td width ="15%"><?php echo $entity->readAttribute($item['column_name']); ?></td>
+			<?php } ?>
+			<td width ="2%">
+				<?php if ($permissions['edit'] == 'Y') { ?>
+				<?php echo $this->tag->linkTo(array('dish_translation/list/' . $entity->id, '<i class="fa fa-language fa-lg"></i>', 'class' => 'btn btn-icon-only yellow')); ?>
+				<?php } ?>
+			</td>
+			<td width ="2%">
+				<?php if ($permissions['edit'] == 'Y') { ?>
+				<?php echo $this->tag->linkTo(array($editroute . $entity->id . '/' . $menuid, '<i class="fa fa-edit fa-lg"></i>', 'class' => 'btn btn-icon-only green')); ?>
+				<?php } ?>
+			</td>
+			<td width ="2%">
+				<?php if ($permissions['delete'] == 'Y') { ?>
+				<?php echo $this->tag->linkTo(array($showroute . $entity->id, '<i class="fa fa-remove fa-lg"></i>', 'class' => 'btn btn-icon-only red')); ?>
+				<?php } ?>
+			</td>
+			</tr>
+		<?php } ?>
+		<?php } ?>
+		</tbody>
+	<!--END GRID BODY -->
+		</table>
+		<!--END GRID PAGINATION -->
+		<div align="left"><?php echo $this->getDI()->get("translate")->_('Página') . ' ' . $page->current . ' ' . $this->getDI()->get("translate")->_('de') . ' ' . $page->total_pages; ?></div>
+		<div align ="left">
+		<ul class="pagination">
+		<li><?php echo $this->tag->linkTo(array($listroute . '/' . $menuid, '<i class="fa fa-angle-left"></i><i class="fa fa-angle-left"></i>')); ?></li>
+		<li><?php echo $this->tag->linkTo(array($listroute . '/' . $menuid . '?page=' . $page->before, '<i class="fa fa-angle-left"></i>')); ?></li>
+		<?php foreach (range(1, $page->total_pages) as $i) { ?>
+		<?php if ($page->current == $i) { ?>
+		<?php $classitem = 'active'; ?>
+		<?php } else { ?>
+		<?php $classitem = ''; ?>
+		<?php } ?>
+		<li class="<?php echo $classitem; ?>"><?php echo $this->tag->linkTo(array($listroute . '?page=' . $i, $i)); ?></li>
+		<?php } ?>
+		<li><?php echo $this->tag->linkTo(array($listroute . '/' . $menuid . '?page=' . $page->next, '<i class="fa fa-angle-right"></i>')); ?></li>
+		<li><?php echo $this->tag->linkTo(array($listroute . '/' . $menuid . '?page=' . $page->last, '<i class="fa fa-angle-right"></i><i class="fa fa-angle-right"></i>')); ?></li>
+		</ul>
+		</div>
+    <!--END GRID PAGINATION -->
+	<?php } else { ?>
+	  <!--NO ITEMS VALIDATION -->
+		<div class="alert alert-warning alert-dismissable">
+		<strong><i class="glyphicon glyphicon-warning-sign"></i> <?php echo $this->getDI()->get("translate")->_($noitems); ?></strong>
+		</div>
+	<?php } ?>
 
   </div>
   </div>
@@ -568,36 +654,9 @@
 
 <!-- javaScripts --> 
   
-
   <script src="<?php echo $this->url->getStatic('tools/jquery/jquery2.2.0/jquery.min.js'); ?>"></script>
   <script src="<?php echo $this->url->getStatic('tools/bootstrap/js/bootstrap.min.js'); ?>"></script> 
   
-<script src="<?php echo $this->url->getStatic('tools/bootstrap-summernote/summernote.min.js'); ?>"></script>
-<?php echo $this->assets->outputJs('validate_forms_js'); ?>
-<?php echo $this->assets->outputJs('validatejs'); ?>
-
-<script>
-var validatemessages = {
-name:'<?php echo $this->getDI()->get("translate")->_('article_comment.name.required'); ?>',
-email:'<?php echo $this->getDI()->get("translate")->_('article_comment.email.required'); ?>',
-valid_email:'<?php echo 'article_comment.email'; ?>',
-comment:'<?php echo $this->getDI()->get("translate")->_('article_comment.comment.required'); ?>'
-};
-</script>
-<script type="text/javascript">
-$(document).ready(function() {
-$('#comment_content').val($('#summernote').code());	
-$('#summernote').summernote({
-	height: "250px",
-	width:"600px",
-  onChange:function() {
-  $('#comment_content').val($('#summernote').code());
-  }
-
-});
-});
-</script>
-
   <!-- End JavaScripts --> 
 </body>
 </html>

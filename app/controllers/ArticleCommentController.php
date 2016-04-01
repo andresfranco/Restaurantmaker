@@ -40,7 +40,7 @@ class ArticleCommentController extends ControllerBase
         array('name' => 'comment','label'=>'Comment'
         ,'required'=>'<span class="required" aria-required="true">* </span>'
         ,'label_error'=>'<span id ="article_commenterror" name ="codeerror" class="has-error"></span>'),
-        array('name' => 'active','label'=>'Active'
+        array('name' => 'active_status','label'=>'Active'
         ,'required'=>''
         ,'label_error'=>'')
         );
@@ -57,7 +57,7 @@ class ArticleCommentController extends ControllerBase
       $this->tag->setDefault("name", $entity_object->getName());
       $this->tag->setDefault("email", $entity_object->getEmail());
       $this->tag->setDefault("comment", $entity_object->getComment());
-      $this->tag->setDefault("active", $entity_object->getActive());
+      $this->tag->setDefault("active_status", $entity_object->getActive_status());
       }
     }
 
@@ -67,7 +67,7 @@ class ArticleCommentController extends ControllerBase
       $entity->setName($this->request->getPost("name"));
       $entity->setEmail($this->request->getPost("email"));
       $entity->setComment($this->request->getPost("comment_content"));
-      $entity->setActive($this->request->getPost("active"));
+      $entity->setActive_status($this->request->getPost("active_status"));
     }
 
   public function set_grid_parameters($routelist)
@@ -88,14 +88,14 @@ class ArticleCommentController extends ControllerBase
       array('column_name' => 'article','title' => 'Article','class'=>''),
       array('column_name'=>'name','title' => 'Name','class'=>''),
       array('column_name'=>'email','title' => 'Email','class'=>''),
-      array('column_name'=>'active','title' => 'Active','class'=>''),
+      array('column_name'=>'active_status','title' => 'Active','class'=>''),
       array('column_name'=>'comment','title' => 'Comment','class'=>'')
     )
     ,'search_columns'=>array(
       array('name' => 'article','title' => 'Article','size'=>30,'div_class'=>"input-control full-size",'label_class'=>'search'),
       array('name' => 'name','title' => 'Name','size'=>30,'div_class'=>"input-control full-size",'label_class'=>'search'),
       array('name' => 'email','title' => 'Email','size'=>30,'div_class'=>"input-control full-size",'label_class'=>'search'),
-      array('name' => 'active','title' => 'Active','size'=>30,'div_class'=>"input-control full-size",'label_class'=>'search'),
+      array('name' => 'active_status','title' => 'Active','size'=>30,'div_class'=>"input-control full-size",'label_class'=>'search'),
       array('name' => 'comment','title' => 'Comment','size'=>30,'div_class'=>"input-control full-size",'label_class'=>'search')
     )
   ];
@@ -111,7 +111,7 @@ class ArticleCommentController extends ControllerBase
     $order=$this->set_grid_order();
     $grid_values =$this->set_grid_parameters('article_comment/list');
     $query= $this->modelsManager->createBuilder()
-             ->columns(array('ac.id ','ac.articleid','a.title as article','ac.name','ac.email','ac.comment','ac.active'))
+             ->columns(array('ac.id ','ac.articleid','a.title as article','ac.name','ac.email','ac.comment','ac.active_status'))
              ->from(array('ac' => 'ArticleComment'))
              ->join('Article', 'a.id = ac.articleid', 'a')
              ->orderBy($order)
@@ -149,29 +149,29 @@ class ArticleCommentController extends ControllerBase
     ,array('name'=>'name','value'=>$this->request->getPost("name"))
     ,array('name'=>'email','value'=>$this->request->getPost("email"))
     ,array('name'=>'comment','value'=>$this->request->getPost("comment"))
-    ,array('name'=>'active','value'=>$this->request->getPost("active"))
+    ,array('name'=>'active_status','value'=>$this->request->getPost("active_status"))
     );
 
     $params_query =$this->set_search_grid_post_values($search_values);
-    if (strtoupper($params_query['active']) =='YES' or
-    strtoupper($params_query['active']) == strtoupper($this->di->get('translate')->_('Yes')))
+    if (strtoupper($params_query['active_status']) =='YES' or
+    strtoupper($params_query['active_status']) == strtoupper($this->di->get('translate')->_('Yes')))
     {
-      $params_query['active']='Y';
+      $params_query['active_status']='Y';
     }
-    if (strtoupper($params_query['active']) =='NO' or
-    strtoupper($params_query['active']) == strtoupper($this->di->get('translate')->_('No')))
+    if (strtoupper($params_query['active_status']) =='NO' or
+    strtoupper($params_query['active_status']) == strtoupper($this->di->get('translate')->_('No')))
     {
-      $params_query['active']='N';
+      $params_query['active_status']='N';
     }
     $query =$this->modelsManager->createBuilder()
-             ->columns(array('ac.id ','ac.articleid','a.title as article','ac.name','ac.email','ac.comment','ac.active'))
+             ->columns(array('ac.id ','ac.articleid','a.title as article','ac.name','ac.email','ac.comment','ac.active_status'))
              ->from(array('ac' => 'ArticleComment'))
              ->join('Article', 'a.id = ac.articleid', 'a')
              ->Where('a.title LIKE :article:', array('article' => '%' . $params_query['article']. '%'))
              ->AndWhere('ac.name LIKE :name:', array('name' => '%' . $params_query['name']. '%'))
              ->AndWhere('ac.email LIKE :email:', array('email' => '%' . $params_query['email']. '%'))
              ->AndWhere('ac.comment LIKE :comment:', array('comment' => '%' . $params_query['comment']. '%'))
-             ->AndWhere('ac.active LIKE :active:', array('active' => '%' . $params_query['active']. '%'))
+             ->AndWhere('ac.active_status LIKE :active:', array('active' => '%' . $params_query['active_status']. '%'))
              ->orderBy($order)
              ->getQuery()
              ->execute();

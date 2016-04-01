@@ -20,13 +20,13 @@ class DishForm extends Form
 
     $category = new Select('categoryid',DishCategory::find(), array(
     'using' => array('id','category')
-    ,'useEmpty' => TRUE,'emptyText' => 'Seleccione una Categoria'));
+    ,'useEmpty' => TRUE,'emptyText' => $this->di->get('translate')->_('Seleccione una Categoría')));
     $category->setLabel('Category');
     $this->add($category);
 
     $gallery= new Select('galleryid',Gallery::find(), array(
     'using' => array('id','name')
-    ,'useEmpty' => TRUE,'emptyText' => 'Seleccione una galeria'));
+    ,'useEmpty' => TRUE,'emptyText' =>  $this->di->get('translate')->_('Seleccione una galeria')));
     $gallery->setLabel('Galeria');
     $this->add($gallery);
 

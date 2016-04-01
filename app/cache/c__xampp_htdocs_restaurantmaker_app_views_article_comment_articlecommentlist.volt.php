@@ -589,7 +589,16 @@
 		<?php foreach ($page->items as $entity) { ?>
 			<tr>
 			<?php foreach ($headercolumns as $index => $item) { ?>
-				<td width ="20%"><?php echo $entity->readAttribute($item['column_name']); ?></td>
+			<?php if ($item['column_name'] == 'active_status') { ?>
+			<?php if ($entity->readAttribute($item['column_name']) == 'Y') { ?>
+			<td width ="15%"><?php echo $this->getDI()->get("translate")->_('Yes'); ?></td>
+			<?php } elseif ($entity->readAttribute($item['column_name']) == 'N') { ?>
+			<td width ="15%"><?php echo $this->getDI()->get("translate")->_('No'); ?></td>
+			<?php } ?>
+			<?php } else { ?>
+			<td width ="15%"><?php echo $entity->readAttribute($item['column_name']); ?></td>
+			<?php } ?>
+
 			<?php } ?>
 			<td width ="2%">
 				<?php if ($permissions['edit'] == 'Y') { ?>

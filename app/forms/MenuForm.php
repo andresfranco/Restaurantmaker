@@ -22,7 +22,7 @@ class MenuForm extends Form
   $restaurant->setLabel('Pais');
   $this->add($restaurant);
 
-  $name = new Text('name');
+  $name = new Text('menu_name');
   $name->setLabel('Name');
   $this->add($name);
 

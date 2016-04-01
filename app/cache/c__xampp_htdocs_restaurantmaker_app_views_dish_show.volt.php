@@ -5,7 +5,6 @@
 <html lang="en">
 <!-- BEGIN HEAD -->
 
- 
 <head>
   <!-- Stylesheets --> 
   <link rel="stylesheet" type="text/css" href="<?php echo $this->url->getStatic('/tools/bootstrap/css/bootstrap.css'); ?>">
@@ -14,8 +13,6 @@
   <!-- End Stylesheets --> 
 </head>
  
-	<link href="<?php echo $this->url->getStatic('tools/bootstrap-summernote/summernote.css'); ?>" rel="stylesheet" type="text/css" />
-
 <body>
  <!-- Main Row Container --> 
 <div class="row">
@@ -528,30 +525,41 @@
 	<?php } ?>
 	<!-- LOAD FORM CONTROLS-->
 	<?php foreach ($formcolumns as $index => $item) { ?>
-		<div class="form-group">
-		<label name="<?php echo $item['name']; ?>" id ="item['name']" class="control-label col-md-1 align_label_left" style="padding-right:0;">
+	<?php if ($item['name'] == 'image_path') { ?>
+	<div class="form-group">
+		<label name="<?php echo $item['name']; ?>" id ="item['name']" class="control-label col-md-1 formlabel">
 		<?php echo $this->getDI()->get("translate")->_($item['label']); ?>
-		<?php echo $item['required']; ?>
-        </label>
+		</label>
+	<div class="col-md-2">
+	<?php echo $form->render($item['name'], array('class' => 'form-control', 'disabled' => '""')); ?>
+	</div>
+	<div id ="logo_image" class="col-md-2">
+    <?php if ($image_path) { ?>
+		<img id="theImg" src="<?php echo $this->url->get('files/images/' . $image_path); ?>" width="50px" heigh="50px"/>
+		<?php } ?>
+	</div>
+</div>
+	<?php } else { ?>
+		<div class="form-group">
+		<label name="<?php echo $item['name']; ?>" id ="item['name']" class="control-label col-md-1 formlabel">
+		<?php echo $this->getDI()->get("translate")->_($item['label']); ?>
+		</label>
 		<div class="col-md-4">
-		<?php echo $form->render($item['name'], array('class' => 'form-control')); ?>
-		<!-- LOAD CONTROL ERROR LABEL-->
-		 <?php if ($item['name'] == 'comment') { ?>
-        <label id="lblcomment" name ="lblcomment"></label>
-        <?php } ?>
-		<?php echo $this->getDI()->get("translate")->_($item['label_error']); ?>
+		<?php echo $form->render($item['name'], array('class' => 'form-control', 'disabled' => '""')); ?>
 		</div>
 		</div>
+  <?php } ?>
 	<?php } ?>
-	   <textarea id ="comment_content" name= "comment_content" style="visibility:hidden;height:0;"></textarea>
        <div class="col-md-offset-1 col-md-3" style="padding-left:0;">
-       	<input type="submit" class="btn btn-primary" value="<?php echo $this->getDI()->get("translate")->_('Guardar'); ?>"></input>
+       	<button class="btn btn-danger"><?php echo $this->getDI()->get("translate")->_($delete_button_name); ?></button>
 		<?php echo $this->tag->linkTo(array($routelist, $this->getDI()->get("translate")->_($cancel_button_name), 'class' => 'btn btn-default')); ?>
        </div>
-    </div>	
+    </div>   
+	<!-- FORM ACTION BUTTONS-->
 	</form>
 	<!-- END FORM-->	
 </div>
+
 
   </div>
   </div>
@@ -572,31 +580,8 @@
   <script src="<?php echo $this->url->getStatic('tools/jquery/jquery2.2.0/jquery.min.js'); ?>"></script>
   <script src="<?php echo $this->url->getStatic('tools/bootstrap/js/bootstrap.min.js'); ?>"></script> 
   
-<script src="<?php echo $this->url->getStatic('tools/bootstrap-summernote/summernote.min.js'); ?>"></script>
 <?php echo $this->assets->outputJs('validate_forms_js'); ?>
 <?php echo $this->assets->outputJs('validatejs'); ?>
-
-<script>
-var validatemessages = {
-name:'<?php echo $this->getDI()->get("translate")->_('article_comment.name.required'); ?>',
-email:'<?php echo $this->getDI()->get("translate")->_('article_comment.email.required'); ?>',
-valid_email:'<?php echo 'article_comment.email'; ?>',
-comment:'<?php echo $this->getDI()->get("translate")->_('article_comment.comment.required'); ?>'
-};
-</script>
-<script type="text/javascript">
-$(document).ready(function() {
-$('#comment_content').val($('#summernote').code());	
-$('#summernote').summernote({
-	height: "250px",
-	width:"600px",
-  onChange:function() {
-  $('#comment_content').val($('#summernote').code());
-  }
-
-});
-});
-</script>
 
   <!-- End JavaScripts --> 
 </body>

@@ -18,6 +18,7 @@ content:'{{"article.content.required"|t}}'
 </script>
 <script type="text/javascript">
 $(document).ready(function() {
+ $('#articlecontent').val($('#summernote').code());	
 $('#summernote').summernote({
 	height: "250px",
 	width:"600px",
