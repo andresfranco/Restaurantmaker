@@ -87,7 +87,12 @@ class EventGalleryController extends ControllerBase
   ];
     return $grid_values;
   }
-
+   
+  public function get_event_data($eventid)
+  {
+     $event = Event::Findfirst($eventid);
+     return $event;
+  } 
 
   /**
   * @Route("/list/{eventid}", methods={"GET","POST"}, name="eventgallerylist")
@@ -107,8 +112,13 @@ class EventGalleryController extends ControllerBase
     $this->set_grid_values($query,$grid_values);
     $this->check_all_permissions($this->session->get('userid'));
     $this->view->eventid = $eventid;
+    $this->view->obj =$this;
+    $event = $this->get_event_data($eventid);
+    $this->view->event_name =$event->name;
 
   }
+
+
 
   public function check_all_permissions($userid)
   {
@@ -149,6 +159,9 @@ class EventGalleryController extends ControllerBase
     $this->set_grid_values($query,$grid_values);
     $this->check_all_permissions($this->session->get('userid'));
     $this->view->eventid = $eventid;
+    $this->view->obj =$this;
+    $event = $this->get_event_data($eventid);
+    $this->view->event_name =$event->name;
 
   }
 

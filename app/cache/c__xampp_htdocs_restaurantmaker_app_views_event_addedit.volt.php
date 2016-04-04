@@ -14,11 +14,11 @@
   <!-- End Stylesheets --> 
 </head>
  
-<link href="<?php echo $this->url->getStatic('metronic/assets/global/plugins/clockface/css/clockface.css'); ?>" rel="stylesheet" type="text/css" />
-<link href="<?php echo $this->url->getStatic('metronic/assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css'); ?>" rel="stylesheet" type="text/css" />
-<link href="<?php echo $this->url->getStatic('metronic/assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css'); ?>" rel="stylesheet" type="text/css" />
-<link href="<?php echo $this->url->getStatic('metronic/assets/global/plugins/bootstrap-daterangepicker/daterangepicker-bs3.css'); ?>" rel="stylesheet" type="text/css" />
-<link href="<?php echo $this->url->getStatic('metronic/assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css'); ?>" rel="stylesheet" type="text/css" />
+<link href="<?php echo $this->url->getStatic('tools/clockface/css/clockface.css'); ?>" rel="stylesheet" type="text/css" />
+<link href="<?php echo $this->url->getStatic('tools/bootstrap-timepicker/css/bootstrap-timepicker.min.css'); ?>" rel="stylesheet" type="text/css" />
+<link href="<?php echo $this->url->getStatic('tools/bootstrap-datepicker/css/bootstrap-datepicker3.min.css'); ?>" rel="stylesheet" type="text/css" />
+<link href="<?php echo $this->url->getStatic('tools/bootstrap-daterangepicker/daterangepicker-bs3.css'); ?>" rel="stylesheet" type="text/css" />
+<link href="<?php echo $this->url->getStatic('tools/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css'); ?>" rel="stylesheet" type="text/css" />
 
 <body>
  <!-- Main Row Container --> 
@@ -514,19 +514,14 @@
   <div class="col-sm-12 col-md-10 col-xs-12 col-lg-10 column_content">
   <div class="main_content">
   
-<div class="row">
-<div class="col-md-12">
-<!-- BEGIN PORTLET-->
-<div class="portlet box blue">
-	<div class="portlet-title">
-	<div class="caption">
-	<?php echo $this->getDI()->get("translate")->_($title); ?>
+<div class="row row_container_form">
+	<div class="row">
+     <h3><?php echo $this->getDI()->get("translate")->_($title); ?></h3>
 	</div>
-	</div>
-	<div class="portlet-body form">
+	<hr></hr>
+	<div class="row">
 	<!-- BEGIN FORM-->
 	<?php echo $this->tag->form(array($routeform, 'method' => 'post', 'id' => 'appform', 'role' => 'form', 'class' => 'form-horizontal')); ?>
-	<div class="form-body">
 	<!-- FORM ERROR MESSAGES-->
 	<?php $errorvar = $this->getContent(); ?>
 	<?php if (!empty($errorvar)) { ?>
@@ -535,10 +530,10 @@
 	<?php echo $this->getDI()->get("translate")->_($this->getContent()); ?>
 	</div>
 	<?php } ?>
-		<!-- LOAD FORM CONTROLS-->
+	<!-- LOAD FORM CONTROLS-->
 	<?php foreach ($formcolumns as $index => $item) { ?>
 		<div class="form-group">
-		<label name="<?php echo $item['name']; ?>" id ="item['name']" class="control-label col-md-3 formlabel">
+		<label name="<?php echo $item['name']; ?>" id ="item['name']" class="control-label col-md-2 formlabel">
 		<?php echo $this->getDI()->get("translate")->_($item['label']); ?>
 		<?php echo $item['required']; ?>
         </label>
@@ -563,24 +558,15 @@
      <?php } ?>
      </div>
 	<?php } ?>
-	</div>
+       <div class="col-md-offset-2 col-md-3" style="padding-left:0;">
+       	<input type="submit" class="btn btn-primary" value="<?php echo $this->getDI()->get("translate")->_('Guardar'); ?>"></input>
+		<?php echo $this->tag->linkTo(array($routelist, $this->getDI()->get("translate")->_($cancel_button_name), 'class' => 'btn btn-default')); ?>
+       </div>
+    </div>   
 	<!-- FORM ACTION BUTTONS-->
-	<div class="form-actions">
-	<div class="row">
-	<div class="col-md-offset-2 col-md-4">
-		<input type="submit" class="btn blue-madison" value="<?php echo $this->getDI()->get("translate")->_('Guardar'); ?>"></input>
-		<?php echo $this->tag->linkTo(array($routelist, $this->getDI()->get("translate")->_($cancel_button_name), 'class' => 'btn grey-cascade')); ?>
-	</div>
-	</div>
-	</div>
 	</form>
-	<!-- END FORM-->
-	</div>
+	<!-- END FORM-->	
 </div>
-<!-- END PORTLET-->
-</div>
-</div>
-
 
   </div>
   </div>
@@ -597,6 +583,10 @@
 
 <!-- javaScripts --> 
   
+
+  <script src="<?php echo $this->url->getStatic('tools/jquery/jquery2.2.0/jquery.min.js'); ?>"></script>
+  <script src="<?php echo $this->url->getStatic('tools/bootstrap/js/bootstrap.min.js'); ?>"></script> 
+  
 <?php echo $this->assets->outputJs('validatejs'); ?>
 <?php echo $this->assets->outputJs('date_picker'); ?>
 <script>
@@ -605,16 +595,6 @@ name:'<?php echo $this->getDI()->get("translate")->_('event.name.required'); ?>'
 ,start_date:'<?php echo $this->getDI()->get("translate")->_('event.start_date.required'); ?>'
 ,finish_date:'<?php echo $this->getDI()->get("translate")->_('event.finish_date.required'); ?>'
 };
-</script>
-<script>
-	jQuery(document).ready(function() {       
-	// initiate layout and plugins
-	Metronic.init(); // init metronic core components
-	Layout.init(); // init current layout
-	QuickSidebar.init(); // init quick sidebar
-	Demo.init(); // init demo features
-	ComponentsPickers.init();
-	});   
 </script>
 <?php if ($this->session->get('language') != 'en') { ?> 
 <script type="text/javascript" src="<?php echo $this->url->getStatic('metronic/assets/global/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.' . $this->session->get('language') . '.js'); ?>" charset="UTF-8"></script>

@@ -1,14 +1,15 @@
 {% extends "layouts/masterpage_standard.volt" %}
 {% block head %}
 {{super()}}
-<link href="{{static_url('metronic/assets/global/plugins/clockface/css/clockface.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{static_url('metronic/assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{static_url('metronic/assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{static_url('metronic/assets/global/plugins/bootstrap-daterangepicker/daterangepicker-bs3.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{static_url('metronic/assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{static_url('tools/clockface/css/clockface.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{static_url('tools/bootstrap-timepicker/css/bootstrap-timepicker.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{static_url('tools/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{static_url('tools/bootstrap-daterangepicker/daterangepicker-bs3.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{static_url('tools/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" type="text/css" />
 {% endblock %}
 
 {% block javascripts %}
+{{super()}}
 {{assets.outputJs('validatejs')}}
 {{assets.outputJs('date_picker')}}
 <script>
@@ -17,16 +18,6 @@ name:'{{"event.name.required"|t}}'
 ,start_date:'{{"event.start_date.required"|t}}'
 ,finish_date:'{{"event.finish_date.required"|t}}'
 };
-</script>
-<script>
-	jQuery(document).ready(function() {       
-	// initiate layout and plugins
-	Metronic.init(); // init metronic core components
-	Layout.init(); // init current layout
-	QuickSidebar.init(); // init quick sidebar
-	Demo.init(); // init demo features
-	ComponentsPickers.init();
-	});   
 </script>
 {% if session.get('language')!= 'en' %} 
 <script type="text/javascript" src="{{static_url('metronic/assets/global/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.'~session.get('language')~'.js')}}" charset="UTF-8"></script>
@@ -44,19 +35,14 @@ $('#datetimepicker2').datetimepicker({
 </script>
 {% endblock %}
 {% block content %}
-<div class="row">
-<div class="col-md-12">
-<!-- BEGIN PORTLET-->
-<div class="portlet box blue">
-	<div class="portlet-title">
-	<div class="caption">
-	{{title|t}}
+<div class="row row_container_form">
+	<div class="row">
+     <h3>{{title|t}}</h3>
 	</div>
-	</div>
-	<div class="portlet-body form">
+	<hr></hr>
+	<div class="row">
 	<!-- BEGIN FORM-->
 	{{ form(routeform, "method":"post","id":"appform","role":"form","class":"form-horizontal") }}
-	<div class="form-body">
 	<!-- FORM ERROR MESSAGES-->
 	{% set errorvar = content() %}
 	{% if errorvar is not empty %}
@@ -65,10 +51,10 @@ $('#datetimepicker2').datetimepicker({
 	{{ content()|t}}
 	</div>
 	{% endif %}
-		<!-- LOAD FORM CONTROLS-->
+	<!-- LOAD FORM CONTROLS-->
 	{% for index,item in formcolumns %}
 		<div class="form-group">
-		<label name="{{item['name']}}" id ="item['name']" class="control-label col-md-3 formlabel">
+		<label name="{{item['name']}}" id ="item['name']" class="control-label col-md-2 formlabel">
 		{{item['label']|t}}
 		{{item['required']}}
         </label>
@@ -93,22 +79,13 @@ $('#datetimepicker2').datetimepicker({
      {% endif %}
      </div>
 	{% endfor %}
-	</div>
+       <div class="col-md-offset-2 col-md-3" style="padding-left:0;">
+       	<input type="submit" class="btn btn-primary" value="{{'Guardar'|t}}"></input>
+		{{ link_to(routelist,cancel_button_name|t,"class":"btn btn-default") }}
+       </div>
+    </div>   
 	<!-- FORM ACTION BUTTONS-->
-	<div class="form-actions">
-	<div class="row">
-	<div class="col-md-offset-2 col-md-4">
-		<input type="submit" class="btn blue-madison" value="{{'Guardar'|t}}"></input>
-		{{ link_to(routelist,cancel_button_name|t,"class":"btn grey-cascade") }}
-	</div>
-	</div>
-	</div>
 	</form>
-	<!-- END FORM-->
-	</div>
+	<!-- END FORM-->	
 </div>
-<!-- END PORTLET-->
-</div>
-</div>
-
 {% endblock %}

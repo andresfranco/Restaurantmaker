@@ -172,11 +172,11 @@ class EventController extends ControllerBase
 
     $this->assets
     ->collection('date_picker')
-    ->addJs('metronic/assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js')
-    ->addJs('metronic/assets/global/plugins/bootstrap-daterangepicker/moment.min.js')
-    ->addJs('metronic/assets/global/plugins/bootstrap-daterangepicker/daterangepicker.js')
-    ->addJs('metronic/assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js')
-    ->addJs('metronic/assets/admin/pages/scripts/components-pickers.js');
+    ->addJs('tools/bootstrap-datepicker/js/bootstrap-datepicker.min.js')
+    ->addJs('tools/bootstrap-daterangepicker/moment.min.js')
+    ->addJs('tools/bootstrap-daterangepicker/daterangepicker.js')
+    ->addJs('tools/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js')
+;
     
     
   }
