@@ -56,7 +56,7 @@
 	<!-- GRID HEADER-->
 	<ul class="dropdown-menu pull-right" role="menu">
 	<li class="ms-hover">
-	<a href="{{url('dish/list')~'/'~menuid~'?page='~page.current~'&order='~item['column_name']~' asc'}}">
+	<a href="{{url(obj.remove_slash_url(router.getRewriteUri()))~'?page='~page.current~'&order='~item['column_name']~' asc'}}">
 	<i class="fa fa-arrow-up"></i>
 	{{' Asc'}}
 	</a>
@@ -64,7 +64,7 @@
 	<li class="divider">
 	</li>
 	<li class="ms-hover">
-	<a href="{{url('dish/list')~'/'~menuid~'?page='~page.current~'&order='~item['column_name']~' desc'}}">
+	<a href="{{url(obj.remove_slash_url(router.getRewriteUri()))~'?page='~page.current~'&order='~item['column_name']~' desc'}}">
 	<i class="fa fa-arrow-down"></i>
 	{{' Desc'}}
 	</a>

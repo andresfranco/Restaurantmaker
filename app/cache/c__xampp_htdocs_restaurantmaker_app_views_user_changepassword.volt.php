@@ -507,137 +507,52 @@
   <div class="col-sm-12 col-md-10 col-xs-12 col-lg-10 column_content">
   <div class="main_content">
   
-   <h3 class="page-title" align ="left"><?php echo $this->getDI()->get("translate")->_($title); ?> (<?php echo $restaurant_name . '-' . $menu_name; ?>)</h3>
-   <div align="right"><a href ="<?php echo $this->url->get('menu/list'); ?>" class="btn btn blue"><?php echo $this->getDI()->get("translate")->_('Menus'); ?> <i class="fa fa-arrow-right "></i> </a></div>
-	<hr/>
-  <!-- GRID SEARCH -->
-	<div align="left" >
-	<?php echo $this->tag->form(array($searchroute . '/' . $menuid, 'method' => 'post', 'autocomplete' => 'off')); ?>
+<div class="row row_container_form">
 	<div class="row">
-	<div class="form-group col-md-10" style="padding-left:0;">
-	<?php foreach ($searchcolumns as $index => $item) { ?>
-	<div class="col-md-4 col-sm-4" style="padding-left:0;">
-	<label><?php echo $this->getDI()->get("translate")->_($item['title']); ?></label>
-	<?php echo $this->tag->textField(array($item['name'], 'size' => $item['size'], 'class' => 'form-control', 'placeholder' => '')); ?>
+     <h3><?php echo $this->getDI()->get("translate")->_($title); ?></h3>
+	</div>
+	<hr></hr>
+	<div class="row">
+	<!-- BEGIN FORM-->
+	<?php echo $this->tag->form(array($routeform, 'method' => 'post', 'id' => 'appform', 'role' => 'form', 'class' => 'form-horizontal')); ?>
+	<!-- FORM ERROR MESSAGES-->
+	<?php $errorvar = $this->getContent(); ?>
+	<?php if (!empty($errorvar)) { ?>
+	<div class="alert alert-danger">
+	<button data-close="alert" class="close"></button>
+	<?php echo $this->getDI()->get("translate")->_($this->getContent()); ?>
 	</div>
 	<?php } ?>
-	</div>
-	</div>
-	<div class="row search_button">
-	<div class="col-md-1" style="padding-left:0;">
-	<?php echo $this->tag->submitButton(array($this->getDI()->get("translate")->_('Buscar'), 'class' => 'btn btn-primary')); ?>
-	</div>
+	<!-- LOAD FORM CONTROLS-->
+	    <div class="form-group">
+		<label name="passwordlabel" id ="passwordlabel" class="control-label col-md-2 align_label_left"><?php echo 'Password'; ?>
+                 <span class="required" aria-required="true">* </span>
+                 </label>
+		 <div class="col-md-4">
+		 <?php echo $this->tag->passwordField(array('password', 'size' => 30, 'class' => 'form-control')); ?>
+		 <!-- LOAD CONTROL ERROR LABEL-->
+		 </div>
+		 </div>
+         
+         <div class="form-group">
+		<label name="confirm_password_label" id ="confirm_password_label" class="control-label col-md-2 align_label_left"><?php echo 'Confirmar Password'; ?>
+		<span class="required" aria-required="true">* </span>
+		</label>
+		 <div class="col-md-4">
+		<?php echo $this->tag->passwordField(array('confirm_password', 'size' => 30, 'class' => 'form-control')); ?>
+		 <!-- LOAD CONTROL ERROR LABEL-->
+		 </div>
+		</div>
 	
-	</div>
+       <div class="col-md-offset-2 col-md-3" style="padding-left:0;">
+       	<input type="submit" class="btn btn-primary" value="<?php echo $this->getDI()->get("translate")->_('Guardar'); ?>"></input>
+		<?php echo $this->tag->linkTo(array($routelist, $this->getDI()->get("translate")->_($cancel_button_name), 'class' => 'btn btn-default')); ?>
+       </div>
+    </div>   
+	<!-- FORM ACTION BUTTONS-->
 	</form>
-	</div>
-  <!-- END GRID SEARCH-->
-
-	<?php if ($permissions['create'] == 'Y') { ?>
-	 <!-- NEW ITEM ICON-->
-	<div align="left"><?php echo $this->tag->linkTo(array($newroute . '/' . $menuid, '<i class="fa fa-plus fa-lg"></i>')); ?></div>
-  <?php } ?>
-	<br>
-	<?php if ($noitems == '') { ?>
-	<table class="table table-bordered table-striped table-condensed flip-content">
-	<thead>
-	<tr>
-	<!-- GRID HEADER-->
-	<?php foreach ($headercolumns as $index => $item) { ?>
-	<th style="background-color:#eee;">
-	<span><?php echo $this->getDI()->get("translate")->_($item['title']); ?></span>
-	<div class="btn-group pull-right">
-	<button aria-expanded="false" type="button" class="btn btn-fit-height gray dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="1000" data-close-others="true">
-	<?php if ($order == 'asc') { ?>
-		<?php $order_class = 'fa fa-arrow-up'; ?>
-	<?php } else { ?>
-		<?php if ($order == 'desc') { ?>
-			<?php $order_class = 'fa fa-arrow-down'; ?>
-		<?php } else { ?>
-			<?php $order_class = 'fa fa-sort'; ?>
-		<?php } ?>
-	<?php } ?>
-	<i class="<?php echo $order_class; ?>"></i>
-	</button>
-	<!-- GRID HEADER-->
-	<ul class="dropdown-menu pull-right" role="menu">
-	<li class="ms-hover">
-	<a href="<?php echo $this->url->get($obj->remove_slash_url($this->router->getRewriteUri())) . '?page=' . $page->current . '&order=' . $item['column_name'] . ' asc'; ?>">
-	<i class="fa fa-arrow-up"></i>
-	<?php echo ' Asc'; ?>
-	</a>
-	</li>
-	<li class="divider">
-	</li>
-	<li class="ms-hover">
-	<a href="<?php echo $this->url->get($obj->remove_slash_url($this->router->getRewriteUri())) . '?page=' . $page->current . '&order=' . $item['column_name'] . ' desc'; ?>">
-	<i class="fa fa-arrow-down"></i>
-	<?php echo ' Desc'; ?>
-	</a>
-	</li>
-	</ul>
-	</div>
-	</th>
-	<?php } ?>
-	<th></th>
-	<th></th>
-	</tr>
-	</thead>
-	<!-- END HEADER-->
-	<!-- GRID BODY -->
-	<tbody>
-	<?php if (isset($page->items)) { ?>
-		<?php foreach ($page->items as $entity) { ?>
-			<tr>
-			<?php foreach ($headercolumns as $index => $item) { ?>
-				<td width ="15%"><?php echo $entity->readAttribute($item['column_name']); ?></td>
-			<?php } ?>
-			<td width ="2%">
-				<?php if ($permissions['edit'] == 'Y') { ?>
-				<?php echo $this->tag->linkTo(array('dish_translation/list/' . $entity->id, '<i class="fa fa-language fa-lg"></i>', 'class' => 'btn btn-icon-only yellow')); ?>
-				<?php } ?>
-			</td>
-			<td width ="2%">
-				<?php if ($permissions['edit'] == 'Y') { ?>
-				<?php echo $this->tag->linkTo(array($editroute . $entity->id . '/' . $menuid, '<i class="fa fa-edit fa-lg"></i>', 'class' => 'btn btn-icon-only green')); ?>
-				<?php } ?>
-			</td>
-			<td width ="2%">
-				<?php if ($permissions['delete'] == 'Y') { ?>
-				<?php echo $this->tag->linkTo(array($showroute . $entity->id, '<i class="fa fa-remove fa-lg"></i>', 'class' => 'btn btn-icon-only red')); ?>
-				<?php } ?>
-			</td>
-			</tr>
-		<?php } ?>
-		<?php } ?>
-		</tbody>
-	<!--END GRID BODY -->
-		</table>
-		<!--END GRID PAGINATION -->
-		<div align="left"><?php echo $this->getDI()->get("translate")->_('Página') . ' ' . $page->current . ' ' . $this->getDI()->get("translate")->_('de') . ' ' . $page->total_pages; ?></div>
-		<div align ="left">
-		<ul class="pagination">
-		<li><?php echo $this->tag->linkTo(array($listroute . '/' . $menuid, '<i class="fa fa-angle-left"></i><i class="fa fa-angle-left"></i>')); ?></li>
-		<li><?php echo $this->tag->linkTo(array($listroute . '/' . $menuid . '?page=' . $page->before, '<i class="fa fa-angle-left"></i>')); ?></li>
-		<?php foreach (range(1, $page->total_pages) as $i) { ?>
-		<?php if ($page->current == $i) { ?>
-		<?php $classitem = 'active'; ?>
-		<?php } else { ?>
-		<?php $classitem = ''; ?>
-		<?php } ?>
-		<li class="<?php echo $classitem; ?>"><?php echo $this->tag->linkTo(array($listroute . '?page=' . $i, $i)); ?></li>
-		<?php } ?>
-		<li><?php echo $this->tag->linkTo(array($listroute . '/' . $menuid . '?page=' . $page->next, '<i class="fa fa-angle-right"></i>')); ?></li>
-		<li><?php echo $this->tag->linkTo(array($listroute . '/' . $menuid . '?page=' . $page->last, '<i class="fa fa-angle-right"></i><i class="fa fa-angle-right"></i>')); ?></li>
-		</ul>
-		</div>
-    <!--END GRID PAGINATION -->
-	<?php } else { ?>
-	  <!--NO ITEMS VALIDATION -->
-		<div class="alert alert-warning alert-dismissable">
-		<strong><i class="glyphicon glyphicon-warning-sign"></i> <?php echo $this->getDI()->get("translate")->_($noitems); ?></strong>
-		</div>
-	<?php } ?>
+	<!-- END FORM-->	
+</div>
 
   </div>
   </div>
@@ -654,9 +569,12 @@
 
 <!-- javaScripts --> 
   
+
   <script src="<?php echo $this->url->getStatic('tools/jquery/jquery2.2.0/jquery.min.js'); ?>"></script>
   <script src="<?php echo $this->url->getStatic('tools/bootstrap/js/bootstrap.min.js'); ?>"></script> 
   
+<?php echo $this->assets->outputJs('change_password'); ?>
+
   <!-- End JavaScripts --> 
 </body>
 </html>

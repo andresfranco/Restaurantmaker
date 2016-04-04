@@ -94,6 +94,12 @@ public function checkuser($userid)
 
 }
 
+public function remove_slash_url($url)
+  {
+    $new_url =  ltrim($url,'/');
+    return $new_url;
+
+  }
 // FIle upload functions--------------------------------------------------
 public function get_upload_files_path()
 {

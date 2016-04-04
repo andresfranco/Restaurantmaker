@@ -561,7 +561,7 @@
 	<!-- GRID HEADER-->
 	<ul class="dropdown-menu pull-right" role="menu">
 	<li class="ms-hover">
-	<a href="<?php echo $this->url->get('article_translation/list') . '/' . $articleid . '?page=' . $page->current . '&order=' . $item['column_name'] . ' asc'; ?>">
+	<a href="<?php echo $this->url->get($obj->remove_slash_url($this->router->getRewriteUri())) . '?page=' . $page->current . '&order=' . $item['column_name'] . ' asc'; ?>">
 	<i class="fa fa-arrow-up"></i>
 	<?php echo ' Asc'; ?>
 	</a>
@@ -569,7 +569,7 @@
 	<li class="divider">
 	</li>
 	<li class="ms-hover">
-	<a href="<?php echo $this->url->get('article_translation/list') . '/' . $articleid . '?page=' . $page->current . '&order=' . $item['column_name'] . ' desc'; ?>">
+	<a href="<?php echo $this->url->get($obj->remove_slash_url($this->router->getRewriteUri())) . '?page=' . $page->current . '&order=' . $item['column_name'] . ' desc'; ?>">
 	<i class="fa fa-arrow-down"></i>
 	<?php echo ' Desc'; ?>
 	</a>

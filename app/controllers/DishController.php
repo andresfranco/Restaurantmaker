@@ -130,6 +130,7 @@ class DishController extends ControllerBase
     $this->view->menu_name =$menu_data['menu_name'];
     $restaurant_data =  $this->get_restaurantdata_by_id($menu_data['restaurantid']);
     $this->view->restaurant_name = $restaurant_data['name']; 
+    $this->view->obj =$this;
 
   }
 
@@ -182,7 +183,8 @@ class DishController extends ControllerBase
     $restaurant_data =  $this->get_restaurantdata_by_id($menu_data['restaurantid']);
     $this->view->restaurant_name = $restaurant_data['name']; 
     $this->view->menuid = $menuid;
-     $this->view->menu_name =$menu_data['menu_name'];
+    $this->view->menu_name =$menu_data['menu_name'];
+    $this->view->obj =$this;
 
   }
 

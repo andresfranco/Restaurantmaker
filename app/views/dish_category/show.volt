@@ -5,53 +5,42 @@
 {{assets.outputJs('validatejs')}}
 {% endblock %}
 {% block content %}
-<div class="row">
-<div class="col-md-12">
-<!-- BEGIN PORTLET-->
-<div class="portlet box blue">
-	<div class="portlet-title">
-	<div class="caption">
-	{{title|t}}
+<div class="row row_container_form">
+	<div class="row">
+     <h3>{{title|t}}</h3>
 	</div>
-	</div>
-	<div class="portlet-body form">
+	<hr></hr>
+	<div class="row">
 	<!-- BEGIN FORM-->
 	{{ form(routeform, "method":"post","id":"appform","role":"form","class":"form-horizontal") }}
-	<div class="form-body">
 	<!-- FORM ERROR MESSAGES-->
 	{% set errorvar = content() %}
 	{% if errorvar is not empty %}
 	<div class="alert alert-danger">
 	<button data-close="alert" class="close"></button>
-	{{ content() }}
+	{{ content()|t}}
 	</div>
 	{% endif %}
-		<!-- LOAD FORM CONTROLS-->
+	<!-- LOAD FORM CONTROLS-->
 	{% for index,item in formcolumns %}
 		<div class="form-group">
-		<label name="{{item['name']}}" id ="item['name']" class="control-label col-md-3 formlabel">
+		<label name="{{item['name']}}" id ="item['name']" class="control-label col-md-1 align_label_left">
 		{{item['label']|t}}
-		</label>
+        </label>
 		<div class="col-md-4">
-		{{ form.render(item['name'],["class":"form-control",'disabled':'""']) }}
+			{{ form.render(item['name'],["class":"form-control",'disabled':'""']) }}
+		<!-- LOAD CONTROL ERROR LABEL-->
+		{{item['label_error']|t}}
 		</div>
 		</div>
 	{% endfor %}
-	</div>
+       <div class="col-md-offset-1 col-md-3" style="padding-left:0;">
+       	<button class="btn btn-danger">{{delete_button_name|t}}</button>
+		{{ link_to(routelist,cancel_button_name|t,"class":"btn btn-default") }}
+       </div>
+    </div>   
 	<!-- FORM ACTION BUTTONS-->
-	<div class="form-actions">
-	<div class="row">
-	<div class="col-md-offset-2 col-md-4">
-    <button class="btn red">{{delete_button_name|t}}</button>
-		{{ link_to(routelist,cancel_button_name|t,"class":"btn grey-cascade") }}
-	</div>
-	</div>
-	</div>
 	</form>
-	<!-- END FORM-->
-	</div>
-</div>
-<!-- END PORTLET-->
-</div>
+	<!-- END FORM-->	
 </div>
 {% endblock %}

@@ -106,6 +106,7 @@ class UserRoleController extends ControllerBase
     $user= User::findFirstByid($userid);
     $this->view->username =$user->username;
     $this->view->listroute ='userrole/list/'.$userid;
+    $this->view->obj =$this;
   }
 
 
@@ -140,6 +141,7 @@ class UserRoleController extends ControllerBase
     $user= User::findFirstByid($userid);
     $this->view->username =$user->username;
     $this->view->listroute ='userrole/search/'.$userid;
+    $this->view->obj =$this;
 
   }
 

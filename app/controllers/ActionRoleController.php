@@ -106,6 +106,7 @@ class ActionRoleController extends ControllerBase
     $this->view->role =$role->role;
     $this->view->listroute ='actionrole/list/'.$roleid;
     $this->view->pick('action_role/actionrolelist');
+    $this->view->obj =$this;
   }
 
 
@@ -141,6 +142,7 @@ class ActionRoleController extends ControllerBase
     $this->view->role =$role->role;
     $this->view->listroute ='actionrole/search/'.$roleid;
     $this->view->pick('action_role/actionrolelist');
+    $this->view->obj =$this;
   }
 
 

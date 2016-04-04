@@ -115,6 +115,7 @@ class ArticleTranslationController extends ControllerBase
     $article_data = $this->get_articledata_by_id($articleid);
     $this->view->article_name =$article_data['title'];
     $this->view->article_id = $article_data['id'];
+    $this->view->obj =$this;
   }
 
   public function check_all_permissions($userid)
@@ -167,6 +168,7 @@ class ArticleTranslationController extends ControllerBase
     $article_data = $this->get_articledata_by_id($articleid);
     $this->view->article_name =$article_data['title'];
     $this->view->article_id = $article_data['articleid'];
+    $this->view->obj =$this;
 
   }
 

@@ -507,12 +507,11 @@
   <div class="col-sm-12 col-md-10 col-xs-12 col-lg-10 column_content">
   <div class="main_content">
   
-   <h3 class="page-title" align ="left"><?php echo $this->getDI()->get("translate")->_($title); ?> (<?php echo $restaurant_name . '-' . $menu_name; ?>)</h3>
-   <div align="right"><a href ="<?php echo $this->url->get('menu/list'); ?>" class="btn btn blue"><?php echo $this->getDI()->get("translate")->_('Menus'); ?> <i class="fa fa-arrow-right "></i> </a></div>
+   <h3 class="page-title" align ="left"><?php echo $this->getDI()->get("translate")->_($title); ?></h3>
 	<hr/>
   <!-- GRID SEARCH -->
 	<div align="left" >
-	<?php echo $this->tag->form(array($searchroute . '/' . $menuid, 'method' => 'post', 'autocomplete' => 'off')); ?>
+	<?php echo $this->tag->form(array($searchroute, 'method' => 'post', 'autocomplete' => 'off')); ?>
 	<div class="row">
 	<div class="form-group col-md-10" style="padding-left:0;">
 	<?php foreach ($searchcolumns as $index => $item) { ?>
@@ -535,7 +534,7 @@
 
 	<?php if ($permissions['create'] == 'Y') { ?>
 	 <!-- NEW ITEM ICON-->
-	<div align="left"><?php echo $this->tag->linkTo(array($newroute . '/' . $menuid, '<i class="fa fa-plus fa-lg"></i>')); ?></div>
+	<div align="left"><?php echo $this->tag->linkTo(array($newroute, '<i class="fa fa-plus fa-lg"></i>')); ?></div>
   <?php } ?>
 	<br>
 	<?php if ($noitems == '') { ?>
@@ -562,7 +561,7 @@
 	<!-- GRID HEADER-->
 	<ul class="dropdown-menu pull-right" role="menu">
 	<li class="ms-hover">
-	<a href="<?php echo $this->url->get($obj->remove_slash_url($this->router->getRewriteUri())) . '?page=' . $page->current . '&order=' . $item['column_name'] . ' asc'; ?>">
+	<a href="<?php echo '..' . $this->router->getRewriteUri() . '?page=' . $page->current . '&order=' . $item['column_name'] . ' asc'; ?>">
 	<i class="fa fa-arrow-up"></i>
 	<?php echo ' Asc'; ?>
 	</a>
@@ -570,7 +569,7 @@
 	<li class="divider">
 	</li>
 	<li class="ms-hover">
-	<a href="<?php echo $this->url->get($obj->remove_slash_url($this->router->getRewriteUri())) . '?page=' . $page->current . '&order=' . $item['column_name'] . ' desc'; ?>">
+	<a href="<?php echo '..' . $this->router->getRewriteUri() . '?page=' . $page->current . '&order=' . $item['column_name'] . ' desc'; ?>">
 	<i class="fa fa-arrow-down"></i>
 	<?php echo ' Desc'; ?>
 	</a>
@@ -590,16 +589,11 @@
 		<?php foreach ($page->items as $entity) { ?>
 			<tr>
 			<?php foreach ($headercolumns as $index => $item) { ?>
-				<td width ="15%"><?php echo $entity->readAttribute($item['column_name']); ?></td>
+				<td width ="20%"><?php echo $entity->readAttribute($item['column_name']); ?></td>
 			<?php } ?>
 			<td width ="2%">
 				<?php if ($permissions['edit'] == 'Y') { ?>
-				<?php echo $this->tag->linkTo(array('dish_translation/list/' . $entity->id, '<i class="fa fa-language fa-lg"></i>', 'class' => 'btn btn-icon-only yellow')); ?>
-				<?php } ?>
-			</td>
-			<td width ="2%">
-				<?php if ($permissions['edit'] == 'Y') { ?>
-				<?php echo $this->tag->linkTo(array($editroute . $entity->id . '/' . $menuid, '<i class="fa fa-edit fa-lg"></i>', 'class' => 'btn btn-icon-only green')); ?>
+				<?php echo $this->tag->linkTo(array($editroute . $entity->id, '<i class="fa fa-edit fa-lg"></i>', 'class' => 'btn btn-icon-only green')); ?>
 				<?php } ?>
 			</td>
 			<td width ="2%">
@@ -617,8 +611,8 @@
 		<div align="left"><?php echo $this->getDI()->get("translate")->_('Página') . ' ' . $page->current . ' ' . $this->getDI()->get("translate")->_('de') . ' ' . $page->total_pages; ?></div>
 		<div align ="left">
 		<ul class="pagination">
-		<li><?php echo $this->tag->linkTo(array($listroute . '/' . $menuid, '<i class="fa fa-angle-left"></i><i class="fa fa-angle-left"></i>')); ?></li>
-		<li><?php echo $this->tag->linkTo(array($listroute . '/' . $menuid . '?page=' . $page->before, '<i class="fa fa-angle-left"></i>')); ?></li>
+		<li><?php echo $this->tag->linkTo(array($listroute, '<i class="fa fa-angle-left"></i><i class="fa fa-angle-left"></i>')); ?></li>
+		<li><?php echo $this->tag->linkTo(array($listroute . '?page=' . $page->before, '<i class="fa fa-angle-left"></i>')); ?></li>
 		<?php foreach (range(1, $page->total_pages) as $i) { ?>
 		<?php if ($page->current == $i) { ?>
 		<?php $classitem = 'active'; ?>
@@ -627,8 +621,8 @@
 		<?php } ?>
 		<li class="<?php echo $classitem; ?>"><?php echo $this->tag->linkTo(array($listroute . '?page=' . $i, $i)); ?></li>
 		<?php } ?>
-		<li><?php echo $this->tag->linkTo(array($listroute . '/' . $menuid . '?page=' . $page->next, '<i class="fa fa-angle-right"></i>')); ?></li>
-		<li><?php echo $this->tag->linkTo(array($listroute . '/' . $menuid . '?page=' . $page->last, '<i class="fa fa-angle-right"></i><i class="fa fa-angle-right"></i>')); ?></li>
+		<li><?php echo $this->tag->linkTo(array($listroute . '?page=' . $page->next, '<i class="fa fa-angle-right"></i>')); ?></li>
+		<li><?php echo $this->tag->linkTo(array($listroute . '?page=' . $page->last, '<i class="fa fa-angle-right"></i><i class="fa fa-angle-right"></i>')); ?></li>
 		</ul>
 		</div>
     <!--END GRID PAGINATION -->

@@ -115,6 +115,7 @@ class DishTranslationController extends ControllerBase
     $dish_data = $this->get_dishdata_by_id($dishid);
     $this->view->dish_name =$dish_data['name'];
     $this->view->menu_id = $dish_data['menuid'];
+    $this->view->obj = $this;
   }
 
   public function check_all_permissions($userid)
@@ -128,7 +129,7 @@ class DishTranslationController extends ControllerBase
 
   }
 
-
+  
   /**
   * @Route("/search/{dishid}", methods={"GET","POST"}, name="dish_translationsearch")
   */
@@ -166,6 +167,7 @@ class DishTranslationController extends ControllerBase
     $dish_data = $this->get_dishdata_by_id($dishid);
     $this->view->dish_name =$dish_data['name'];
     $this->view->menu_id = $dish_data['menuid'];
+    $this->view->obj = $this;
 
   }
 
