@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 23-03-2016 a las 21:08:29
+-- Tiempo de generación: 05-04-2016 a las 23:47:57
 -- Versión del servidor: 10.1.9-MariaDB
 -- Versión de PHP: 5.6.15
 
@@ -17,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `testphalcon`
+-- Base de datos: `rmaker`
 --
 
 DELIMITER $$
@@ -314,7 +314,9 @@ INSERT INTO `address` (`id`, `countryid`, `stateid`, `cityid`, `townshipid`, `ne
 (24, 49, 16, 2, 4, 3, 'Colombia,Cundinamarca,Bogotá,Norte,Cedritos,wewweew', 'wewweew', 'admin', 'admin', '2015-12-04 15:30:56', '2015-12-04 15:30:56'),
 (25, 49, 16, 2, 4, 3, 'Colombia,Cundinamarca,Bogotá,Norte,Cedritos,testtt', 'testtt', 'admin', 'admin', '2015-12-07 13:53:20', '2015-12-07 13:53:20'),
 (26, 173, 4, 3, 10, 4, 'Panama,Coclé,Penonomé,Penonomé,Barrio Random,Entrando por Hotel Dos Continentes, por Banistmo, Harin', 'Entrando por Hotel Dos Continentes, por Banistmo, Harinos Mall, Local #4', 'admin', 'admin', '2015-12-09 11:30:00', '2015-12-09 11:30:00'),
-(27, 173, 1, 1, 1, 1, ' Panama,Coclé,Penonomé,Barrio Random,Entrando por Hotel Dos Continentes, por Banistmo, Harinos Mall, Local #4.', 'saasasa', 'admin', 'admin', '2015-12-09 12:54:44', '2015-12-09 12:54:44');
+(27, 173, 1, 1, 1, 1, ' Panama,Coclé,Penonomé,Barrio Random,Entrando por Hotel Dos Continentes, por Banistmo, Harinos Mall, Local #4.', 'saasasa', 'admin', 'admin', '2015-12-09 12:54:44', '2015-12-09 12:54:44'),
+(28, 173, 1, 1, 1, 1, 'Panama,Panamá,Panamá,Juan Diaz,Chanis,assasasasa', 'assasasasa', 'admin', 'admin', '2016-04-01 17:34:34', '2016-04-01 17:34:34'),
+(29, 173, 1, 1, 1, 2, 'Panama,Panamá,Panamá,Juan Diaz,test,sasasa', 'sasasa', 'admin', 'admin', '2016-04-01 18:54:31', '2016-04-01 18:54:31');
 
 -- --------------------------------------------------------
 
@@ -374,7 +376,8 @@ CREATE TABLE `article` (
 --
 
 INSERT INTO `article` (`id`, `title`, `author`, `content`, `active`, `createuser`, `modifyuser`, `createdate`, `modifydate`) VALUES
-(12, 'asssasa', 'sasassa', '<p>asddffdfdfd<br></p>', 'Y', 'admin', 'admin', '2015-10-27', '2015-10-27');
+(12, 'asssasa', 'sasassa', '<p>asddffdfdfd<br></p>', 'N', 'admin', 'admin', '2015-10-27', '2016-04-01'),
+(13, 'test', 'test', '<p>sasassa<br></p>', 'N', 'admin', 'admin', '2016-03-31', '2016-03-31');
 
 -- --------------------------------------------------------
 
@@ -396,7 +399,10 @@ CREATE TABLE `article_comment` (
 --
 
 INSERT INTO `article_comment` (`id`, `articleid`, `name`, `email`, `comment`, `active`) VALUES
-(4, 12, 'test', 'test@test.com', '<p>assasa<br></p>', 'Y');
+(4, 12, 'test', 'test@test.com', '<p>asssaaa<br></p>', 'N'),
+(5, 12, 'tttt', 'test@test.com', '<p>tttt<br></p>', 'Y'),
+(6, 13, 'dd', 'dd@dd.com', 'assasaa', 'N'),
+(7, 12, 'ff', 'ff@ff.com', '<p>ff<br></p>', 'N');
 
 -- --------------------------------------------------------
 
@@ -421,7 +427,8 @@ CREATE TABLE `article_translation` (
 --
 
 INSERT INTO `article_translation` (`id`, `articleid`, `languagecode`, `title`, `content`, `createuser`, `modifyuser`, `createdate`, `modifydate`) VALUES
-(3, 12, 'en', 'test', '<p>test<br></p>', 'admin', 'admin', '2015-12-17 17:34:46', '2015-12-17 17:34:46');
+(5, 12, 'es', 'test344', '<p>test1212123343<br></p>', 'admin', 'admin', '2016-03-31 23:13:28', '2016-04-01 17:10:05'),
+(6, 12, 'en', 'assasa', '<p>assasasa<br></p>', 'admin', 'admin', '2016-03-31 23:47:49', '2016-03-31 23:48:19');
 
 -- --------------------------------------------------------
 
@@ -447,7 +454,10 @@ CREATE TABLE `city` (
 INSERT INTO `city` (`id`, `stateid`, `countryid`, `city`, `createuser`, `modifyuser`, `createdate`, `modifydate`) VALUES
 (1, 1, 173, 'Panamá', 'admin', 'admin', '2015-09-16 09:38:01', '2015-09-16 09:38:01'),
 (2, 16, 49, 'Bogotá', 'admin', 'admin', '2015-09-16 09:38:01', '2015-09-16 09:38:01'),
-(3, 4, 173, 'Penonomé', 'admin', 'admin', '2015-12-09 11:01:23', '2015-12-09 11:01:23');
+(3, 4, 173, 'Penonomé', 'admin', 'admin', '2015-12-09 11:01:23', '2015-12-09 11:01:23'),
+(4, 8, 173, 'David', 'admin', 'admin', '2016-03-30 21:05:27', '2016-03-30 21:05:27'),
+(5, 7, 173, 'Santiago', 'admin', 'admin', '2016-03-30 21:05:51', '2016-03-30 21:05:51'),
+(6, 9, 173, 'Changuinola', 'admin', 'admin', '2016-03-30 21:06:10', '2016-03-30 21:06:10');
 
 -- --------------------------------------------------------
 
@@ -786,7 +796,8 @@ CREATE TABLE `dish` (
 --
 
 INSERT INTO `dish` (`id`, `menuid`, `categoryid`, `name`, `galleryid`, `price`, `image_path`, `description`, `createuser`, `modifyuser`, `createdate`, `modifydate`) VALUES
-(2, 2, 2, 'Sopa Gulash', 0, '5.00', 'sopa_gulash.jpg', 'sopa de tomate y carne', 'admin', 'admin', '2015-12-15 17:31:34', '2015-12-15 17:32:08');
+(2, 2, 2, 'Sopa Gulash', 0, '5.00', 'sopa_gulash.jpg', 'sopa de tomate y carne', 'admin', 'admin', '2015-12-15 17:31:34', '2015-12-15 17:32:08'),
+(4, 2, 3, 'assa', 0, '7.00', 'error.png', 'assa', 'admin', 'admin', '2016-04-01 22:14:11', '2016-04-01 22:19:34');
 
 -- --------------------------------------------------------
 
@@ -808,7 +819,8 @@ CREATE TABLE `dish_category` (
 --
 
 INSERT INTO `dish_category` (`id`, `category`, `createuser`, `modifyuser`, `createdate`, `modifydate`) VALUES
-(2, 'Entrance', 'admin', 'admin', '2015-12-15 15:31:38', '2015-12-16 19:01:29');
+(2, 'Entrance', 'admin', 'admin', '2015-12-15 15:31:38', '2015-12-16 19:01:29'),
+(3, 'Main Dish', 'admin', 'admin', '2016-04-01 21:24:38', '2016-04-04 21:41:23');
 
 -- --------------------------------------------------------
 
@@ -833,7 +845,8 @@ CREATE TABLE `dish_translation` (
 --
 
 INSERT INTO `dish_translation` (`id`, `dishid`, `languagecode`, `name`, `description`, `createuser`, `modifyuser`, `createdate`, `modifydate`) VALUES
-(2, 2, 'en', 'Gulash Soup', 'Tomato and meat soup', 'admin', 'admin', '2015-12-16 20:03:26', '2015-12-16 20:03:26');
+(2, 2, 'en', 'Gulash Soup', 'Tomato and meat soup', 'admin', 'admin', '2015-12-16 20:03:26', '2015-12-16 20:03:26'),
+(4, 2, 'es', 'Sopa Gulash', 'sopa gulash prueba', 'admin', 'admin', '2016-04-04 21:37:06', '2016-04-04 21:37:06');
 
 -- --------------------------------------------------------
 
@@ -883,7 +896,7 @@ CREATE TABLE `event_gallery` (
 
 INSERT INTO `event_gallery` (`eventid`, `galleryid`, `createuser`, `modifyuser`, `createdate`, `modifydate`) VALUES
 (6, 4, 'admin', 'admin', '2016-01-08 22:20:34', '2016-01-08 22:20:34'),
-(7, 4, 'admin', 'admin', '2016-01-08 22:01:00', '2016-01-08 22:01:00');
+(7, 5, 'admin', 'admin', '2016-04-04 22:15:22', '2016-04-04 22:15:22');
 
 -- --------------------------------------------------------
 
@@ -914,7 +927,7 @@ INSERT INTO `file` (`id`, `name`, `type`, `path`, `size`, `createuser`, `modifyu
 (4, 'sopa_gulash.jpg', 'image/jpeg', 'C:\\xampp\\htdocs\\Phalcontest\\public\\files\\images\\sopa_gulash.jpg', '3860', 'admin', 'admin', '2015-12-15 17:12:23', '2015-12-15 17:12:23'),
 (6, 'error.png', 'image/png', 'C:\\xampp\\htdocs\\Phalcontest\\public\\files\\images\\error.png', '1415', 'admin', 'admin', '2016-03-22 19:52:23', '2016-03-22 19:52:23'),
 (7, 'error (1).png', 'image/png', 'C:\\xampp\\htdocs\\Phalcontest\\public\\files\\images\\error (1).png', '1415', 'admin', 'admin', '2016-03-22 22:51:48', '2016-03-22 22:51:48'),
-(8, 'profilepic.jpg', 'image/jpeg', 'C:\\xampp\\htdocs\\Restaurantmaker\\public\\files\\images\\profilepic.jpg', '12374', 'admin', 'admin', '2016-03-23 20:57:19', '2016-03-23 20:57:19');
+(11, 'failure_succes.jpg', 'image/jpeg', 'C:\\xampp\\htdocs\\Restaurantmaker\\public\\files\\images\\failure_succes.jpg', '92130', 'admin', 'admin', '2016-03-31 18:18:25', '2016-03-31 18:18:25');
 
 -- --------------------------------------------------------
 
@@ -997,7 +1010,8 @@ CREATE TABLE `gallery` (
 --
 
 INSERT INTO `gallery` (`id`, `name`, `title`, `type`, `description`, `createuser`, `modifyuser`, `createdate`, `modifydate`) VALUES
-(4, 'prueba', 'prueba', 'image', '', 'admin', 'admin', '2015-11-11 10:07:16', '2015-11-11 10:07:17');
+(4, 'prueba', 'prueba', 'image', '', 'admin', 'admin', '2015-11-11 10:07:16', '2015-11-11 10:07:17'),
+(5, 'test2', 'test2', 'video', 'test2', 'admin', 'admin', '2016-03-31 18:28:19', '2016-03-31 18:28:39');
 
 -- --------------------------------------------------------
 
@@ -1021,7 +1035,11 @@ CREATE TABLE `gallery_image` (
 
 INSERT INTO `gallery_image` (`id`, `galleryid`, `imageid`, `createuser`, `modifyuser`, `createdate`, `modifydate`) VALUES
 (9, 4, 12, 'admin', 'admin', '2016-03-22 20:52:17', '2016-03-22 20:52:17'),
-(12, 4, 15, 'admin', 'admin', '2016-03-22 22:52:10', '2016-03-22 22:52:10');
+(12, 4, 15, 'admin', 'admin', '2016-03-22 22:52:10', '2016-03-22 22:52:10'),
+(13, 4, 16, 'admin', 'admin', '2016-03-31 18:34:31', '2016-03-31 18:34:31'),
+(15, 5, 18, 'admin', 'admin', '2016-03-31 18:39:53', '2016-03-31 18:39:53'),
+(16, 4, 19, 'admin', 'admin', '2016-03-31 18:43:38', '2016-03-31 18:43:38'),
+(17, 4, 20, 'admin', 'admin', '2016-03-31 18:43:47', '2016-03-31 18:43:47');
 
 -- --------------------------------------------------------
 
@@ -1046,7 +1064,11 @@ CREATE TABLE `image` (
 
 INSERT INTO `image` (`id`, `name`, `title`, `path`, `createuser`, `modifyuser`, `createdate`, `modifydate`) VALUES
 (12, 'failure_succes.jpg', 'failure_succes.jpg', 'C:\\xampp\\htdocs\\Phalcontest\\public\\files\\galleries\\prueba_gallery\\failure_succes.jpg', 'admin', 'admin', '2016-03-22 20:52:17', '2016-03-22 20:52:17'),
-(15, 'error.png', 'error.png', 'C:\\xampp\\htdocs\\Phalcontest\\public\\files\\galleries\\prueba_gallery\\error.png', 'admin', 'admin', '2016-03-22 22:52:10', '2016-03-22 22:52:10');
+(15, 'error.png', 'error.png', 'C:\\xampp\\htdocs\\Phalcontest\\public\\files\\galleries\\prueba_gallery\\error.png', 'admin', 'admin', '2016-03-22 22:52:10', '2016-03-22 22:52:10'),
+(16, 'error.png', 'error.png', 'C:\\xampp\\htdocs\\Restaurantmaker\\public\\files\\galleries\\prueba_gallery\\error.png', 'admin', 'admin', '2016-03-31 18:34:31', '2016-03-31 18:34:31'),
+(18, 'profilepic.jpg', 'profilepic.jpg', 'C:\\xampp\\htdocs\\Restaurantmaker\\public\\files\\galleries\\test2_gallery\\profilepic.jpg', 'admin', 'admin', '2016-03-31 18:39:53', '2016-03-31 18:39:53'),
+(19, 'failure_succes.jpg', 'failure_succes.jpg', 'C:\\xampp\\htdocs\\Restaurantmaker\\public\\files\\galleries\\prueba_gallery\\failure_succes.jpg', 'admin', 'admin', '2016-03-31 18:43:38', '2016-03-31 18:43:38'),
+(20, 'failure_succes (1).jpg', 'failure_succes (1).jpg', 'C:\\xampp\\htdocs\\Restaurantmaker\\public\\files\\galleries\\prueba_gallery\\failure_succes (1).jpg', 'admin', 'admin', '2016-03-31 18:43:46', '2016-03-31 18:43:46');
 
 -- --------------------------------------------------------
 
@@ -1094,7 +1116,9 @@ CREATE TABLE `menu` (
 --
 
 INSERT INTO `menu` (`id`, `restaurantid`, `name`, `active`, `createuser`, `modifyuser`, `createdate`, `modifydate`) VALUES
-(2, 7, 'Menu Principal', 'Y', 'admin', 'admin', '2015-12-09 13:59:10', '2015-12-09 13:59:10');
+(2, 7, 'Menu Principal', 'Y', 'admin', 'admin', '2015-12-09 13:59:10', '2015-12-09 13:59:10'),
+(3, 8, 'ss', 'Y', 'admin', 'admin', '2016-04-01 20:24:00', '2016-04-01 20:24:00'),
+(4, 8, 'gg', 'Y', 'admin', 'admin', '2016-04-01 20:47:38', '2016-04-01 20:47:38');
 
 -- --------------------------------------------------------
 
@@ -1162,7 +1186,9 @@ CREATE TABLE `restaurant` (
 --
 
 INSERT INTO `restaurant` (`id`, `name`, `phone`, `email`, `logo_path`, `website`, `addressid`, `createuser`, `modifyuser`, `createdate`, `modifydate`) VALUES
-(7, 'Gambrinus Penonomé', '908-5894', 'pedidos@gambrinus.net', 'logo.png', '', 27, 'admin', 'admin', '2015-12-09 12:54:45', '2015-12-09 13:11:03');
+(7, 'Gambrinus Penonomé', '908-5894', 'pedidos@gambrinus.net', 'logo.png', '', 27, 'admin', 'admin', '2015-12-09 12:54:45', '2015-12-09 13:11:03'),
+(8, 'testr', '2323233', 'andresfranco@cableonda.net', 'Koala.jpg', 'sassasa', 28, 'admin', 'admin', '2016-04-01 17:34:34', '2016-04-01 17:34:34'),
+(9, 'test2', '343434', 'asas@hotmail.com', 'error.png', '', 29, 'admin', 'admin', '2016-04-01 18:54:31', '2016-04-01 18:54:31');
 
 -- --------------------------------------------------------
 
@@ -1890,8 +1916,8 @@ INSERT INTO `translation` (`id`, `languagecode`, `translatekey`, `value`, `creat
 (540, 'es', 'dish.title.edit', 'Editar Plato', 'admin', 'admin', '2015-12-15 18:33:58', '2015-12-15 18:33:58'),
 (541, 'en', 'dish.delete.question', 'Are you sure you want to delete this dish ?', 'admin', 'admin', '2015-12-15 18:34:24', '2015-12-15 18:34:24'),
 (542, 'es', 'dish.delete.question', '¿ Esta seguro que desea eliminar este plato ?', 'admin', 'admin', '2015-12-15 18:34:44', '2015-12-15 18:34:44'),
-(543, 'en', 'dish.name.required', 'You must enter a name', 'admin', 'admin', '2015-12-15 18:35:06', '2015-12-15 18:35:06'),
-(544, 'es', 'dish.name.required', 'Debe ingresar un nombre', 'admin', 'admin', '2015-12-15 18:35:18', '2015-12-15 18:35:18'),
+(543, 'en', 'dish.name.required', 'You must enter a name', 'admin', 'admin', '2015-12-15 18:35:06', '2016-04-01 21:57:38'),
+(544, 'es', 'dish.name.required', 'Debe ingresar un nombre', 'admin', 'admin', '2015-12-15 18:35:18', '2016-04-01 21:57:52'),
 (545, 'en', 'dish.price.required', 'You must enter a price', 'admin', 'admin', '2015-12-15 18:35:38', '2015-12-15 18:35:38'),
 (546, 'es', 'dish.price.required', 'Debe ingresar un precio', 'admin', 'admin', '2015-12-15 18:35:51', '2015-12-15 18:35:51'),
 (547, 'en', 'dish.exist', 'Already exist a dish with this name', 'admin', 'admin', '2015-12-15 18:36:45', '2015-12-15 18:36:45'),
@@ -1973,7 +1999,43 @@ INSERT INTO `translation` (`id`, `languagecode`, `translatekey`, `value`, `creat
 (623, 'en', 'event.gallery.required', 'You must select a gallery', 'admin', 'admin', '2016-01-08 22:16:51', '2016-01-08 22:16:51'),
 (624, 'es', 'event.gallery.required', 'Debe seleccionar una galeria', 'admin', 'admin', '2016-01-08 22:17:06', '2016-01-08 22:17:06'),
 (625, 'en', 'eventgallery.gallery.exist', 'Already exists this gallery in the event', 'admin', 'admin', '2016-01-08 22:18:37', '2016-01-08 22:18:37'),
-(626, 'es', 'eventgallery.gallery.exist', 'Ya esta asociada esta galeria al evento', 'admin', 'admin', '2016-01-08 22:20:21', '2016-01-08 22:20:21');
+(626, 'es', 'eventgallery.gallery.exist', 'Ya esta asociada esta galeria al evento', 'admin', 'admin', '2016-01-08 22:20:21', '2016-01-08 22:20:21'),
+(627, 'es', 'Password', 'Contraseña', 'admin', 'admin', '2016-03-30 16:48:24', '2016-03-30 16:48:24'),
+(628, 'es', 'Username', 'Usuario', 'admin', 'admin', '2016-03-30 16:48:44', '2016-03-30 16:48:44'),
+(629, 'en', 'Iniciar Sesión', 'Log in', 'admin', 'admin', '2016-03-30 17:14:15', '2016-03-30 17:14:15'),
+(630, 'en', 'Administración', 'Administration', 'admin', 'admin', '2016-03-30 17:15:23', '2016-03-30 17:15:23'),
+(631, 'en', 'Usuario o contraseña inválida', 'Invalid Username or Password', 'admin', 'admin', '2016-03-30 17:19:23', '2016-03-30 17:19:23'),
+(632, 'en', 'user.required', 'You must enter a username', 'admin', 'admin', '2016-03-30 17:24:17', '2016-03-30 17:24:17'),
+(633, 'es', 'user.required', 'Debe ingresar un usuario', 'admin', 'admin', '2016-03-30 17:24:39', '2016-03-30 17:24:39'),
+(634, 'en', 'password.required', 'You must enter a password', 'admin', 'admin', '2016-03-30 17:25:17', '2016-03-30 17:25:17'),
+(635, 'es', 'password.required', 'Debe ingresar una contraseña', 'admin', 'admin', '2016-03-30 17:25:31', '2016-03-30 17:25:31'),
+(636, 'en', 'Dirección', 'Address', 'admin', 'admin', '2016-03-30 22:04:39', '2016-03-30 22:04:39'),
+(637, 'en', 'role.title.edit', 'Edit Role', 'admin', 'admin', '2016-03-31 16:28:50', '2016-03-31 16:28:50'),
+(638, 'es', 'role.title.edit', 'Editar Rol', 'admin', 'admin', '2016-03-31 16:29:00', '2016-03-31 16:29:00'),
+(639, 'en', 'language.code.required', 'You must enter a language code', 'admin', 'admin', '2016-03-31 17:21:50', '2016-03-31 17:21:50'),
+(640, 'es', 'language.code.required', 'Debe ingresar un código de idioma', 'admin', 'admin', '2016-03-31 17:22:08', '2016-03-31 17:22:08'),
+(641, 'en', 'language.required', 'You must enter a language name', 'admin', 'admin', '2016-03-31 17:22:28', '2016-03-31 17:22:28'),
+(642, 'es', 'language.required', 'Debe ingresar un idioma', 'admin', 'admin', '2016-03-31 17:22:40', '2016-03-31 17:22:40'),
+(643, 'en', 'Seleccione una bandera', 'Select a flag', 'admin', 'admin', '2016-03-31 17:22:55', '2016-03-31 17:22:55'),
+(644, 'es', 'Articles', 'Artículos', 'admin', 'admin', '2016-03-31 21:23:10', '2016-03-31 21:23:10'),
+(645, 'en', 'Seleccione una Categoría', 'Select a Category', 'admin', 'admin', '2016-04-01 22:09:44', '2016-04-01 22:09:44'),
+(646, 'es', 'Events', 'Eventos', 'admin', 'admin', '2016-04-05 17:17:40', '2016-04-05 17:17:40'),
+(647, 'en', 'article_translation.notfound', 'Article translation not found', 'admin', 'admin', '2016-04-05 17:24:02', '2016-04-05 17:24:02'),
+(648, 'es', 'article_translation.notfound', 'No se encontraron traducciones', 'admin', 'admin', '2016-04-05 17:24:22', '2016-04-05 17:24:22'),
+(649, 'en', 'article_comment.notfound', 'Comments not found', 'admin', 'admin', '2016-04-05 17:25:09', '2016-04-05 17:25:09'),
+(650, 'es', 'article_comment.notfound', 'No se encontraron comentarios', 'admin', 'admin', '2016-04-05 17:25:23', '2016-04-05 17:25:23'),
+(651, 'en', 'dish_translation.notfound', 'Translation not found', 'admin', 'admin', '2016-04-05 17:25:51', '2016-04-05 17:25:51'),
+(652, 'es', 'dish_translation.notfound', 'No se encontraron traducciones', 'admin', 'admin', '2016-04-05 17:26:12', '2016-04-05 17:26:12'),
+(653, 'en', 'dish_category.notfound', 'Category not found', 'admin', 'admin', '2016-04-05 17:27:13', '2016-04-05 17:27:13'),
+(654, 'es', 'dish_category.notfound', 'No se encontraron categorías', 'admin', 'admin', '2016-04-05 17:27:29', '2016-04-05 17:27:29'),
+(655, 'en', 'event.notfound', 'Event not found', 'admin', 'admin', '2016-04-05 17:27:51', '2016-04-05 17:27:51'),
+(656, 'es', 'event.notfound', 'No se encontraron eventos', 'admin', 'admin', '2016-04-05 17:28:05', '2016-04-05 17:28:05'),
+(657, 'en', 'gallery.notfound', 'Gallery not found', 'admin', 'admin', '2016-04-05 17:28:32', '2016-04-05 17:28:32'),
+(658, 'es', 'gallery.notfound', 'No se encontraron galerias', 'admin', 'admin', '2016-04-05 17:28:46', '2016-04-05 17:28:46'),
+(659, 'en', 'systemparameter.notfound', 'Parameters not found', 'admin', 'admin', '2016-04-05 17:29:12', '2016-04-05 17:29:12'),
+(660, 'es', 'systemparameter.notfound', 'No se encontraron parámetros', 'admin', 'admin', '2016-04-05 17:29:45', '2016-04-05 17:29:45'),
+(661, 'en', 'fileformat.notfound', 'File format not found', 'admin', 'admin', '2016-04-05 17:30:07', '2016-04-05 17:30:07'),
+(662, 'es', 'fileformat.notfound', 'No se encontraron formatos de archivo', 'admin', 'admin', '2016-04-05 17:30:43', '2016-04-05 17:30:43');
 
 -- --------------------------------------------------------
 
@@ -1997,10 +2059,11 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `username`, `email`, `password`, `createuser`, `modifyuser`, `createdate`, `modifydate`) VALUES
-(30, 'admin', 'andresfranco@cableonda.net', '$2a$08$GYhoUJZxQha4xYSX4WbapebHRBYhT.biiqsia63QICJhS8NMepN1W', 'admin', 'admin', '2015-09-16 09:38:01', '2015-09-16 09:38:01'),
+(30, 'admin', 'andresfranco@cableonda.net', '$2a$08$GYhoUJZxQha4xYSX4WbapebHRBYhT.biiqsia63QICJhS8NMepN1W', 'admin', 'admin', '2015-09-16 09:38:01', '2016-03-30 22:42:54'),
 (37, 'test2', 'andresfranco@cableonda.net', '$2a$08$13NjHo7VHfGd7DRkPCCoW.8a.hWjDUTcBJXNCL3OC2o61aeRcJr8y', 'admin', 'admin', '2015-09-16 22:45:49', '2015-09-16 22:45:49'),
 (38, 'test5', 'andresfranco@cableonda.net', '$2a$08$RbaMD9e6TZ1d6U9qljY1WeFROKpfYrV6sqMD8OeSc.92A5HurGqii', 'admin', 'admin', '2015-09-16 23:04:10', '2015-09-16 23:04:10'),
-(39, 'test99as', 'andresfranco@cableonda.net', '$2a$08$f6fK6GRyZwgPCLMienjls.0npOUESpFXSPGvprrSmxULBP5niTT8G', 'admin', 'admin', '2015-09-29 03:21:01', '2015-09-28 20:28:00');
+(39, 'test99as', 'andresfranco@cableonda.net', '$2a$08$f6fK6GRyZwgPCLMienjls.0npOUESpFXSPGvprrSmxULBP5niTT8G', 'admin', 'admin', '2015-09-29 03:21:01', '2015-09-28 20:28:00'),
+(40, 'test', 'test@test.com', '$2a$08$SwwRJxRZL4gYMejXdwsxnuzzPU50wotaymfp54zhLii.BOttYZKia', 'admin', 'admin', '2016-03-30 22:49:06', '2016-03-30 22:49:06');
 
 -- --------------------------------------------------------
 
@@ -2306,7 +2369,7 @@ ALTER TABLE `action`
 -- AUTO_INCREMENT de la tabla `address`
 --
 ALTER TABLE `address`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 --
 -- AUTO_INCREMENT de la tabla `apartment`
 --
@@ -2316,22 +2379,22 @@ ALTER TABLE `apartment`
 -- AUTO_INCREMENT de la tabla `article`
 --
 ALTER TABLE `article`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 --
 -- AUTO_INCREMENT de la tabla `article_comment`
 --
 ALTER TABLE `article_comment`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT de la tabla `article_translation`
 --
 ALTER TABLE `article_translation`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT de la tabla `city`
 --
 ALTER TABLE `city`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT de la tabla `company`
 --
@@ -2346,17 +2409,17 @@ ALTER TABLE `country`
 -- AUTO_INCREMENT de la tabla `dish`
 --
 ALTER TABLE `dish`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT de la tabla `dish_category`
 --
 ALTER TABLE `dish_category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT de la tabla `dish_translation`
 --
 ALTER TABLE `dish_translation`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT de la tabla `event`
 --
@@ -2366,7 +2429,7 @@ ALTER TABLE `event`
 -- AUTO_INCREMENT de la tabla `file`
 --
 ALTER TABLE `file`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT de la tabla `file_format`
 --
@@ -2376,22 +2439,22 @@ ALTER TABLE `file_format`
 -- AUTO_INCREMENT de la tabla `gallery`
 --
 ALTER TABLE `gallery`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT de la tabla `gallery_image`
 --
 ALTER TABLE `gallery_image`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 --
 -- AUTO_INCREMENT de la tabla `image`
 --
 ALTER TABLE `image`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 --
 -- AUTO_INCREMENT de la tabla `menu`
 --
 ALTER TABLE `menu`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT de la tabla `neighborhood`
 --
@@ -2401,7 +2464,7 @@ ALTER TABLE `neighborhood`
 -- AUTO_INCREMENT de la tabla `restaurant`
 --
 ALTER TABLE `restaurant`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT de la tabla `role`
 --
@@ -2436,12 +2499,12 @@ ALTER TABLE `township`
 -- AUTO_INCREMENT de la tabla `translation`
 --
 ALTER TABLE `translation`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=627;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=663;
 --
 -- AUTO_INCREMENT de la tabla `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 --
 -- Restricciones para tablas volcadas
 --
