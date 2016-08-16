@@ -1,8 +1,10 @@
 <?php
-use Phalcon\Mvc\Model\Validator\PresenceOf;
-use Phalcon\Mvc\Model\Validator\Uniqueness;
+use Phalcon\Mvc\Model;
+use Phalcon\Validation;
+use Phalcon\Validation\Validator\PresenceOf;
+use Phalcon\Validation\Validator\Uniqueness;
 
-class Language extends \Phalcon\Mvc\Model
+class Language extends Model
 {
 
     /**
@@ -265,48 +267,51 @@ class Language extends \Phalcon\Mvc\Model
      */
     public function validation()
     {
-      $this->validate(
-          new PresenceOf(
-              array(
-                  'field'    => 'code',
-                  'message'  => $this->di->get('translate')->_('language.code.required')
+      $validator = new Validation();
 
-              )
-          )
-      );
-
-      $this->validate(
-          new PresenceOf(
-              array(
-                  'field'    => 'language',
-                  'message'  => $this->di->get('translate')->_('language.required')
-              )
-          )
-      );
-
-        $this->validate(
-            new PresenceOf(
-                array(
-                    'field'    => 'flag',
-                    'message'=> $this->di->get('translate')->_('flag.required')
-                )
-            )
+      $validator->add(
+            'code', //your field name
+            new PresenceOf([
+                'model' => $this,
+                'message' => $this->di->get('translate')->_('language.code.required')
+            ])
+        );
+  
+    
+        $validator->add(
+            'language', //your field name
+            new PresenceOf([
+                'model' => $this,
+                'message' => $this->di->get('translate')->_('language.required')
+            ])
         );
 
-        $this->validate(new Uniqueness(array(
-           'field' => 'code',
-           'message'=>$this->di->get('translate')->_('language.code.unique')
-       )));
+        $validator->add(
+            'flag', //your field name
+            new PresenceOf([
+                'model' => $this,
+                'message' => $this->di->get('translate')->_('flag.required')
+            ])
+        );
+  
 
-       $this->validate(new Uniqueness(array(
-          'field' => 'language',
-          'message'=>$this->di->get('translate')->_('language.unique')
-      )));
-        if ($this->validationHasFailed() == true) {
-            return false;
-        }
+        $validator->add(
+            'code', //your field name
+            new Uniqueness([
+                'model' => $this,
+                'message' => $this->di->get('translate')->_('language.code.unique')
+            ])
+        );
+      
+        $validator->add(
+            'language', //your field name
+            new Uniqueness([
+                'model' => $this,
+                'message' => $this->di->get('translate')->_('language.unique')
+            ])
+        );
 
-        return true;
+         return $this->validate($validator);
     }
 
 

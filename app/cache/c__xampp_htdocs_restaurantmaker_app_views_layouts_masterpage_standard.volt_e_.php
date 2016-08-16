@@ -1,4 +1,4 @@
-a:11:{i:0;s:259:"<?php echo $globalobj->checkuser($this->session->get('userid')); ?>
+a:11:{i:0;s:251:"<?= $globalobj->checkuser($this->session->get('userid')) ?>
 <?php $actions = $globalobj->get_user_actions($this->session->get('userid')); ?>
 <?php $languages = $globalobj->get_languages(); ?>
 <!DOCTYPE html>
@@ -12,7 +12,7 @@ a:11:{i:0;s:259:"<?php echo $globalobj->checkuser($this->session->get('userid'))
   <link rel="stylesheet" type="text/css" href="";s:4:"file";s:74:"C:\xampp\htdocs\Restaurantmaker/app/views/layouts/masterpage_standard.volt";s:4:"line";i:12;}i:5;a:4:{s:4:"type";i:359;s:4:"expr";a:5:{s:4:"type";i:350;s:4:"name";a:4:{s:4:"type";i:265;s:5:"value";s:10:"static_url";s:4:"file";s:74:"C:\xampp\htdocs\Restaurantmaker/app/views/layouts/masterpage_standard.volt";s:4:"line";i:12;}s:9:"arguments";a:1:{i:0;a:3:{s:4:"expr";a:4:{s:4:"type";i:260;s:5:"value";s:43:"/stylesheets/masterpage_standard/layout.css";s:4:"file";s:74:"C:\xampp\htdocs\Restaurantmaker/app/views/layouts/masterpage_standard.volt";s:4:"line";i:12;}s:4:"file";s:74:"C:\xampp\htdocs\Restaurantmaker/app/views/layouts/masterpage_standard.volt";s:4:"line";i:12;}}s:4:"file";s:74:"C:\xampp\htdocs\Restaurantmaker/app/views/layouts/masterpage_standard.volt";s:4:"line";i:12;}s:4:"file";s:74:"C:\xampp\htdocs\Restaurantmaker/app/views/layouts/masterpage_standard.volt";s:4:"line";i:15;}i:6;a:4:{s:4:"type";i:357;s:5:"value";s:43:"">
   <!-- End Stylesheets --> 
 </head>
- ";s:4:"file";s:74:"C:\xampp\htdocs\Restaurantmaker/app/views/layouts/masterpage_standard.volt";s:4:"line";i:15;}}i:1;s:3034:"
+ ";s:4:"file";s:74:"C:\xampp\htdocs\Restaurantmaker/app/views/layouts/masterpage_standard.volt";s:4:"line";i:15;}}i:1;s:2906:"
 <body>
  <!-- Main Row Container --> 
 <div class="row">
@@ -27,8 +27,8 @@ a:11:{i:0;s:259:"<?php echo $globalobj->checkuser($this->session->get('userid'))
       <span class="icon-bar"></span>
       <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="<?php echo $this->url->get('index/home'); ?>">
-      <i class="fa fa-cutlery"></i><?php echo ' '; ?><?php echo $this->getDI()->get("translate")->_('RESTAURANT MAKER'); ?>
+      <a class="navbar-brand" href="<?= $this->url->get('index/home') ?>">
+      <i class="fa fa-cutlery"></i><?= ' ' ?><?= $this->getDI()->get("translate")->_('RESTAURANT MAKER') ?>
       </a>
       </div>
       <!-- Collect the nav links, forms, and other content for toggling -->
@@ -45,12 +45,12 @@ a:11:{i:0;s:259:"<?php echo $globalobj->checkuser($this->session->get('userid'))
                  <?php $languagename = $item->language; ?>
              <?php } ?>
           <?php } ?>
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <img src="<?php echo $this->url->getStatic('img/flags/' . $flag); ?>" alt=""><?php echo ' '; ?><?php echo $this->getDI()->get("translate")->_($languagename); ?><span class="caret"></span></a>
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <img src="<?= $this->url->getStatic('img/flags/' . $flag) ?>" alt=""><?= ' ' ?><?= $this->getDI()->get("translate")->_($languagename) ?><span class="caret"></span></a>
       <ul class="dropdown-menu">
         <?php foreach ($languages as $item) { ?>
         <li>
-        <a href="<?php echo $this->url->get('setlang') . '/' . $item->code; ?>">
-        <img src="<?php echo $this->url->getStatic('img/flags/' . $item->flag); ?>" alt=""><?php echo ' '; ?><?php echo $this->getDI()->get("translate")->_($item->language); ?> </a>
+        <a href="<?= $this->url->get('setlang') . '/' . $item->code ?>">
+        <img src="<?= $this->url->getStatic('img/flags/' . $item->flag) ?>" alt=""><?= ' ' ?><?= $this->getDI()->get("translate")->_($item->language) ?> </a>
         </li>
         <?php } ?>
       </ul>
@@ -59,9 +59,9 @@ a:11:{i:0;s:259:"<?php echo $globalobj->checkuser($this->session->get('userid'))
       <ul class="nav navbar-nav navbar-right">
       <li class="dropdown">
       <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-        <img src="<?php echo $this->url->getStatic('img/avatar.png'); ?>" width="16px" height="16px"><?php echo ' '; ?><?php echo $this->session->get('username'); ?><span class="caret"></span></a>
+        <img src="<?= $this->url->getStatic('img/avatar.png') ?>" width="16px" height="16px"><?= ' ' ?><?= $this->session->get('username') ?><span class="caret"></span></a>
       <ul class="dropdown-menu">
-      <li> <a href="<?php echo $this->url->get('login/logout'); ?>"><i class="fa fa-sign-out"></i><?php echo ' '; ?><?php echo $this->getDI()->get("translate")->_('logout.text'); ?></a></li>
+      <li> <a href="<?= $this->url->get('login/logout') ?>"><i class="fa fa-sign-out"></i><?= ' ' ?><?= $this->getDI()->get("translate")->_('logout.text') ?></a></li>
       </ul>
       </li>
       </ul>
@@ -86,7 +86,7 @@ a:11:{i:0;s:259:"<?php echo $globalobj->checkuser($this->session->get('userid'))
 
   <!--CONTENT-->
 
-  ";s:4:"file";s:74:"C:\xampp\htdocs\Restaurantmaker/app/views/layouts/masterpage_standard.volt";s:4:"line";i:89;}}i:4;s:358:"
+  ";s:4:"file";s:74:"C:\xampp\htdocs\Restaurantmaker/app/views/layouts/masterpage_standard.volt";s:4:"line";i:89;}}i:4;s:350:"
   </div>
   </div>
   <!-- End Main Content-->   
@@ -96,7 +96,7 @@ a:11:{i:0;s:259:"<?php echo $globalobj->checkuser($this->session->get('userid'))
  <!-- End Main Row Container -->
  <!-- Footet-->  
 <footer class="footer">
-     <p align="center" style="padding-top:25px;"><?php echo '2016 &copy; Restaurant Maker'; ?></p>   
+     <p align="center" style="padding-top:25px;"><?= '2016 &copy; Restaurant Maker' ?></p>   
 </footer>
 <!-- End footer--> 
 
