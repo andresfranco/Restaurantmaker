@@ -24,7 +24,7 @@
 <link href="{{ static_url('metronic/assets/admin/layout/css/layout.css')}}" rel="stylesheet" type="text/css"/>
 <link href="{{ static_url('metronic/assets/admin/layout/css/themes/darkblue.css')}}" rel="stylesheet" type="text/css" id="style_color"/>
 <link href="{{ static_url('metronic/assets/admin/layout/css/custom.css')}}" rel="stylesheet" type="text/css"/>
-<link href="{{ static_url('css/animate/animate.css')}}" rel="stylesheet" type="text/css"/>
+
 
 <link rel="shortcut icon" href="favicon.ico"/>
 </head>
@@ -36,7 +36,8 @@
             <h2><b>LA PÁGINA SOLICITADA NO SE ENCUENTRA</b></h2><p class="number animated zoomInDown"><b>404</b></p>
                 <br><br>
 		<div>
-                    {{image('img/lostface.png',"id":"ogo","class":"animated flip")}}
+                     {{image('metronic/assets/global/img/lostface.png',"id":"logo")}}
+         
 		</div>
 		
                <div class="details animated flip">
@@ -75,7 +76,6 @@ jQuery(document).ready(function() {
 jQuery(document).ready(function() {    
    Metronic.init(); // init metronic core components
 Layout.init(); // init current layout
-QuickSidebar.init(); // init quick sidebar
 Demo.init(); // init demo features
 });
 </script>

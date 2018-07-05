@@ -1,9 +1,11 @@
 <?php
-use Phalcon\Mvc\Model\Validator;
 use Phalcon\Mvc\Model\Validator\Email as Email;
-use Phalcon\Mvc\Model\Validator\PresenceOf;
-use Phalcon\Mvc\Model\Validator\Uniqueness;
-class Country extends \Phalcon\Mvc\Model
+use Phalcon\Mvc\Model;
+use Phalcon\Validation;
+use Phalcon\Validation\Validator\Uniqueness;
+use Phalcon\Validation\Validator\InclusionIn;
+use Phalcon\Validation\Validator\PresenceOf;
+class Country extends Model
 {
 
     /**
@@ -282,41 +284,43 @@ class Country extends \Phalcon\Mvc\Model
      */
     public function validation()
     {
-      $this->validate(
-          new PresenceOf(
-              array(
-                  'field'    => 'code'
+      $validator = new Validation();
+      
+      $validator->add(
+    "code",
+    new PresenceOf(
+        [
+            "message" => $this->di->get('translate')->_('country.code.required'),
+        ]
+       )
+     );
+      
+     $validator->add(
+    "code",
+    new Uniqueness(
+        [
+            "model"   => $this,
+            "message" => "country.code.exist",
+        ]
+    )
+);
 
-              )
-          )
-      );
-      $this->validate(
-          new PresenceOf(
-              array(
-                  'field'    => 'country'
+      
+      //$validator->add("country",new PresenceOf(["message"=>$this->di->get('translate')->_('country.required')]));
 
-              )
-          )
-      );
+     /*$validator->add(
+            new Uniqueness(
+                [
+                    "field"   => "code",
+                    "message" =>  $this->di->get('translate')->_('country.code.exist'),
+                ]
+            )
+        );*/
+       
 
-      $this->validate(new Uniqueness(array(
-         'field' => array('code', 'country')
-
-
-     )));
-     $this->validate(new Uniqueness(array(
-        'field' => 'code'
-
-
-    )));
-
-        if ($this->validationHasFailed() == true) {
-            return false;
-        }
-
-        return true;
+       return $this->validate($validator);
     }
-    public function getMessages()
+    /*public function getMessages()
    {
        $messages = array();
        $txtmessage ="";
@@ -364,6 +368,6 @@ class Country extends \Phalcon\Mvc\Model
 
        return $messages;
    }
- }
+ }*/
 
 }

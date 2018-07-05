@@ -211,21 +211,50 @@ class CountryController extends ControllerBase
   */
   public function createAction()
   {
-    $entity = $this->set_entity(
+    //echo 'entro create';
+    //print_r($this->crud_params);
+    /*$entity = $this->set_entity(
     ''
     ,$this->crud_params['entityname']
     ,$this->crud_params['not_found_message']
     ,$this->crud_params['controller']
     ,$this->crud_params['action_list']
-    ,'create');
+    ,'create');*/
+    
+    
+    $entity = new Country();
 
-    $this->set_post_values($entity);
-    $this->audit_fields($entity,'create');
+    //$this->set_post_values($entity);
+    $entity->setCode($this->request->getPost("code"));
+    $entity->setCountry($this->request->getPost("country"));
+    
+    
+      $entity->setCreateuser($this->session->get('username'));
+      $entity->setCreatedate(date('Y-m-d H:i:s'));
+      $entity->setModifyuser($this->session->get('username'));
+      $entity->setModifydate(date('Y-m-d H:i:s'));
+     
+    
+    if (!$entity->save())
+    {
 
-    $this->execute_entity_action($entity
+        foreach ($entity->getMessages() as $message) {
+            $this->flash->error($message);
+        }
+        return $this->dispatcher->forward(array(
+            "controller" => $this->crud_params['controller'],
+            "action" => 'new',
+            "params"=>array($entity)
+        ));
+  }
+  $this->response->redirect(array('for' => $this->crud_params['action_list']));
+    
+    //$this->audit_fields($entity,'create');
+
+    /*$this->execute_entity_action($entity
     ,$this->crud_params['controller']
     ,'new',array($entity),$this->crud_params['action_list']
-    ,'create');
+    ,'create');*/
   }
 
   /**
@@ -240,7 +269,8 @@ class CountryController extends ControllerBase
     ,$this->crud_params['controller']
     ,$this->crud_params['action_list']
     ,'update');
-
+    
+     
     $this->set_post_values($entity);
     $this->audit_fields($entity,'edit');
 
