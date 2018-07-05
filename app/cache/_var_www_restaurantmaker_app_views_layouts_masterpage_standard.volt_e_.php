@@ -12,7 +12,7 @@ a:11:{i:0;s:245:"<?= $globalobj->checkuser($this->session->get('userid')) ?>
   <link rel="stylesheet" type="text/css" href="";s:4:"file";s:67:"/var/www/Restaurantmaker/app/views/layouts/masterpage_standard.volt";s:4:"line";i:12;}i:5;a:4:{s:4:"type";i:359;s:4:"expr";a:5:{s:4:"type";i:350;s:4:"name";a:4:{s:4:"type";i:265;s:5:"value";s:10:"static_url";s:4:"file";s:67:"/var/www/Restaurantmaker/app/views/layouts/masterpage_standard.volt";s:4:"line";i:12;}s:9:"arguments";a:1:{i:0;a:3:{s:4:"expr";a:4:{s:4:"type";i:260;s:5:"value";s:43:"/stylesheets/masterpage_standard/layout.css";s:4:"file";s:67:"/var/www/Restaurantmaker/app/views/layouts/masterpage_standard.volt";s:4:"line";i:12;}s:4:"file";s:67:"/var/www/Restaurantmaker/app/views/layouts/masterpage_standard.volt";s:4:"line";i:12;}}s:4:"file";s:67:"/var/www/Restaurantmaker/app/views/layouts/masterpage_standard.volt";s:4:"line";i:12;}s:4:"file";s:67:"/var/www/Restaurantmaker/app/views/layouts/masterpage_standard.volt";s:4:"line";i:15;}i:6;a:4:{s:4:"type";i:357;s:5:"value";s:40:"">
   <!-- End Stylesheets --> 
 </head>
- ";s:4:"file";s:67:"/var/www/Restaurantmaker/app/views/layouts/masterpage_standard.volt";s:4:"line";i:15;}}i:1;s:2845:"
+ ";s:4:"file";s:67:"/var/www/Restaurantmaker/app/views/layouts/masterpage_standard.volt";s:4:"line";i:15;}}i:1;s:2847:"
 <body>
  <!-- Main Row Container --> 
 <div class="row">
@@ -45,12 +45,12 @@ a:11:{i:0;s:245:"<?= $globalobj->checkuser($this->session->get('userid')) ?>
                  <?php $languagename = $item->language; ?>
              <?php } ?>
           <?php } ?>
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <img src="<?= $this->url->getStatic('img/flags/' . $flag) ?>" alt=""><?= ' ' ?><?= $this->getDI()->get("translate")->_($languagename) ?><span class="caret"></span></a>
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <img src="<?= $this->url->getStatic('/img/flags/' . $flag) ?>" alt=""><?= ' ' ?><?= $this->getDI()->get("translate")->_($languagename) ?><span class="caret"></span></a>
       <ul class="dropdown-menu">
         <?php foreach ($languages as $item) { ?>
         <li>
         <a href="<?= $this->url->get('setlang') . '/' . $item->code ?>">
-        <img src="<?= $this->url->getStatic('img/flags/' . $item->flag) ?>" alt=""><?= ' ' ?><?= $this->getDI()->get("translate")->_($item->language) ?> </a>
+        <img src="<?= $this->url->getStatic('/img/flags/' . $item->flag) ?>" alt=""><?= ' ' ?><?= $this->getDI()->get("translate")->_($item->language) ?> </a>
         </li>
         <?php } ?>
       </ul>

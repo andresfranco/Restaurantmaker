@@ -5,6 +5,7 @@ use Phalcon\Validation;
 use Phalcon\Validation\Validator\Uniqueness;
 use Phalcon\Validation\Validator\InclusionIn;
 use Phalcon\Validation\Validator\PresenceOf;
+use Phalcon\Validation\Validator\StringLength;
 class Country extends Model
 {
 
@@ -163,7 +164,7 @@ class Country extends Model
      */
     public function getCode()
     {
-        return $this->code;
+         return $this->code;
     }
 
     /**
@@ -173,7 +174,7 @@ class Country extends Model
      */
     public function getCountry()
     {
-        return $this->country;
+          return $this->country;
     }
     /**
      * Returns the value of field createuser
@@ -182,7 +183,7 @@ class Country extends Model
      */
     public function getCreateuser()
     {
-        return $this->createuser;
+         return $this->createuser;
     }
     /**
      * Returns the value of field modifyuser
@@ -191,7 +192,7 @@ class Country extends Model
      */
     public function getModifyuser()
     {
-        return $this->modifyuser;
+         return $this->modifyuser;
     }
     /**
      * Returns the value of field createdate
@@ -200,7 +201,7 @@ class Country extends Model
      */
     public function getCreatedate()
     {
-        return $this->createdate;
+         return $this->createdate;
     }
     /**
      * Returns the value of field modifydate
@@ -209,21 +210,21 @@ class Country extends Model
      */
     public function getModifydate()
     {
-        return $this->modifydate;
+         return $this->modifydate;
     }
 
 
-    /**
+    /**2
      * Initialize method for model.
      */
     public function initialize()
     {
-        $this->hasMany('id', 'Address', 'countryid', array('alias' => 'Address',"foreignKey" => array(
+         $this->hasMany('id', 'Address', 'countryid', array('alias' => 'Address',"foreignKey" => array(
                     "message" => "country.constraintviolation"
                 )));
-        $this->hasMany('id', 'City', 'countryid', array('alias' => 'City',"foreignKey" => array(
+         $this->hasMany('id', 'City', 'countryid', array('alias' => 'City',"foreignKey" => array(
                     "message" => "No se Puede eliminar,Existe una ciudad que tien ese pais asociado")));
-        $this->hasMany('id', 'State', 'countryid', array('alias' => 'State',"foreignKey" => array(
+         $this->hasMany('id', 'State', 'countryid', array('alias' => 'State',"foreignKey" => array(
                     "message" => "No se Puede eliminar,Existe un estado  que tien ese pais asociado")));
     }
 
@@ -234,7 +235,7 @@ class Country extends Model
      */
     public function getSource()
     {
-        return 'country';
+         return 'country';
     }
 
     /**
@@ -245,7 +246,7 @@ class Country extends Model
      */
     public static function find($parameters = null)
     {
-        return parent::find($parameters);
+         return parent::find($parameters);
     }
 
     /**
@@ -256,7 +257,7 @@ class Country extends Model
      */
     public static function findFirst($parameters = null)
     {
-        return parent::findFirst($parameters);
+         return parent::findFirst($parameters);
     }
 
     /**
@@ -267,7 +268,7 @@ class Country extends Model
      */
     public function columnMap()
     {
-        return array(
+         return array(
             'id' => 'id',
             'code' => 'code',
             'country' => 'country',
@@ -275,7 +276,7 @@ class Country extends Model
             'modifyuser'=>'modifyuser',
             'createdate'=>'createdate',
             'modifydate'=>'modifydate'
-        );
+         );
     }
     /**
      * Validations and business logic
@@ -284,90 +285,20 @@ class Country extends Model
      */
     public function validation()
     {
-      $validator = new Validation();
+         $validator = new Validation();
       
-      $validator->add(
-    "code",
-    new PresenceOf(
-        [
-            "message" => $this->di->get('translate')->_('country.code.required'),
-        ]
-       )
-     );
+         $validator->add( "code", new PresenceOf([ "message" => $this->di->get('translate')->_('country.code.required')]));
       
-     $validator->add(
-    "code",
-    new Uniqueness(
-        [
-            "model"   => $this,
-            "message" => "country.code.exist",
-        ]
-    )
-);
-
+         $validator->add("country",new PresenceOf(["message" => $this->di->get('translate')->_('country.required')]));
       
-      //$validator->add("country",new PresenceOf(["message"=>$this->di->get('translate')->_('country.required')]));
+         $validator->add("code",new Uniqueness(["model"   => $this,"message" => $this->di->get('translate')->_('country.code.exist')]));
+      
+         $validator->add("code",new StringLength(["max"=> 4,"min" => 2
+                                                 ,"messageMaximum" => "country.code.max"
+                                                 ,"messageMinimum" => "country.code.min"]));
 
-     /*$validator->add(
-            new Uniqueness(
-                [
-                    "field"   => "code",
-                    "message" =>  $this->di->get('translate')->_('country.code.exist'),
-                ]
-            )
-        );*/
-       
-
-       return $this->validate($validator);
+        return $this->validate($validator);
     }
-    /*public function getMessages()
-   {
-       $messages = array();
-       $txtmessage ="";
-       foreach (parent::getMessages() as $message) {
-
-           switch ($message->getType()) {
-               case 'PresenceOf':
-                   switch ($message->getField()) {
-                    case 'code':
-                     $txtmessage = $this->di->get('translate')->_('country.code.required');
-                    break;
-                    case 'country':
-                     $txtmessage = $this->di->get('translate')->_('country.required');
-                    break;
-
-                   }
-                    $messages[] =$txtmessage;
-                   break;
-              case 'Unique':
-
-              if (is_array($message->getField()))
-              {
-                $field =implode("-", $message->getField());
-              }
-              else {
-                $field =$message->getField();
-              }
-
-              switch ($field) {
-                case 'code':
-                   $txtmessage =$this->di->get('translate')->_('country.code.exist');
-                break;
-               case 'code-country':
-                  $txtmessage =$this->di->get('translate')->_('country.name.code.exist');
-               break;
-
-           }
-           $messages[] =$txtmessage;
-          break;
-          case 'ConstraintViolation':
-               $txtmessage =$this->di->get('translate')->_('country.constraintviolation');
-               $messages[] =$txtmessage;
-               break;
-       }
-
-       return $messages;
-   }
- }*/
+  
 
 }

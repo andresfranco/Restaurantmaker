@@ -45,12 +45,12 @@
                  {% set languagename = item.language %}
              {% endif %}
           {% endfor %}
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <img src="{{static_url('img/flags/'~flag)}}" alt="">{{' '}}{{languagename|t}}<span class="caret"></span></a>
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <img src="{{static_url('/img/flags/'~flag)}}" alt="">{{' '}}{{languagename|t}}<span class="caret"></span></a>
       <ul class="dropdown-menu">
         {% for item in languages %}
         <li>
         <a href="{{ url('setlang')~'/'~item.code}}">
-        <img src="{{static_url('img/flags/'~item.flag)}}" alt="">{{' '}}{{item.language|t}} </a>
+        <img src="{{static_url('/img/flags/'~item.flag)}}" alt="">{{' '}}{{item.language|t}} </a>
         </li>
         {% endfor %}
       </ul>

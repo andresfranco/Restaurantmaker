@@ -150,9 +150,9 @@ class CountryController extends ControllerBase
   {
     $this->assets
     ->collection('validatejs')
-    ->addJs('js/jqueryvalidate/jquery.validate.js')
-    ->addJs('js/jqueryvalidate/additional-methods.min.js')
-    ->addJs('js/validatecountry/validate_country.js');
+    ->addJs('/js/jqueryvalidate/jquery.validate.js')
+    ->addJs('/js/jqueryvalidate/additional-methods.min.js')
+    ->addJs('/js/validatecountry/validate_country.js');
   }
 
 

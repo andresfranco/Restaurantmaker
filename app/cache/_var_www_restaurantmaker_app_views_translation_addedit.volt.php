@@ -547,7 +547,6 @@
 	<!-- END FORM-->	
 </div>
 
-
   </div>
   </div>
   <!-- End Main Content-->   
@@ -571,10 +570,8 @@
 <?= $this->assets->outputJs('validatejs') ?>
 <script>
 var validatemessages = {
-code:'<?= $this->getDI()->get("translate")->_('country.code.required') ?>',
-country:'<?= $this->getDI()->get("translate")->_('country.required') ?>',
-min_code:'<?= $this->getDI()->get("translate")->_('country.code.min') ?>',
-max_code:'<?= $this->getDI()->get("translate")->_('country.code.max') ?>'
+key:'<?= $this->getDI()->get("translate")->_('translation.required.key') ?>'
+,value:'<?= $this->getDI()->get("translate")->_('translation.required.value') ?>'
 };
 </script>
 

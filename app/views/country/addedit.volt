@@ -6,7 +6,9 @@
 <script>
 var validatemessages = {
 code:'{{"country.code.required"|t}}',
-country:'{{"country.required"|t}}'
+country:'{{"country.required"|t}}',
+min_code:'{{"country.code.min"|t}}',
+max_code:'{{"country.code.max"|t}}'
 };
 </script>
 {% endblock %}

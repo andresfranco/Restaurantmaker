@@ -1,10 +1,10 @@
 $(function() {
 
-    // Setup form validation on the #register-form element
+    // Setup form validation on the form
     $("#appform").validate({
       errorClass: "has-error",
       errorPlacement: function(error, element) {
-        //Custom position: first name
+        
         if (element.attr("name") == "code" ) {
             $("#codeerror").html(error);
         }
@@ -12,24 +12,24 @@ $(function() {
             $("#countryerror").html(error);
         }
 
-        // Default position: if no match is met (other fields)
     },
         // Specify the validation rules
         rules: {
-
             code:{
-                required:true
+                required:true,
+                minlength: 2,
+                maxlength: 4
             },
             country:{
-                required:true
-
+                required:true,    
             }
-
         },
         // Specify the validation error messages
         messages: {
             code:{
-                required:validatemessages.code
+                required: validatemessages.code,
+                minlength: validatemessages.min_code,
+                maxlength: validatemessages.max_code
 
             },
              country:{
