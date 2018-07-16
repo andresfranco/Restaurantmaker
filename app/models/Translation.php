@@ -1,6 +1,10 @@
 <?php
-use Phalcon\Mvc\Model\Validator\PresenceOf;
-use Phalcon\Mvc\Model\Validator\Uniqueness;
+use Phalcon\Mvc\Model;
+use Phalcon\Validation;
+use Phalcon\Validation\Validator\Uniqueness;
+use Phalcon\Validation\Validator\InclusionIn;
+use Phalcon\Validation\Validator\PresenceOf;
+use Phalcon\Validation\Validator\StringLength;
 class Translation extends \Phalcon\Mvc\Model
 {
 
@@ -303,86 +307,20 @@ class Translation extends \Phalcon\Mvc\Model
      */
     public function validation()
     {
-      $this->validate(
-          new PresenceOf(
-              array(
-                  'field'    => 'languagecode'
+      $validator= new Validation();
+      
+      $validator->add( "languagecode", new PresenceOf([ "message" => $this->di->get('translate')->_('translation.required.language')]));
+      
+      $validator->add( "translatekey", new PresenceOf([ "message" => $this->di->get('translate')->_('translation.required.key')]));
 
-              )
-          )
-      );
-
-      $this->validate(
-          new PresenceOf(
-              array(
-                  'field'    => 'translatekey'
-
-              )
-          )
-      );
-
-        $this->validate(
-            new PresenceOf(
-                array(
-                    'field'    => 'value'
-
-                )
-            )
-        );
-
-        $this->validate(new Uniqueness(array(
-           'field' => array('languagecode', 'translatekey')
-
-       )));
-
-        if ($this->validationHasFailed() == true) {
-            return false;
-        }
-
-        return true;
+      $validator->add( "value", new PresenceOf([ "message" => $this->di->get('translate')->_('translation.required.value')]));
+        
+      $validator->add(["languagecode","translatekey"],new Uniqueness(["model"   => $this,"message" => $this->di->get('translate')->_('translation.key.exist')]));
+      
+      return $this->validate($validator);
+     
     }
 
-    public function getMessages()
-   {
-       $messages = array();
-       $txtmessage ="";
-       foreach (parent::getMessages() as $message) {
-           switch ($message->getType()) {
-               case 'PresenceOf':
-                   switch ($message->getField()) {
-                    case 'languagecode':
-                     $txtmessage = $this->di->get('translate')->_('translation.required.language');
-                    break;
-                    case 'key':
-                     $txtmessage = $this->di->get('translate')->_('translation.required.key');
-                    break;
-                    case 'value':
-                     $txtmessage = $this->di->get('translate')->_('translation.required.value');
-                    break;
-                   }
-                    $messages[] =$txtmessage;
-                   break;
-              case 'Unique':
-
-                   if (is_array($message->getField()))
-                   {
-                     $field =implode("-", $message->getField());
-                   }
-                   else {
-                     $field =$message->getField();
-                   }
-
-                   switch ($field) {
-                    case 'languagecode-translatekey':
-                       $txtmessage =$this->di->get('translate')->_('translation.key.exist');
-                  break;
-                }
-                $messages[] =$txtmessage;
-               break;
-           }
-       }
-
-       return $messages;
-   }
+  
 
 }

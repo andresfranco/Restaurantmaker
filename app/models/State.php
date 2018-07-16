@@ -1,8 +1,10 @@
 <?php
-use Phalcon\Mvc\Model\Validator;
-use Phalcon\Mvc\Model\Validator\Email as Email;
-use Phalcon\Mvc\Model\Validator\PresenceOf;
-use Phalcon\Mvc\Model\Validator\Uniqueness;
+use Phalcon\Mvc\Model;
+use Phalcon\Validation;
+use Phalcon\Validation\Validator\Uniqueness;
+use Phalcon\Validation\Validator\InclusionIn;
+use Phalcon\Validation\Validator\PresenceOf;
+use Phalcon\Validation\Validator\StringLength;
 
 class State extends \Phalcon\Mvc\Model
 {
@@ -289,80 +291,21 @@ class State extends \Phalcon\Mvc\Model
      */
     public function validation()
     {
-      $this->validate(
-          new PresenceOf(
-              array(
-                  'field'    => 'countryid'
-
-              )
-          )
-      );
-      $this->validate(
-          new PresenceOf(
-              array(
-                  'field'    => 'state'
-
-              )
-          )
-      );
-
-      $this->validate(new Uniqueness(array(
-         'field' => array('countryid', 'state')
-     )));
-
-        if ($this->validationHasFailed() == true) {
-            return false;
-        }
-
-        return true;
+   
+      
+      $validator= new Validation();
+      
+      $validator->add( "countryid", new PresenceOf([ "message" => $this->di->get('translate')->_('state.country.required')]));
+      
+      $validator->add( "state", new PresenceOf([ "message" => $this->di->get('translate')->_('state.required')]));
+   
+      $validator->add(["countryid","state"],new Uniqueness(["model"   => $this,"message" => $this->di->get('translate')->_('state.country.state.exist')]));
+      
+      return $this->validate($validator);
+      
+      
     }
-    public function getMessages()
-   {
-       $messages = array();
-       $txtmessage ="";
-       foreach (parent::getMessages() as $message) {
-
-           switch ($message->getType()) {
-
-               case 'PresenceOf':
-                   switch ($message->getField()) {
-                    case 'countryid':
-                     $txtmessage = $this->di->get('translate')->_('state.country.required');
-                    break;
-                    case 'state':
-                     $txtmessage = $this->di->get('translate')->_('state.required');
-                    break;
-                   }
-                    $messages[] =$txtmessage;
-                   break;
-               case 'Unique':
-
-                if (is_array($message->getField()))
-                {
-                  $field =implode("-", $message->getField());
-                }
-                else {
-                  $field =$message->getField();
-                }
-
-                switch ($field)
-                {
-                 case 'countryid-state':
-                    $txtmessage =$this->di->get('translate')->_('state.country.state.exist');
-                 break;
-                 }
-                $messages[] =$txtmessage;
-               break;
-              case 'ConstraintViolation':
-               $txtmessage =$this->di->get('translate')->_('state.constraintviolation');
-               $messages[] =$txtmessage;
-               break;
-
-           }
-       }
-
-       return $messages;
-   }
+   
 
 
 

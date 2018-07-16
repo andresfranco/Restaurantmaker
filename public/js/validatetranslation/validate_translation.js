@@ -10,7 +10,7 @@ $(function() {
             languagecode:{
                 required:true
             },
-            key:{
+            translatekey:{
                 required:true
 
             },
@@ -26,7 +26,7 @@ $(function() {
                 required:""
 
             },
-             key:{
+             translatekey:{
                 required:validatemessages.key
 
             },
