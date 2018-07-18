@@ -1,5 +1,5 @@
 <?php
-
+use Phalcon\Mvc\Model;
 class File extends \Phalcon\Mvc\Model
 {
 

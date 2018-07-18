@@ -1,8 +1,8 @@
 <?php
 use Phalcon\Mvc\Model;
 use Phalcon\Validation;
-use Phalcon\Validation\Validator\PresenceOf;
 use Phalcon\Validation\Validator\Uniqueness;
+use Phalcon\Validation\Validator\PresenceOf;
 
 class Language extends Model
 {
@@ -269,30 +269,17 @@ class Language extends Model
     {
       $validator = new Validation();
 
-      $validator->add(
-            'code', //your field name
-            new PresenceOf([
-                'model' => $this,
-                'message' => $this->di->get('translate')->_('language.code.required')
-            ])
-        );
-  
-    
-        $validator->add(
-            'language', //your field name
-            new PresenceOf([
-                'model' => $this,
-                'message' => $this->di->get('translate')->_('language.required')
-            ])
-        );
-
-        $validator->add(
-            'flag', //your field name
-            new PresenceOf([
-                'model' => $this,
-                'message' => $this->di->get('translate')->_('flag.required')
-            ])
-        );
+      $validator->add(["code","language", "flag"],
+       new PresenceOf(
+        [
+          "message" =>
+          [
+            "code" => $this->di->get('translate')->_('language.code.required'),
+            "language" => $this->di->get('translate')->_('language.required'),
+            "flag" => $this->di->get('translate')->_('flag.required')
+           ]
+        ]
+        ));
   
 
         $validator->add(

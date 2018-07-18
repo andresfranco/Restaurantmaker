@@ -1,7 +1,8 @@
 <?php
-use Phalcon\Mvc\Model\Validator\PresenceOf;
-use Phalcon\Mvc\Model\Validator\Uniqueness;
-
+use Phalcon\Mvc\Model;
+use Phalcon\Validation;
+use Phalcon\Validation\Validator\Uniqueness;
+use Phalcon\Validation\Validator\PresenceOf;
 class Action extends \Phalcon\Mvc\Model
 {
 
@@ -272,67 +273,15 @@ class Action extends \Phalcon\Mvc\Model
 
     public function validation()
     {
-      $this->validate(
-          new PresenceOf(
-              array(
-                  'field'    => 'action'
-
-              )
-          )
-      );
-      $this->validate(new Uniqueness(array(
-         'field' => 'action'
-
-     )));
-
-        if ($this->validationHasFailed() == true) {
-            return false;
-        }
-
-        return true;
+      $validator= new Validation();
+      
+      $validator->add( "action", new PresenceOf([ "message" => $this->di->get('translate')->_('action.required')]));
+      
+      $validator->add("action",new Uniqueness(["model"   => $this,"message" => $this->di->get('translate')->_('action.exist')]));
+      
+      return $this->validate($validator);
     }
 
-    public function getMessages()
-   {
-     $messages = array();
-     $txtmessage ="";
-     foreach (parent::getMessages() as $message) {
-         switch ($message->getType()) {
-             case 'PresenceOf':
-                 switch ($message->getField()) {
-                  case 'action':
-                   $txtmessage = $this->di->get('translate')->_('action.required');
-                  break;
-                 }
-                  $messages[] =$txtmessage;
-                 break;
-
-            case 'Unique':
-
-                 if (is_array($message->getField()))
-                 {
-                   $field =implode("-", $message->getField());
-                 }
-                 else {
-                   $field =$message->getField();
-                 }
-
-                 switch ($field) {
-                  case 'action':
-                     $txtmessage =$this->di->get('translate')->_('action.exist');
-                break;
-              }
-              $messages[] =$txtmessage;
-             break;
-             case 'ConstraintViolation':
-            $txtmessage =$this->di->get('translate')->_('action.constraintviolation');
-             $messages[] =$txtmessage;
-             break;
-         }
-     }
-
-     return $messages;
- }
 
 
 }

@@ -31,7 +31,7 @@ $(document).ready(function()
   function get_states()
   {
     var base_url =get_url_path();
-    var urlpath =base_url+"/address/get_state_data/";
+    var urlpath =base_url+"/get_state_data/";
     var countryid = $('#countryid').val();
     remove_select_options("#stateid","Seleccione un Estado");
     $.ajax
@@ -57,7 +57,7 @@ $(document).ready(function()
     var base_url =get_url_path();
     var countryid =$('#countryid').val();
     var stateid = $('#stateid').val();
-    var urlpath =base_url+"/address/get_city_data/";
+    var urlpath =base_url+"/get_city_data/";
     remove_select_options("#cityid","Seleccione una Ciudad");
     $.ajax
     ({
@@ -81,7 +81,7 @@ $(document).ready(function()
   function get_townships()
   {
     var base_url =get_url_path();
-    var urlpath =base_url+"/address/get_township_data/";
+    var urlpath =base_url+"/get_township_data/";
     var cityid = $('#cityid').val();
     remove_select_options("#townshipid","Seleccione un Sector");
     $.ajax
@@ -104,7 +104,7 @@ $(document).ready(function()
   function get_neighborhoods()
   {
     var base_url =get_url_path();
-    var urlpath =base_url+"/address/get_neighborhood_data/";
+    var urlpath =base_url+"/get_neighborhood_data/";
     var cityid = $('#cityid').val();
     var townshipid =$('#townshipid').val();
     remove_select_options("#neighborhoodid","Seleccione un Barrio");

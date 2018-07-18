@@ -1,6 +1,8 @@
 <?php
-use Phalcon\Mvc\Model\Validator\PresenceOf;
-use Phalcon\Mvc\Model\Validator\Uniqueness;
+use Phalcon\Mvc\Model;
+use Phalcon\Validation;
+use Phalcon\Validation\Validator\Uniqueness;
+use Phalcon\Validation\Validator\PresenceOf;
 class Role extends \Phalcon\Mvc\Model
 {
 
@@ -273,65 +275,16 @@ class Role extends \Phalcon\Mvc\Model
     }
     public function validation()
     {
-      $this->validate(
-          new PresenceOf(
-              array(
-                  'field'    => 'role'
-              )
-          )
-      );
-      $this->validate(new Uniqueness(array(
-         'field' => 'role'
-     )));
-
-        if ($this->validationHasFailed() == true) {
-            return false;
-        }
-
-        return true;
+      
+      $validator= new Validation();
+      
+      $validator->add( "role", new PresenceOf([ "message" => $this->di->get('translate')->_('role.required')]));
+      
+      $validator->add("role",new Uniqueness(["model"   => $this,"message" => $this->di->get('translate')->_('role.exist')]));
+      
+      return $this->validate($validator);
     }
 
-    public function getMessages()
-   {
-     $messages = array();
-     $txtmessage ="";
-     foreach (parent::getMessages() as $message) {
-         switch ($message->getType()) {
-             case 'PresenceOf':
-                 switch ($message->getField()) {
-                  case 'role':
-                   $txtmessage = $this->di->get('translate')->_('role.required');
-                  break;
-                 }
-                  $messages[] =$txtmessage;
-                 break;
-
-            case 'Unique':
-
-                 if (is_array($message->getField()))
-                 {
-                   $field =implode("-", $message->getField());
-                 }
-                 else {
-                   $field =$message->getField();
-                 }
-
-                 switch ($field) {
-                  case 'role':
-                     $txtmessage =$this->di->get('translate')->_('role.exist');
-                break;
-              }
-              $messages[] =$txtmessage;
-             break;
-             case 'ConstraintViolation':
-            $txtmessage =$this->di->get('translate')->_('role.constraintviolation');
-             $messages[] =$txtmessage;
-             break;
-         }
-     }
-
-     return $messages;
- }
 
 
 }

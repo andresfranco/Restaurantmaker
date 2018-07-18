@@ -1,6 +1,8 @@
 <?php
-use Phalcon\Mvc\Model\Validator\PresenceOf;
-use Phalcon\Mvc\Model\Validator\Uniqueness;
+use Phalcon\Mvc\Model;
+use Phalcon\Validation;
+use Phalcon\Validation\Validator\Uniqueness;
+use Phalcon\Validation\Validator\PresenceOf;
 class Address extends \Phalcon\Mvc\Model
 {
 
@@ -458,111 +460,24 @@ class Address extends \Phalcon\Mvc\Model
      */
     public function validation()
     {
-      $this->validate(
-          new PresenceOf(
-              array(
-                  'field'    => 'countryid'
+    
+      $validator= new Validation();
+      
+      $validator->add( "countryid", new PresenceOf([ "message" => $this->di->get('translate')->_('address.country.required')]));
+      
+      $validator->add( "stateid", new PresenceOf([ "message" => $this->di->get('translate')->_('address.state.required')]));
 
-              )
-          )
-      );
-      $this->validate(
-          new PresenceOf(
-              array(
-                  'field'    => 'stateid'
-
-              )
-          )
-      );
-      $this->validate(
-          new PresenceOf(
-              array(
-                  'field'    => 'cityid'
-              )
-          )
-      );
-
-      $this->validate(
-          new PresenceOf(
-              array(
-                  'field'    => 'neighborhoodid'
-              )
-          )
-      );
-
-      $this->validate(
-          new PresenceOf(
-              array(
-                  'field'    => 'address'
-              )
-          )
-      );
-
-      $this->validate(new Uniqueness(array(
-         'field' => array('countryid', 'stateid','cityid','townshipid','neighborhoodid','address')
-
-
-     )));
-
-
-        if ($this->validationHasFailed() == true) {
-            return false;
-        }
-
-        return true;
+      $validator->add( "cityid", new PresenceOf([ "message" => $this->di->get('translate')->_('address.city.required')]));
+       
+      $validator->add( "neighborhoodid", new PresenceOf([ "message" => $this->di->get('translate')->_('address.neighborhood.required')]));
+      
+      $validator->add( "address", new PresenceOf([ "message" => $this->di->get('translate')->_('address.required')]));
+      
+      $validator->add(["countryid", "stateid","cityid","townshipid","neighborhoodid","address"],new Uniqueness(["model"   => $this,"message" => $this->di->get('translate')->_('complete_address.exist')]));
+      
+      return $this->validate($validator);
     }
-    public function getMessages()
-   {
-       $messages = array();
-       $txtmessage ="";
-       foreach (parent::getMessages() as $message) {
-           switch ($message->getType()) {
-               case 'PresenceOf':
-                   switch ($message->getField()) {
-                    case 'countryid':
-                     $txtmessage = $this->di->get('translate')->_('address.country.required');
-                    break;
-                    case 'stateid':
-                     $txtmessage = $this->di->get('translate')->_('address.state.required');
-                    break;
-                    case 'cityid':
-                     $txtmessage = $this->di->get('translate')->_('address.city.required');
-                    break;
-                    case 'neighborhoodid':
-                     $txtmessage = $this->di->get('translate')->_('address.neighborhood.required');
-                    break;
-                    case 'address':
-                     $txtmessage = $this->di->get('translate')->_('address.required');
-                    break;
-                   }
-                    $messages[] =$txtmessage;
-                   break;
-              case 'Unique':
-
-                   if (is_array($message->getField()))
-                   {
-                     $field =implode("-", $message->getField());
-                   }
-                   else {
-                     $field =$message->getField();
-                   }
-
-                   switch ($field) {
-                    case 'countryid-stateid-cityid-townshipid-neighborhoodid-address':
-                       $txtmessage =$this->di->get('translate')->_('complete_address.exist');
-                  break;
-                }
-                $messages[] =$txtmessage;
-               break;
-               case 'ConstraintViolation':
-               $txtmessage =$this->di->get('translate')->_('address.constraintviolation');
-               $messages[] =$txtmessage;
-               break;
-           }
-       }
-
-       return $messages;
-   }
+   
 
    public function afterSave()
     {

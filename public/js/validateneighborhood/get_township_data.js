@@ -2,7 +2,7 @@ $(document).ready(function()
 {
   var l = window.location;
   var base_url = l.protocol + "//" + l.host + "/" + l.pathname.split('/')[1];
-  var urlpath =base_url+"/neighborhood/get_township_data/";
+  var urlpath =base_url+"/get_township_data/";
 
  $("#cityid").change(function()
  {

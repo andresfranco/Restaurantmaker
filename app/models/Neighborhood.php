@@ -1,8 +1,9 @@
 <?php
-use Phalcon\Mvc\Model\Validator;
-use Phalcon\Mvc\Model\Validator\Email as Email;
-use Phalcon\Mvc\Model\Validator\PresenceOf;
-use Phalcon\Mvc\Model\Validator\Uniqueness;
+use Phalcon\Mvc\Model;
+use Phalcon\Validation;
+use Phalcon\Validation\Validator\Uniqueness;
+use Phalcon\Validation\Validator\PresenceOf;
+
 class Neighborhood extends \Phalcon\Mvc\Model
 {
 
@@ -312,88 +313,18 @@ class Neighborhood extends \Phalcon\Mvc\Model
      */
     public function validation()
     {
-      $this->validate(
-          new PresenceOf(
-              array(
-                  'field'    => 'cityid'
+      $validator= new Validation();
+      
+      $validator->add( "cityid", new PresenceOf([ "message" => $this->di->get('translate')->_('city.select.required')]));
+      
+      $validator->add( "townshipid", new PresenceOf([ "message" => $this->di->get('translate')->_('neighborhood.township.required')]));
 
-              )
-          )
-      );
-      $this->validate(
-          new PresenceOf(
-              array(
-                  'field'    => 'townshipid'
-
-              )
-          )
-      );
-      $this->validate(
-          new PresenceOf(
-              array(
-                  'field'    => 'neighborhood'
-
-              )
-          )
-      );
-      $this->validate(new Uniqueness(array(
-         'field' => array('townshipid', 'neighborhood')
-
-
-     )));
-
-        if ($this->validationHasFailed() == true) {
-            return false;
-        }
-
-        return true;
+      $validator->add( "neighborhood", new PresenceOf([ "message" => $this->di->get('translate')->_('neighborhood.required')]));
+        
+      $validator->add(["townshipid","neighborhood"],new Uniqueness(["model"   => $this,"message" => $this->di->get('translate')->_('neighborhood.township.exist')]));
+      
+      return $this->validate($validator);
     }
-    public function getMessages()
-   {
-       $messages = array();
-       $txtmessage ="";
-       foreach (parent::getMessages() as $message) {
-
-           switch ($message->getType()) {
-               case 'PresenceOf':
-                   switch ($message->getField()) {
-                    case 'cityid':
-                     $txtmessage = $this->di->get('translate')->_('city.select.required');
-                    break;
-                    case 'townshipid':
-                     $txtmessage = $this->di->get('translate')->_('neighborhood.township.required');
-                    break;
-                    case 'neighborhood':
-                     $txtmessage = $this->di->get('translate')->_('neighborhood.required');
-                    break;
-                   }
-                    $messages[] =$txtmessage;
-                   break;
-              case 'Unique':
-
-              if (is_array($message->getField()))
-              {
-                $field =implode("-", $message->getField());
-              }
-              else {
-                $field =$message->getField();
-              }
-
-              switch ($field) {
-               case 'townshipid-neighborhood':
-                  $txtmessage =$this->di->get('translate')->_('neighborhood.township.exist');
-             break;
-           }
-           $messages[] =$txtmessage;
-          break;
-          case 'ConstraintViolation':
-              $txtmessage =$this->di->get('translate')->_('neighborhood.constraintviolation');
-              $messages[] =$txtmessage;
-              break;
-       }
-
-       return $messages;
-   }
- }
+    
 
 }
