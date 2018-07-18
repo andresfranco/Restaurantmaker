@@ -1,7 +1,9 @@
 <?php
-use Phalcon\Mvc\Model\Validator\PresenceOf;
-use Phalcon\Mvc\Model\Validator\Uniqueness;
-use Phalcon\Mvc\Model\Validator\Email as Email;
+use Phalcon\Mvc\Model;
+use Phalcon\Validation;
+use Phalcon\Validation\Validator\Uniqueness;
+use Phalcon\Validation\Validator\PresenceOf;
+use Phalcon\Validation\Validator\Email;
 class Menu extends \Phalcon\Mvc\Model
 {
 
@@ -305,32 +307,20 @@ class Menu extends \Phalcon\Mvc\Model
        */
        public function validation()
        {
-           $this->validate(new PresenceOf(array('field'=>'restaurantid')));
-           $this->validate(new PresenceOf(array('field'=>'menu_name')));
-           if ($this->validationHasFailed() == true) {return false;}
-           return true;
-       }
-       public function getMessages()
-       {
-           $messages = array();
-           $txtmessage ="";
-           foreach (parent::getMessages() as $message) {
-
-               switch ($message->getType())
-               {
-
-                   case 'PresenceOf':
-
-                       switch ($message->getField()) {
-                           case 'restaurantid':$txtmessage = $this->di->get('translate')->_('menu.restaurant.required');break;
-                           case 'menu_name':$txtmessage = $this->di->get('translate')->_('menu.name.required');break;
-                       }
-                       $messages[] =$txtmessage;
-                       break;
-               }
-           }
-
-           return $messages;
+         
+       $validator= new Validation();
+       $validator->add(["restaurantid","menu_name"],
+       new PresenceOf(
+        [
+          "message" =>
+          [
+            "restaurantid" => $this->di->get('translate')->_('menu.restaurant.required'),
+            "menu_name" => $this->di->get('translate')->_('menu.name.required')  
+           ]
+        ]
+        ));
+      
+        return $this->validate($validator);
        }
 
 

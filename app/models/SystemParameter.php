@@ -1,6 +1,8 @@
 <?php
-use Phalcon\Mvc\Model\Validator\PresenceOf;
-use Phalcon\Mvc\Model\Validator\Uniqueness;
+use Phalcon\Mvc\Model;
+use Phalcon\Validation;
+use Phalcon\Validation\Validator\Uniqueness;
+use Phalcon\Validation\Validator\PresenceOf;
 class SystemParameter extends \Phalcon\Mvc\Model
 {
 
@@ -291,49 +293,21 @@ class SystemParameter extends \Phalcon\Mvc\Model
 
     public function validation()
     {
-        $this->validate(new PresenceOf(array('field'=>'code')));
-        $this->validate(new PresenceOf(array('field'=>'parameter')));
-        $this->validate(new PresenceOf(array('field' => 'textvalue')));
-        $this->validate(new Uniqueness(array('field' => array('code', 'parameter'))));
-        if ($this->validationHasFailed() == true) {return false;}
-        return true;
+       $validator= new Validation();
+       $validator->add(["code","parameter", "textvalue"],
+       new PresenceOf(
+        [
+          "message" =>
+          [
+            "code" => $this->di->get('translate')->_('systemparameter.code.required'),
+            "parameter" => $this->di->get('translate')->_('systemparameter.parameter.required'),
+            "textvalue" => $this->di->get('translate')->_('systemparameter.textvalue.required')
+           ]
+        ]
+        ));
+      
+      $validator->add(["code","parameter"],new Uniqueness(["model"   => $this,"message" => $this->di->get('translate')->_('systemparameter.code_parameter.exist')]));
+      return $this->validate($validator);
     }
-    public function getMessages()
-    {
-        $messages = array();
-        $txtmessage ="";
-        foreach (parent::getMessages() as $message) {
-            switch ($message->getType())
-            {
-                case 'PresenceOf':
-                    switch ($message->getField()) {
-                      case 'code':$txtmessage = $this->di->get('translate')->_('systemparameter.code.required');break;
-                      case 'parameter':$txtmessage = $this->di->get('translate')->_('systemparameter.parameter.required');break;
-                      case 'textvalue':$txtmessage = $this->di->get('translate')->_('systemparameter.textvalue.required');break;
-                    }
-                    $messages[] =$txtmessage;break;
-                    case 'Unique':
-
-                         if (is_array($message->getField()))
-                         {
-                           $field =implode("-", $message->getField());
-                         }
-                         else {
-                           $field =$message->getField();
-                         }
-
-                         switch ($field) {
-                          case 'code-parameter':
-                             $txtmessage =$this->di->get('translate')->_('systemparameter.code_parameter.exist');
-                          break;
-                      }
-                      $messages[] =$txtmessage;break;
-
-            }
-        }
-
-        return $messages;
-    }
-
-
+    
 }

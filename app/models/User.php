@@ -298,7 +298,7 @@ class User extends Phalcon\Mvc\Model
       $validator->add( "email", new Email([ "message" => $this->di->get('translate')->_('email.valid')]));
       
       $validator->add("username",new Uniqueness(["model"   => $this,"message" => $this->di->get('translate')->_('username.unique')]));
-      
+      return $this->validate($validator);
     }
 
    

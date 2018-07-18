@@ -1,7 +1,9 @@
 <?php
-use Phalcon\Mvc\Model\Validator\Email as Email;
-use Phalcon\Mvc\Model\Validator\PresenceOf;
-use Phalcon\Mvc\Model\Validator\Uniqueness;
+use Phalcon\Mvc\Model;
+use Phalcon\Validation;
+use Phalcon\Validation\Validator\Uniqueness;
+use Phalcon\Validation\Validator\PresenceOf;
+use Phalcon\Validation\Validator\Email;
 class ArticleComment extends \Phalcon\Mvc\Model
 {
 
@@ -243,40 +245,22 @@ class ArticleComment extends \Phalcon\Mvc\Model
 
     public function validation()
     {
-        $this->validate(new PresenceOf(array('field'=>'name')));
-        $this->validate(new PresenceOf(array('field'=>'email')));
-        $this->validate(new PresenceOf(array('field'=>'comment')));
-        $this->validate(new Email(array('field'=>'email')));
-
-        if ($this->validationHasFailed() == true) {return false;}
-        return true;
-    }
-
-    public function getMessages()
-    {
-        $messages = array();
-        $txtmessage ="";
-        foreach (parent::getMessages() as $message) {
-            switch ($message->getType())
-            {
-                case 'PresenceOf':
-                    switch ($message->getField()) {
-                        case 'name':$txtmessage = $this->di->get('translate')->_('article_comment.name.required');break;
-                        case 'email':$txtmessage = $this->di->get('translate')->_('article_comment.email.required');break;
-                        case 'comment':$txtmessage = $this->di->get('translate')->_('article_comment.comment.required');break;
-                    }
-                    $messages[] =$txtmessage;break;
-                case 'Email':
-                    switch ($message->getField()) {
-                        case 'email':
-                            $txtmessage =$this->di->get('translate')->_('article_comment.email.exist');
-                            break;
-                    }
-                    $messages[] =$txtmessage;break;
-            }
-        }
-
-        return $messages;
+      
+       $validator= new Validation();
+       $validator->add(["name","email", "comment"],
+       new PresenceOf(
+        [
+          "message" =>
+          [
+            "name" => $this->di->get('translate')->_('article_comment.name.required'),
+            "email" => $this->di->get('translate')->_('article_comment.email.required'),
+            "comment" => $this->di->get('translate')->_('article_comment.comment.required')
+           ]
+        ]
+        ));
+      
+      $validator->add( "email", new Email([ "message" => $this->di->get('translate')->_('article_comment.email.exist')]));
+      return $this->validate($validator);
     }
 
 }

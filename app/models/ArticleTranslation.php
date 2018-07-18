@@ -1,6 +1,8 @@
 <?php
-use Phalcon\Mvc\Model\Validator\PresenceOf;
-use Phalcon\Mvc\Model\Validator\Uniqueness;
+use Phalcon\Mvc\Model;
+use Phalcon\Validation;
+use Phalcon\Validation\Validator\Uniqueness;
+use Phalcon\Validation\Validator\PresenceOf;
 class ArticleTranslation extends \Phalcon\Mvc\Model
 {
 
@@ -328,58 +330,23 @@ class ArticleTranslation extends \Phalcon\Mvc\Model
     }
     public function validation()
     {
-      $this->validate(new PresenceOf(array('field' => 'languagecode')));
-      $this->validate(new PresenceOf(array('field' => 'title_translation' )));
-      $this->validate(new Uniqueness(array('field' => array('articleid','languagecode'))));
-
-
-        if ($this->validationHasFailed() == true) {
-            return false;
-        }
-
-        return true;
+       $validator= new Validation();
+       $validator->add(["languagecode","title_translation"],
+       new PresenceOf(
+        [
+          "message" =>
+          [
+            "languagecode" => $this->di->get('translate')->_('article_translation.language.required'),
+            "title_translation" => $this->di->get('translate')->_('article_translation.title.required'),
+           
+           ]
+        ]
+        ));
+    
+      $validator->add(["articleid","languagecode"],new Uniqueness(["model" => $this,"message" => $this->di->get('translate')->_('article_translation.language.exist')]));
+      return $this->validate($validator);
     }
 
-    public function getMessages()
-   {
-     $messages = array();
-     $txtmessage ="";
-     foreach (parent::getMessages() as $message) {
-         switch ($message->getType()) {
-             case 'PresenceOf':
-                 switch ($message->getField()) {
-                  case 'languagecode':
-                   $txtmessage = $this->di->get('translate')->_('article_translation.language.required');
-                  break;
-                  case 'title_translation':
-                   $txtmessage = $this->di->get('translate')->_('article_translation.title.required');
-                  break;
-                 }
-                  $messages[] =$txtmessage;
-                 break;
-
-            case 'Unique':
-
-                 if (is_array($message->getField()))
-                 {
-                   $field =implode("-", $message->getField());
-                 }
-                 else {
-                   $field =$message->getField();
-                 }
-
-                 switch ($field) {
-                  case 'articleid-languagecode':
-                     $txtmessage =$this->di->get('translate')->_('article_translation.language.exist');
-                break;
-              }
-              $messages[] =$txtmessage;
-             break;
-         }
-     }
-
-     return $messages;
- }
 
 
 }

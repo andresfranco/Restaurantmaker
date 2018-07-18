@@ -1,7 +1,9 @@
 <?php
 use ControllerBase as ControllerBase;
-use Phalcon\Mvc\Model\Validator\PresenceOf;
-use Phalcon\Mvc\Model\Validator\Uniqueness;
+use Phalcon\Mvc\Model;
+use Phalcon\Validation;
+use Phalcon\Validation\Validator\Uniqueness;
+use Phalcon\Validation\Validator\PresenceOf;
 class Gallery extends \Phalcon\Mvc\Model
 {
 
@@ -368,47 +370,20 @@ class Gallery extends \Phalcon\Mvc\Model
     }
     public function validation()
     {
-        $this->validate(new PresenceOf(array('field'=>'name')));
-        $this->validate(new PresenceOf(array('field'=>'title')));
-        $this->validate(new Uniqueness(array('field' => 'name')));
-        if ($this->validationHasFailed() == true) {return false;}
-        return true;
+       $validator= new Validation();
+       $validator->add(["name","title"],
+       new PresenceOf(
+        [
+          "message" =>
+          [
+            "name" => $this->di->get('translate')->_('gallery.name.required'),
+            "title" => $this->di->get('translate')->_('gallery.title.required')
+          ]
+        ]
+        ));
+      
+      $validator->add("name",new Uniqueness(["model"   => $this,"message" => $this->di->get('translate')->_('gallery.name.exist')]));
+      return $this->validate($validator);
     }
-
-    public function getMessages()
-    {
-        $messages = array();
-        $txtmessage ="";
-        foreach (parent::getMessages() as $message) {
-            switch ($message->getType())
-            {
-                case 'PresenceOf':
-                    switch ($message->getField()) {
-                      case 'name':$txtmessage = $this->di->get('translate')->_('gallery.name.required');break;
-                      case 'title':$txtmessage = $this->di->get('translate')->_('gallery.title.required');break;
-                    }
-                    $messages[] =$txtmessage;break;
-
-                case 'Unique':
-
-                    if (is_array($message->getField())) {$field =implode("-", $message->getField());}
-                    else {$field =$message->getField();}
-
-                    switch ($field)
-                    {
-                    case 'name':$txtmessage =$this->di->get('translate')->_('gallery.name.exist');break;
-                    }
-                    $messages[] =$txtmessage;break;
-
-            }
-        }
-
-        return $messages;
-    }
-
-
-
-
-
 
 }

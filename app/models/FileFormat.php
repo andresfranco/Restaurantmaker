@@ -1,6 +1,8 @@
 <?php
-use Phalcon\Mvc\Model\Validator\PresenceOf;
-use Phalcon\Mvc\Model\Validator\Uniqueness;
+use Phalcon\Mvc\Model;
+use Phalcon\Validation;
+use Phalcon\Validation\Validator\Uniqueness;
+use Phalcon\Validation\Validator\PresenceOf;
 class FileFormat extends \Phalcon\Mvc\Model
 {
 
@@ -320,52 +322,19 @@ class FileFormat extends \Phalcon\Mvc\Model
         );
     }
 
-    public function beforeValidationOnCreate()
-   {
-     $this->validate(new Uniqueness(array('field' => array('extension'))));
-     
-   }
+  
     public function validation()
     {
-        $this->validate(new PresenceOf(array('field'=>'extension')));
-
-        if ($this->validationHasFailed() == true) {return false;}
-        return true;
+      
+      $validator= new Validation();
+      
+      $validator->add( "extension", new PresenceOf([ "message" => $this->di->get('translate')->_('fileformat.extension.required')]));
+      
+      $validator->add("extension",new Uniqueness(["model"   => $this,"message" => $this->di->get('translate')->_('fileformat.extension.exist')]));
+      
+      return $this->validate($validator);
     }
-    public function getMessages()
-    {
-        $messages = array();
-        $txtmessage ="";
-        foreach (parent::getMessages() as $message) {
-            switch ($message->getType())
-            {
-                case 'PresenceOf':
-                    switch ($message->getField()) {
-                      case 'extension':$txtmessage = $this->di->get('translate')->_('fileformat.extension.required');break;
-                    }
-                    $messages[] =$txtmessage;break;
-                    case 'Unique':
-
-                         if (is_array($message->getField()))
-                         {
-                           $field =implode("-", $message->getField());
-                         }
-                         else {
-                           $field =$message->getField();
-                         }
-
-                         switch ($field) {
-                          case 'extension':
-                             $txtmessage =$this->di->get('translate')->_('fileformat.extension.exist');
-                          break;
-                      }
-                      $messages[] =$txtmessage;break;
-
-            }
-        }
-
-        return $messages;
-    }
+   
 
 
 }

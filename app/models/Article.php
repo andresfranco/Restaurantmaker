@@ -1,6 +1,8 @@
 <?php
-use Phalcon\Mvc\Model\Validator\PresenceOf;
-use Phalcon\Mvc\Model\Validator\Uniqueness;
+use Phalcon\Mvc\Model;
+use Phalcon\Validation;
+use Phalcon\Validation\Validator\Uniqueness;
+use Phalcon\Validation\Validator\PresenceOf;
 class Article extends \Phalcon\Mvc\Model
 {
 
@@ -328,48 +330,27 @@ class Article extends \Phalcon\Mvc\Model
 
     public function validation()
     {
-        $this->validate(new PresenceOf(array('field'=>'title')));
-        $this->validate(new PresenceOf(array('field'=>'author')));
-        $this->validate(new Uniqueness(array('field' => array('title'))));
-        $this->validate(new Uniqueness(array('field' => array('content'))));
-        if ($this->validationHasFailed() == true) {return false;}
-        return true;
-    }
-    public function getMessages()
-    {
-        $messages = array();
-        $txtmessage ="";
-        foreach (parent::getMessages() as $message) {
-            switch ($message->getType())
-            {
-                case 'PresenceOf':
-                    switch ($message->getField()) {
-                        case 'title':$txtmessage = $this->di->get('translate')->_('article.title.required');break;
-                        case 'author':$txtmessage = $this->di->get('translate')->_('article.author.required');break;
-                        case 'content':$txtmessage = $this->di->get('translate')->_('article.content.required');break;
-                    }
-                    $messages[] =$txtmessage;break;
-                case 'Unique':
-
-                    if (is_array($message->getField()))
-                    {
-                        $field =implode("-", $message->getField());
-                    }
-                    else {
-                        $field =$message->getField();
-                    }
-
-                    switch ($field) {
-                        case 'title':
-                            $txtmessage =$this->di->get('translate')->_('article.title.exist');
-                            break;
-                    }
-                    $messages[] =$txtmessage;break;
-
-            }
-        }
-
-        return $messages;
+        
+       $validator= new Validation();
+       $validator->add(["title","author","content"],
+       new PresenceOf(
+        [
+          "message" =>
+          [
+            "title" => $this->di->get('translate')->_('article.title.required'),
+            "author" => $this->di->get('translate')->_('article.title.required'),
+            "content" => $this->di->get('translate')->_('article.content.required'),
+          ]
+        ]
+        ));
+      
+   
+      $validator->add("title",new Uniqueness(["model"   => $this,"message" => $this->di->get('translate')->_('article.title.exist')]));
+      $validator->add("content",new Uniqueness(["model"   => $this,"message" => $this->di->get('translate')->_('article.content.exist')]));
+      
+      return $this->validate($validator);
+      
+      
     }
 
 }

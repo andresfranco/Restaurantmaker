@@ -5,7 +5,6 @@
 <html lang="en">
 <!-- BEGIN HEAD -->
 
- 
 <head>
   <!-- Stylesheets --> 
   <link rel="stylesheet" type="text/css" href="<?= $this->url->getStatic('/tools/bootstrap/css/bootstrap.css') ?>">
@@ -14,19 +13,6 @@
   <!-- End Stylesheets --> 
 </head>
  
- <?= $this->assets->outputCss('upload_file_css') ?>
- <script>
- var file_param =new Array();
- file_param['acceptFileTypes'] =<?= $file_formats['accept_file_types'] ?> ;
- file_param['maxFileSize'] =<?= $upload_params['max_file_size'] ?>;
- file_param['minFileSize'] =<?= $upload_params['min_file_size'] ?>;
- file_param['maxNumberOfFiles'] =<?= $upload_params['max_number_of_files'] ?>;
- file_param['accept_file_error']='<?= $this->getDI()->get("translate")->_('validate.file.validformats') ?>';
- file_param['max_file_size_error']='<?= $this->getDI()->get("translate")->_('validate.file.maxsize') ?>';
- file_param['min_file_size_error']='<?= $this->getDI()->get("translate")->_('validate.file.minsize') ?>';
- file_param['max_number_files_error']='<?= $this->getDI()->get("translate")->_('validate.file.filesnumber') ?>';
- </script>
-
 <body>
  <!-- Main Row Container --> 
 <div class="row">
@@ -521,105 +507,44 @@
   <div class="col-sm-12 col-md-10 col-xs-12 col-lg-10 column_content">
   <div class="main_content">
   
-	<!-- END SIDEBAR -->
-	<!-- BEGIN CONTENT -->
-
-			<!-- BEGIN SAMPLE PORTLET CONFIGURATION MODAL FORM-->
-			<div class="modal fade" id="portlet-config" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-				<div class="modal-dialog">
-					<div class="modal-content">
-						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-							<h4 class="modal-title">Modal title</h4>
-						</div>
-						<div class="modal-body">
-							 Widget settings form goes here
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn blue">Save changes</button>
-							<button type="button" class="btn default" data-dismiss="modal">Close</button>
-						</div>
-					</div>
-					<!-- /.modal-content -->
-				</div>
-				<!-- /.modal-dialog -->
-			</div>
-			<!-- /.modal -->
-
-			<!-- END STYLE CUSTOMIZER -->
-       
-			<!-- BEGIN PAGE CONTENT-->
-			<div class="row">
-				<div class="col-md-12">
-          <h3 class="page-title" align ="left">
-        	<?= $this->getDI()->get("translate")->_($title_tags['main_title']) ?>
-        	</h3>
-        	<hr/>
-					<form id="fileupload" action="<?= $this->url->get('file/upload_files') ?>" method="POST" enctype="multipart/form-data">
-						<!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
-						<div class="row fileupload-buttonbar">
-							<div class="col-lg-10">
-								<!-- The fileinput-button span is used to style the file input field as button -->
-								<span class="btn  btn-primary fileinput-button">
-								<i class="fa fa-plus"></i>
-								<span>
-								<?= $this->getDI()->get("translate")->_($title_tags['add_files_title']) ?><?= '...' ?> </span>
-								<input type="file" name="files[]" multiple="">
-								</span>
-								<button type="submit" class="btn btn-success start">
-								<i class="fa fa-upload"></i>
-								<span>
-								<?= $this->getDI()->get("translate")->_($title_tags['start_upload_title']) ?></span>
-								</button>
-								<button type="reset" class="btn btn-default cancel">
-								<i class="fa fa-ban-circle"></i>
-								<span>
-								<?= $this->getDI()->get("translate")->_($title_tags['cancel_upload_title']) ?> </span>
-								</button>
-
-								<!-- The global file processing state -->
-								<span class="fileupload-process">
-								</span>
-							</div>
-							<!-- The global progress information -->
-							<div class="col-lg-5 fileupload-progress fade">
-								<!-- The global progress bar -->
-								<div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100">
-									<div class="progress-bar progress-bar-success" style="width:0%;">
-									</div>
-								</div>
-								<!-- The extended global progress information -->
-								<div class="progress-extended">
-									 &nbsp;
-								</div>
-							</div>
-						</div>
-						<!-- The table listing the files available for upload/download -->
-						<table role="presentation" class="table table-striped clearfix">
-						<tbody class="files">
-						</tbody>
-						</table>
-					</form>
-				</div>
-			</div>
-
-      <div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls" data-filter=":even">
-	<div class="slides">
+<div class="row row_container_form">
+	<div class="row">
+     <h3><?= $this->getDI()->get("translate")->_($title) ?></h3>
 	</div>
-	<h3 class="title"></h3>
-	<a class="prev">
-	‹ </a>
-	<a class="next">
-	› </a>
-	<a class="close white">
-	</a>
-	<a class="play-pause">
-	</a>
-	<ol class="indicator">
-	</ol>
+	<hr></hr>
+	<div class="row">
+	<!-- BEGIN FORM-->
+	<?= $this->tag->form([$routeform, 'method' => 'post', 'id' => 'appform', 'role' => 'form', 'class' => 'form-horizontal']) ?>
+	<!-- FORM ERROR MESSAGES-->
+	<?php $errorvar = $this->getContent(); ?>
+	<?php if (!empty($errorvar)) { ?>
+	<div class="alert alert-danger">
+	<button data-close="alert" class="close"></button>
+	<?= $this->getDI()->get("translate")->_($this->getContent()) ?>
+	</div>
+	<?php } ?>
+	<!-- LOAD FORM CONTROLS-->
+	<?php foreach ($formcolumns as $index => $item) { ?>
+		<div class="form-group">
+		<label name="<?= $item['name'] ?>" id ="item['name']" class="control-label col-md-1 align_label_left">
+		<?= $this->getDI()->get("translate")->_($item['label']) ?>
+        </label>
+		<div class="col-md-4">
+			<?= $form->render($item['name'], ['class' => 'form-control', 'disabled' => '""']) ?>
+		</div>
+		</div>
+	<?php } ?>
+       <div class="col-md-offset-1 col-md-3" style="padding-left:0;">
+       	<button class="btn btn-danger"><?= $this->getDI()->get("translate")->_($delete_button_name) ?></button>
+		<?= $this->tag->linkTo([$routelist, $this->getDI()->get("translate")->_($cancel_button_name), 'class' => 'btn btn-default']) ?>
+       </div>
+    </div>   
+	<!-- FORM ACTION BUTTONS-->
+	</form>
+	<!-- END FORM-->	
 </div>
 
-  
+
   </div>
   </div>
   <!-- End Main Content-->   
@@ -635,54 +560,12 @@
 
 <!-- javaScripts --> 
   
- 
+
   <script src="<?= $this->url->getStatic('tools/jquery/jquery2.2.0/jquery.min.js') ?>"></script>
   <script src="<?= $this->url->getStatic('tools/bootstrap/js/bootstrap.min.js') ?>"></script> 
   
- <?= $this->assets->outputJs('upload_file_javascripts') ?>
-<!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
-<script id="template-upload" type="text/x-tmpl">
-<?= '{%' ?> for (var i=0, file; file=o.files[i]; i++) { <?= '%}' ?>
-    <tr class="template-upload fade">
-        <td>
-            <span class="preview"></span>
-        </td>
-        <td>
-            <p class="name"><?= '{%=file.name%}' ?></p>
-            <strong class="error text-danger label label-danger"></strong>
-        </td>
-        <td>
-            <p class="size">Processing...</p>
-            <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
-            <div class="progress-bar progress-bar-success" style="width:0%;"></div>
-            </div>
-        </td>
-        <td>
-            <?= '{%' ?> if (!i && !o.options.autoUpload) { <?= '%}' ?>
-                <button class="btn btn-success start" disabled>
-                    <i class="fa fa-upload"></i>
-                    <span><?= $this->getDI()->get("translate")->_($title_tags['start_button_title']) ?></span>
-                </button>
-            <?= '{%' ?> } <?= '%}' ?>
-            <?= '{%' ?>if (!i) { <?= '%}' ?>
-                <button class="btn btn-danger cancel">
-                    <i class="fa fa-ban"></i>
-                    <span><?= $this->getDI()->get("translate")->_($title_tags['cancel_button_title']) ?></span>
-                </button>
-          <?= '{%' ?> } <?= '%}' ?>
-        </td>
-    </tr>
-<?= '{%' ?> } <?= '%}' ?>
-</script>
-<!-- The template to display files available for download -->
-<script id="template-download" type="text/x-tmpl">
-      <?= '{%' ?> for (var i=0, file; file=o.files[i]; i++) { <?= '%}' ?>
-
-        <?= '{%' ?> } <?= '%}' ?>
-    </script>
-<script>
-jQuery(document).ready(function() {FormFileUpload.init();});
-</script>
+<?= $this->assets->outputJs('validate_forms_js') ?>
+<?= $this->assets->outputJs('validatejs') ?>
 
   <!-- End JavaScripts --> 
 </body>

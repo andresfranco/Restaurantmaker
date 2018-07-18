@@ -1,7 +1,9 @@
 <?php
-use Phalcon\Mvc\Model\Validator\PresenceOf;
-use Phalcon\Mvc\Model\Validator\Uniqueness;
-use Phalcon\Mvc\Model\Validator\Email as Email;
+use Phalcon\Mvc\Model;
+use Phalcon\Validation;
+use Phalcon\Validation\Validator\Uniqueness;
+use Phalcon\Validation\Validator\PresenceOf;
+use Phalcon\Validation\Validator\Email;
 
 class Restaurant extends \Phalcon\Mvc\Model
 {
@@ -332,36 +334,26 @@ class Restaurant extends \Phalcon\Mvc\Model
        */
        public function validation()
        {
-           $this->validate(new PresenceOf(array('field'=>'name')));
-           $this->validate(new PresenceOf(array('field'=>'phone')));
-           $this->validate(new PresenceOf(array('field'=>'email')));
-           $this->validate(new PresenceOf(array('field'=>'addressid')));
-           if ($this->validationHasFailed() == true) {return false;}
-           return true;
-       }
-       public function getMessages()
-       {
-           $messages = array();
-           $txtmessage ="";
-           foreach (parent::getMessages() as $message) {
-                //echo $message->getType();
-               switch ($message->getType())
-               {
-
-                   case 'PresenceOf':
-                   //echo $message->getField();
-                       switch ($message->getField()) {
-                           case 'addressid':$txtmessage = $this->di->get('translate')->_('restaurant.address.required');break;
-                           case 'name':$txtmessage = $this->di->get('translate')->_('restaurant.name.required');break;
-                           case 'phone':$txtmessage = $this->di->get('translate')->_('restaurant.phone.required');break;
-                           case 'email':$txtmessage = $this->di->get('translate')->_('restaurant.email.required');break;
-                       }
-                       $messages[] =$txtmessage;
-                       break;
-               }
-           }
-
-           return $messages;
+          
+         
+        $validator= new Validation();
+        $validator->add(["name","phone", "email","addressid"],
+        new PresenceOf(
+        [
+          "message" =>
+          [
+            "name" => $this->di->get('translate')->_('restaurant.name.required'),
+            "phone" => $this->di->get('translate')->_('restaurant.phone.required'),
+            "email" => $this->di->get('translate')->_('restaurant.email.required'),
+            "addressid" => $this->di->get('translate')->_('restaurant.address.required')
+           ]
+        ]
+        ));
+      
+      $validator->add( "email", new Email([ "message" => $this->di->get('translate')->_('email.valid')]));
+      
+      return $this->validate($validator);
+         
        }
 
     /**
