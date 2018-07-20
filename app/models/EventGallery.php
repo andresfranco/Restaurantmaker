@@ -1,6 +1,8 @@
 <?php
-use Phalcon\Mvc\Model\Validator\PresenceOf;
-use Phalcon\Mvc\Model\Validator\Uniqueness;
+use Phalcon\Mvc\Model;
+use Phalcon\Validation;
+use Phalcon\Validation\Validator\Uniqueness;
+use Phalcon\Validation\Validator\PresenceOf;
 use Phalcon\Mvc\Model\Message as Message;
 use Phalcon\Mvc\Model\modelsManager;
 class EventGallery extends \Phalcon\Mvc\Model
@@ -240,46 +242,12 @@ class EventGallery extends \Phalcon\Mvc\Model
     }
      public function validation()
     {
-      $this->validate(new PresenceOf(array('field' => 'galleryid' )));
-        if ($this->validationHasFailed() == true) {
-            return false;
-        }
-
-        return true;
+       
+      $validator= new Validation();
+      $validator->add( "galleryid", new PresenceOf([ "message" => $this->di->get('translate')->_('event.gallery.required')]));
+      return $this->validate($validator);
     }
 
-    public function getMessages()
-   {
-     $messages = array();
-     $txtmessage ="";
-     foreach (parent::getMessages() as $message) {
-         switch ($message->getType()) 
-          {
-             case 'PresenceOf':
-                 switch ($message->getField()) {
-                  case 'galleryid':
-                   $txtmessage = $this->di->get('translate')->_('event.gallery.required');
-                  break;
-                 
-                 }
-                  $messages[] =$txtmessage;
-                 break;
-              $messages[] =$txtmessage;
-             break;
-             case 'ConstraintViolation':
-            $txtmessage =$this->di->get('translate')->_('eventgallery.constraintviolation');
-             $messages[] =$txtmessage;
-             break;
-
-            case 'Gallery_exist':
-            $txtmessage =$this->di->get('translate')->_('eventgallery.gallery.exist');
-             $messages[] =$txtmessage;
-             break;
-         }
-     }
-
-     return $messages;
- }
 
  public function beforeValidation()
  

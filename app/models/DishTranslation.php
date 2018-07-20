@@ -1,6 +1,8 @@
 <?php
-use Phalcon\Mvc\Model\Validator\PresenceOf;
-use Phalcon\Mvc\Model\Validator\Uniqueness;
+use Phalcon\Mvc\Model;
+use Phalcon\Validation;
+use Phalcon\Validation\Validator\Uniqueness;
+use Phalcon\Validation\Validator\PresenceOf;
 class DishTranslation extends \Phalcon\Mvc\Model
 {
 
@@ -329,61 +331,22 @@ class DishTranslation extends \Phalcon\Mvc\Model
 
     public function validation()
     {
-      $this->validate(new PresenceOf(array('field' => 'languagecode')));
-      $this->validate(new PresenceOf(array('field' => 'name' )));
-      $this->validate(new PresenceOf(array('field' => 'description')));
-      $this->validate(new Uniqueness(array('field' => array('dishid','languagecode'))));
-
-
-        if ($this->validationHasFailed() == true) {
-            return false;
-        }
-
-        return true;
+       $validator= new Validation();
+       $validator->add(["languagecode","name", "description"],
+       new PresenceOf(
+        [
+          "message" =>
+          [
+            "languagecode" => $this->di->get('translate')->_('dish_translation.language.required'),
+            "name" => $this->di->get('translate')->_('dish_translation.name.required'),
+            "description" => $this->di->get('translate')->_('dish_translation.description.required')
+           ]
+        ]
+        ));
+      
+      $validator->add(["dishid","languagecode"],new Uniqueness(["model" => $this,"message" => $this->di->get('translate')->_('dish_translation.language.exist')]));
+      return $this->validate($validator);
     }
 
-    public function getMessages()
-   {
-     $messages = array();
-     $txtmessage ="";
-     foreach (parent::getMessages() as $message) {
-         switch ($message->getType()) {
-             case 'PresenceOf':
-                 switch ($message->getField()) {
-                  case 'languagecode':
-                   $txtmessage = $this->di->get('translate')->_('dish_translation.language.required');
-                  break;
-                  case 'name':
-                   $txtmessage = $this->di->get('translate')->_('dish_translation.name.required');
-                  break;
-                  case 'description':
-                   $txtmessage = $this->di->get('translate')->_('dish_translation.description.required');
-                  break;
-                 }
-                  $messages[] =$txtmessage;
-                 break;
-
-            case 'Unique':
-
-                 if (is_array($message->getField()))
-                 {
-                   $field =implode("-", $message->getField());
-                 }
-                 else {
-                   $field =$message->getField();
-                 }
-
-                 switch ($field) {
-                  case 'dishid-languagecode':
-                     $txtmessage =$this->di->get('translate')->_('dish_translation.language.exist');
-                break;
-              }
-              $messages[] =$txtmessage;
-             break;
-         }
-     }
-
-     return $messages;
- }
-
+   
 }

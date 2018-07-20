@@ -167,7 +167,7 @@ $(document).ready(function()
 function selectImage(clicked_id)
 {
   var base_url =get_url_path();
-  var urlpath =base_url+"/files/images/"+clicked_id;
+  var urlpath ="/files/images/"+clicked_id;
   $("#logo").val(clicked_id);
   $('#logo_image').html('<img id="theImg" src="'+urlpath+'" width="50px" heigh="50px"/>')
   $('#ModalEditor').modal('hide');

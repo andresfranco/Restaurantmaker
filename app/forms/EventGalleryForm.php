@@ -17,7 +17,7 @@ class EventGalleryForm extends Form
   public function initialize($entity =null , $options=null)
 	{
 
-    $gallery = new Select('galleryid',gallery::find(), array(
+    $gallery = new Select('galleryid',Gallery::find(), array(
     'using' => array('id','name')
    ,'useEmpty' => TRUE,'emptyText' => $this->di->get('translate')->_('Seleccione una galeria')));
      $gallery->setLabel('Gallerry');

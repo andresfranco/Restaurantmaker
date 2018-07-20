@@ -1,6 +1,8 @@
 <?php
-use Phalcon\Mvc\Model\Validator\PresenceOf;
-use Phalcon\Mvc\Model\Validator\Uniqueness;
+use Phalcon\Mvc\Model;
+use Phalcon\Validation;
+use Phalcon\Validation\Validator\Uniqueness;
+use Phalcon\Validation\Validator\PresenceOf;
 class DishCategory extends \Phalcon\Mvc\Model
 {
 
@@ -238,56 +240,11 @@ class DishCategory extends \Phalcon\Mvc\Model
 
     public function validation()
     {
-      $this->validate(new PresenceOf(array('field' => 'category')));
-      $this->validate(new Uniqueness(array('field' => 'category' )));
-
-        if ($this->validationHasFailed() == true) {
-            return false;
-        }
-
-        return true;
+      $validator= new Validation();
+      $validator->add( "category", new PresenceOf([ "message" => $this->di->get('translate')->_('category.required')]));
+      $validator->add( "category",new Uniqueness(["model" => $this,"message" => $this->di->get('translate')->_('category.exist')]));
+      return $this->validate($validator);
     }
 
-    public function getMessages()
-   {
-     $messages = array();
-     $txtmessage ="";
-     foreach (parent::getMessages() as $message) {
-         switch ($message->getType()) {
-             case 'PresenceOf':
-                 switch ($message->getField()) {
-                  case 'category':
-                   $txtmessage = $this->di->get('translate')->_('category.required');
-                  break;
-                 }
-                  $messages[] =$txtmessage;
-                 break;
-
-            case 'Unique':
-
-                 if (is_array($message->getField()))
-                 {
-                   $field =implode("-", $message->getField());
-                 }
-                 else {
-                   $field =$message->getField();
-                 }
-
-                 switch ($field) {
-                  case 'category':
-                     $txtmessage =$this->di->get('translate')->_('category.exist');
-                break;
-              }
-              $messages[] =$txtmessage;
-             break;
-             case 'ConstraintViolation':
-            $txtmessage =$this->di->get('translate')->_('category.constraintviolation');
-             $messages[] =$txtmessage;
-             break;
-         }
-     }
-
-     return $messages;
- }
 
 }
