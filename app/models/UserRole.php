@@ -1,5 +1,7 @@
 <?php
-use Phalcon\Mvc\Model\Validator\PresenceOf;
+use Phalcon\Mvc\Model;
+use Phalcon\Validation;
+use Phalcon\Validation\Validator\PresenceOf;
 class UserRole extends \Phalcon\Mvc\Model
 {
 
@@ -240,41 +242,12 @@ class UserRole extends \Phalcon\Mvc\Model
 
     public function validation()
     {
-      $this->validate(
-          new PresenceOf(
-              array(
-                  'field'    => 'roleid'
-
-              )
-          )
-      );
-
-        if ($this->validationHasFailed() == true) {
-            return false;
-        }
-
-        return true;
+      $validator= new Validation();
+      
+      $validator->add( "roleid", new PresenceOf([ "message" => $this->di->get('translate')->_('userrole.roleid.required')]));
+  
+      return $this->validate($validator);
     }
 
-    public function getMessages()
-   {
-     $messages = array();
-     $txtmessage ="";
-     foreach (parent::getMessages() as $message) {
-         switch ($message->getType()) {
-             case 'PresenceOf':
-                 switch ($message->getField()) {
-                  case 'roleid':
-                   $txtmessage = $this->di->get('translate')->_('userrole.roleid.required');
-                  break;
-                 }
-                  $messages[] =$txtmessage;
-                 break;
-
-          }
-     }
-
-     return $messages;
- }
 
 }

@@ -3,6 +3,7 @@ use Phalcon\Mvc\Model\Criteria;
 use Phalcon\Paginator\Adapter\Model as Paginator;
 use Phalcon\Validation;
 use UserForm as UserForm;
+//use Phalcon\Mvc\Model\User as User;
 /**
  * @RoutePrefix("/user")
  */
@@ -373,8 +374,9 @@ class UserController extends ControllerBase
   public function set_password_changeAction($id)
   {
 
-            $entity = User::findFirstByid($id);
-            if (!$entity) {
+            $entity = User::findFirst($id);
+            
+           if (!$entity) {
                 $this->flash->error($this->crud_params['not_found_message']);
 
                 return $this->dispatcher->forward(array(
@@ -385,7 +387,7 @@ class UserController extends ControllerBase
             $this->set_change_password_assets();
             $this->view->id = $entity->id;
             $this->view->title ='Cambiar Password '.$entity->username;
-            $this->view->routeform ='user/change_password/';
+            $this->view->routeform ='user/change_password/'.$entity->id;
             $this->view->cancel_button_name=$this->crud_params['cancel_button_name'];
             $this->view->routelist =$this->crud_params['route_list'];
 
@@ -395,10 +397,10 @@ class UserController extends ControllerBase
    /**
   * @Route("/change_password/{id}", methods={"POST"}, name="change_password")
   */
-    public function Change_password_Action($id)
+    public function change_passwordAction($id)
     {
 
-        $entity = User::findFirstByid($id);
+        $entity = User::findFirst($id);
         if (!$entity) {
             $this->flash->error($this->crud_params['not_found_message']);
 
