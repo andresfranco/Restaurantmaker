@@ -12,28 +12,45 @@ class FrontEndController extends ControllerBase
 {
 
   /**
-   * @Route("/home", methods={"GET"}, name="home")
+   * @Route("/{restaurantid}", methods={"GET"}, name="home")
   */
-  public function homeAction()
+  public function homeAction($restaurantid)
 
   {
-     $this->get_assets();
-     $this->view->website_title ='Gambrinus Pub and Grill';
+    $restaurant = Restaurant::findFirst($restaurantid);
+    
+    
+    $this->get_assets();
+     $this->view->website_title =$restaurant->name;
+    //Restaurant Favicon 
      $this->view->favicon_url = 'frontend/themes/default/images/beer.ico';
-     $this->view->main_page_title = 'Gambrinus Pub & Grill';
+    
+    //Restaurant Main Image Slider
+    $this->view->mainImage = '/files/images/mainimage.jpg';
+    
+    $this->view->mainImageTitle ='Name Image title';
+     
+    //Restaurant Logo
+    $this->view->logo = '/files/images/'.$restaurant->logo_path;
+    
+     $this->view->main_page_title =$restaurant->name;
+    
+     $languages = Language::find(); 
+     $this->view->languages = $languages; 
      $this->view->pick('front_end/themes/default/default_theme');
-
+     
+    
   }
 
   public function get_assets()
   {
     $this->assets->collection('frontend_js')
     //Jquery
-    ->addJs('frontend/themes/default/assets/jquery.js')
+    //->addJs('frontend/themes/default/assets/jquery.js')
     //wow script
     ->addJs('frontend/themes/default/assets/wow/wow.min.js')
     //Bootstrap
-    ->addJs('frontend/themes/default/assets/bootstrap/js/bootstrap.js')
+   // ->addJs('frontend/themes/default/assets/bootstrap/js/bootstrap.js')
     //Jquery Mobile
     ->addJs('frontend/themes/default/assets/mobile/touchSwipe.min.js')
     ->addJs('frontend/themes/default/assets/respond/respond.js')
@@ -42,7 +59,7 @@ class FrontEndController extends ControllerBase
     //Maps
     ->addJs('https://maps.googleapis.com/maps/api/js?key=&sensor=false&extension=.js')
     //Angular JS
-    ->addJs('https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js',false)
+   // ->addJs('https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js',false)
     //Custom Script
     ->addJs('frontend/themes/default/assets/script.js');
 

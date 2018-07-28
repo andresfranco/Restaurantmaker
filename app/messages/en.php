@@ -6,8 +6,6 @@ $messages = array(
     "Password"  =>"Password",
     "Usuarios" =>"Users",
     "User Name"=>"User Name",
-    "Ingles"=>"English",
-    "Español"=>"Spanish",
     "Página"=>"Page",
     "de"=>"of",
     "Primero"=>"First",
@@ -45,4 +43,5 @@ $messages = array(
     "Seguridad"=>"Security",
     "Acciones"=>"Actions",
     "Seleccione una bandera"=>"Select a Flag"
+
 );

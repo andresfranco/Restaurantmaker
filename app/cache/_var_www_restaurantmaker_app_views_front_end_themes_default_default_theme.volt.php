@@ -31,7 +31,7 @@
         <div class="navbar-header">
         <!-- Logo Starts -->
         <a class="navbar-brand" href="#home">
-        <img src="<?= $this->url->getStatic('frontend/themes/default/images/logo.png') ?>" alt="logo">
+        <img src="<?= $logo ?>" alt="logo" width="93px" height="100px">
         <span style="font: 1em Lobster,Arial,Helvetica;color:#00b504;font-weight:bold;"><?= $main_page_title ?></span>
         </a>
         <!-- #Logo Ends -->
@@ -46,16 +46,31 @@
         <div class="navbar-collapse  collapse">
 
             <ul class="nav navbar-nav navbar-right scroll">
-              <li class="active"><a href="#home">Home</a></li>
-              <li ><a href="#menu">Menu</a></li>
-              <li ><a href="#foods">Eventos</a></li>
-              <li ><a href="#foods">Pedidos</a></li>
-              <li ><a href="#partners">Blog</a></li>
-              <li ><a href="#contact">Contáctenos</a></li>
-              <li> <div style="padding-left:20px;">
-              <a href="#home"><img src="<?= $this->url->getStatic('frontend/themes/default/images/usa.png') ?>" alt="logo"></a>
-              <a href="#home"><img src="<?= $this->url->getStatic('frontend/themes/default/images/panama.png') ?>" alt="logo"></a>
-              </div>
+              <li class="active"><a href="#home"><?= $this->getDI()->get("translate")->_('headermenu.home') ?></a></li>
+              <li ><a href="#menu"><?= $this->getDI()->get("translate")->_('headermenu.menu') ?></a></li>
+              <li ><a href="#foods"><?= $this->getDI()->get("translate")->_('headermenu.event') ?></a></li>
+              <li ><a href="#partners"><?= $this->getDI()->get("translate")->_('headermenu.blog') ?></a></li>
+              <li> 
+               <li class="dropdown">
+        
+           <?php $flag = 'es.png'; ?>
+           <?php $languagename = 'Spanish'; ?>
+           <?php foreach ($languages as $item) { ?>
+             <?php if ($this->session->get('language') == $item->code) { ?>
+                 <?php $flag = $item->flag; ?>
+                 <?php $languagename = $item->language; ?>
+             <?php } ?>
+          <?php } ?>
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <img src="<?= $this->url->getStatic('/img/flags/' . $flag) ?>" alt=""><?= ' ' ?><?= $this->getDI()->get("translate")->_($languagename) ?><span class="caret"></span></a>
+      <ul class="dropdown-menu">
+        <?php foreach ($languages as $item) { ?>
+        <li>
+        <a href="<?= $this->url->get('setlang') . '/' . $item->code ?>">
+        <img src="<?= $this->url->getStatic('/img/flags/' . $item->flag) ?>" alt=""><?= ' ' ?><?= $this->getDI()->get("translate")->_($item->language) ?> </a>
+        </li>
+        <?php } ?>
+      </ul>
+      </li>
               </li>
             </ul>
 
@@ -72,11 +87,11 @@
 <div id="home">
 <!-- Slider Starts -->
   <div class="banner">
-  <img src="<?= $this->url->getStatic('frontend/themes/default/images/back.jpg') ?>" alt="banner" class="img-responsive">
+  <img src="<?= $mainImage ?>" alt="banner" class="img-responsive" width="100%">
   <div class="caption">
     <div class="caption-wrapper">
     <div class="caption-info">
-    <h1 class="animated bounceInUp"><i class="fa fa-beer animated bounceInDown"></i> Disfruta de nuestras deliciosas comidas y bebidas</h1>
+    <h1 class="animated bounceInUp"><?= $mainImageTitle ?></h1>
     <p class="animated bounceInLeft"> </p>
     <a href="#menu" class="explore animated bounceInDown"><i class="fa fa-angle-down  fa-3x"></i></a>
     </div>
@@ -412,7 +427,9 @@
 </div>
 
 
-<?= $this->assets->outputCJs('frontend_js') ?>
+  <script src="<?= $this->url->getStatic('tools/jquery/jquery2.2.0/jquery.min.js') ?>"></script>
+  <script src="<?= $this->url->getStatic('tools/bootstrap/js/bootstrap.min.js') ?>"></script>
+  <?= $this->assets->outputCJs('frontend_js') ?>
 
 </body>
 

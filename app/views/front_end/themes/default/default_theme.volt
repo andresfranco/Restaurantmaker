@@ -31,7 +31,7 @@
         <div class="navbar-header">
         <!-- Logo Starts -->
         <a class="navbar-brand" href="#home">
-        <img src="{{static_url('frontend/themes/default/images/logo.png')}}" alt="logo">
+        <img src="{{logo}}" alt="logo" width="93px" height="100px">
         <span style="font: 1em Lobster,Arial,Helvetica;color:#00b504;font-weight:bold;">{{main_page_title}}</span>
         </a>
         <!-- #Logo Ends -->
@@ -46,16 +46,31 @@
         <div class="navbar-collapse  collapse">
 
             <ul class="nav navbar-nav navbar-right scroll">
-              <li class="active"><a href="#home">Home</a></li>
-              <li ><a href="#menu">Menu</a></li>
-              <li ><a href="#foods">Eventos</a></li>
-              <li ><a href="#foods">Pedidos</a></li>
-              <li ><a href="#partners">Blog</a></li>
-              <li ><a href="#contact">Contáctenos</a></li>
-              <li> <div style="padding-left:20px;">
-              <a href="#home"><img src="{{static_url('frontend/themes/default/images/usa.png')}}" alt="logo"></a>
-              <a href="#home"><img src="{{static_url('frontend/themes/default/images/panama.png')}}" alt="logo"></a>
-              </div>
+              <li class="active"><a href="#home">{{'headermenu.home'|t}}</a></li>
+              <li ><a href="#menu">{{'headermenu.menu'|t}}</a></li>
+              <li ><a href="#foods">{{'headermenu.event'|t}}</a></li>
+              <li ><a href="#partners">{{'headermenu.blog'|t}}</a></li>
+              <li> 
+               <li class="dropdown">
+        {#Default language spanish#}
+           {% set flag ='es.png' %}
+           {% set languagename ='Spanish' %}
+           {% for item in languages %}
+             {% if session.get('language')== item.code %}
+                 {% set flag = item.flag %}
+                 {% set languagename = item.language %}
+             {% endif %}
+          {% endfor %}
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <img src="{{static_url('/img/flags/'~flag)}}" alt="">{{' '}}{{languagename|t}}<span class="caret"></span></a>
+      <ul class="dropdown-menu">
+        {% for item in languages %}
+        <li>
+        <a href="{{ url('setlang')~'/'~item.code}}">
+        <img src="{{static_url('/img/flags/'~item.flag)}}" alt="">{{' '}}{{item.language|t}} </a>
+        </li>
+        {% endfor %}
+      </ul>
+      </li>
               </li>
             </ul>
 
@@ -72,11 +87,11 @@
 <div id="home">
 <!-- Slider Starts -->
   <div class="banner">
-  <img src="{{static_url('frontend/themes/default/images/back.jpg')}}" alt="banner" class="img-responsive">
+  <img src="{{mainImage}}" alt="banner" class="img-responsive" width="100%">
   <div class="caption">
     <div class="caption-wrapper">
     <div class="caption-info">
-    <h1 class="animated bounceInUp"><i class="fa fa-beer animated bounceInDown"></i> Disfruta de nuestras deliciosas comidas y bebidas</h1>
+    <h1 class="animated bounceInUp">{{mainImageTitle}}</h1>
     <p class="animated bounceInLeft"> </p>
     <a href="#menu" class="explore animated bounceInDown"><i class="fa fa-angle-down  fa-3x"></i></a>
     </div>
@@ -412,7 +427,9 @@
 </div>
 
 {% block javascripts %}
-{{ assets.outputCJs('frontend_js') }}
+  <script src="{{static_url('tools/jquery/jquery2.2.0/jquery.min.js')}}"></script>
+  <script src="{{static_url('tools/bootstrap/js/bootstrap.min.js')}}"></script>
+  {{ assets.outputCJs('frontend_js') }}
 {% endblock %}
 </body>
 
