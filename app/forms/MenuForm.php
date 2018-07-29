@@ -5,6 +5,7 @@ use Phalcon\Forms\Element\Select;
 use Phalcon\Forms\Element\Password;
 use Phalcon\Forms\Element\Submit;
 use Phalcon\Forms\Element\Hidden;
+use Phalcon\Forms\Element\TextArea;
 use Phalcon\Validation\Validator\PresenceOf;
 use Phalcon\Validation\Validator\Email;
 use Phalcon\Validation\Validator\Identical;
@@ -25,6 +26,18 @@ class MenuForm extends Form
   $name = new Text('menu_name');
   $name->setLabel('Name');
   $this->add($name);
+    
+  $title = new Text('title');
+  $title->setLabel('Title');
+  $this->add($title);  
+    
+  $description = new TextArea('description',array(
+            'id' =>'summernote'
+             ,'name'=>'description',
+            'class'   =>'summernote'
+        ));
+        $description->setLabel('Description');
+        $this->add($description);  
 
   $active = new Select("active"
   ,array('Y' => $this->di->get('translate')->_('Yes'),'N' => $this->di->get('translate')->_('No'))

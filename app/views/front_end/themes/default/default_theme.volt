@@ -49,7 +49,7 @@
               <li class="active"><a href="#home">{{'headermenu.home'|t}}</a></li>
               <li ><a href="#menu">{{'headermenu.menu'|t}}</a></li>
               <li ><a href="#foods">{{'headermenu.event'|t}}</a></li>
-              <li ><a href="#partners">{{'headermenu.blog'|t}}</a></li>
+              <li ><a href="#blog">{{'headermenu.blog'|t}}</a></li>
               <li> 
                <li class="dropdown">
         {#Default language spanish#}
@@ -103,14 +103,14 @@
 {% endblock %}
 
 {% block restaurant_menu %}
+
 <!-- Cirlce Starts -->
 <div id="menu"  class="container spacer about">
-<h2 class="text-center wowload fadeInUp">Prueba nuestro delicioso menu</h2>
+
+<h2 class="text-center wowload fadeInUp">{{menuTitle}}</h2>
 <div class="row">
   <div class="col-sm-6 wowload fadeInLeft">
-  <p>En Gambrinus combinamos la diversión con la buena gastronomía</p>
-  <p>Deleitate con nuestros deliciosos sabores que tienen el contraste de la cosina europea con el sabor panameño.
-  Además prueba nuestra selecta colección de cervezas y disfruta de nuestros eventos únicos.</p>
+   <p>{{menuDescription}}</p>
   </div>
   <div class="col-sm-6 wowload fadeInRight">
   <h4><i class="fa fa-bars"></i> Menu</h4>
@@ -299,7 +299,7 @@
 {% endblock %}
 
 {% block comments %}
-<div id="partners" class="container spacer ">
+<div id="blog" class="container spacer ">
   <h2 class="text-center  wowload fadeInUp">Comentarios de nuestros clientes felices</h2>
   <div class="clearfix">
     <div class="col-sm-6 col-sm-offset-3">

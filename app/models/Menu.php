@@ -30,6 +30,18 @@ class Menu extends \Phalcon\Mvc\Model
      * @var string
      */
     protected $active;
+  
+   /**
+     *
+     * @var string
+     */
+    protected $description;
+ /**
+     *
+     * @var string
+     */
+    protected $title;
+
 
     /**
      *
@@ -103,6 +115,30 @@ class Menu extends \Phalcon\Mvc\Model
     public function setActive($active)
     {
         $this->active = $active;
+
+        return $this;
+    }
+  /**
+     * Method to set the value of field title
+     *
+     * @param string $title
+     * @return $this
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+  /**
+     * Method to set the value of field description
+     *
+     * @param string $description
+     * @return $this
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
 
         return $this;
     }
@@ -197,6 +233,24 @@ class Menu extends \Phalcon\Mvc\Model
     public function getActive()
     {
         return $this->active;
+    }
+  /**
+     * Returns the value of field title
+     *
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+  /**
+     * Returns the value of field description
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
     }
 
     /**
@@ -293,6 +347,8 @@ class Menu extends \Phalcon\Mvc\Model
             'restaurantid' => 'restaurantid',
             'name' => 'menu_name',
             'active' => 'active',
+            'title'=>'title',
+            'description'=>'description',
             'createuser' => 'createuser',
             'modifyuser' => 'modifyuser',
             'createdate' => 'createdate',

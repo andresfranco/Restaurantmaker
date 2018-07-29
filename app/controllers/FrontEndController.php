@@ -20,7 +20,7 @@ class FrontEndController extends ControllerBase
     $restaurant = Restaurant::findFirst($restaurantid);
     
     
-    $this->get_assets();
+    $this->getAssets();
      $this->view->website_title =$restaurant->name;
     //Restaurant Favicon 
      $this->view->favicon_url = 'frontend/themes/default/images/beer.ico';
@@ -28,21 +28,61 @@ class FrontEndController extends ControllerBase
     //Restaurant Main Image Slider
     $this->view->mainImage = '/files/images/mainimage.jpg';
     
+    // restaurant header image title
     $this->view->mainImageTitle ='Name Image title';
      
     //Restaurant Logo
     $this->view->logo = '/files/images/'.$restaurant->logo_path;
     
+     // Restaurant Name
      $this->view->main_page_title =$restaurant->name;
     
+    
+    //Front End Languages
      $languages = Language::find(); 
      $this->view->languages = $languages; 
-     $this->view->pick('front_end/themes/default/default_theme');
+    
+    
+    //Get Main Menu 
+    $menu = $this->getActiveMenu($restaurantid);
+    
+    $this->view->menuTitle =$menu->title;
+    $this->view->menuDescription= $menu->description;
+    
+    
+    $this->view->pick('front_end/themes/default/default_theme');
+    
+     
+    //
      
     
   }
+  
+  public function getActiveMenu($restaurantId){
+    
+     $menu = Menu::findFirst(
+    [
+        "restaurantid = :restaurantid: AND active = :active:",
+        "bind" => [
+            "restaurantid" => $restaurantId,
+            "active" => "Y",
+        ],
+    ]
+);
+   
+      return $menu;
+        
+  }
+  
+  public function getMenuDishes($menuId){
+        $dishes=Dish::query()
+            ->where("menuid = :menuid:")
+            ->bind(["menuid" => $menuId])
+            ->execute();
+      return $dishes;   
+  }
 
-  public function get_assets()
+  public function getAssets()
   {
     $this->assets->collection('frontend_js')
     //Jquery

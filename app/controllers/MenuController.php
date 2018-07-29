@@ -33,7 +33,9 @@ class MenuController extends ControllerBase
         ,'label_error'=>''),
         array('name' => 'menu_name','label'=>'Name','required'=>'<span class="required" aria-required="true">* </span>'
         ,'label_error'=>''),
-        array('name' => 'active','label'=>'Active'  ,'required'=>'','label_error'=>'')
+        array('name' => 'title','label'=>'Title'  ,'required'=>'','label_error'=>''),
+        array('name' => 'description','label'=>'Description'  ,'required'=>'','label_error'=>''),  
+        array('name' => 'active','label'=>'Active'  ,'required'=>'','label_error'=>'')  
         );
         $this->crud_params['save_button_name']       ='Guardar';
         $this->crud_params['cancel_button_name']     ='Cancelar';
@@ -54,7 +56,8 @@ class MenuController extends ControllerBase
     {
       $entity->setRestaurantid($this->request->getPost("restaurantid"));
       $entity->setMenu_name($this->request->getPost("menu_name"));
-      $entity->setActive($this->request->getPost("active"));
+      $entity->setTitle($this->request->getPost("title"));
+      $entity->setDescription($this->request->getPost("description"));
     }
 
   public function set_grid_parameters($routelist)
