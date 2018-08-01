@@ -45,7 +45,6 @@ $(document).ready(function()
     var urlpath =base_url+"/address/get_state_data/";
     var countryid = $('#countryid').val();
     remove_select_options("#stateid","Seleccione un Estado");
-    console.log(urlpath+countryid);
     $.ajax
     ({
      dataType:'json',

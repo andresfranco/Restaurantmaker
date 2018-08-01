@@ -23,13 +23,13 @@ class FrontEndController extends ControllerBase
     $this->getAssets();
      $this->view->website_title =$restaurant->name;
     //Restaurant Favicon 
-     $this->view->favicon_url = 'frontend/themes/default/images/beer.ico';
+     $this->view->favicon_url = '/files/images/'.$restaurant->favicon;
     
     //Restaurant Main Image Slider
-    $this->view->mainImage = '/files/images/mainimage.jpg';
+    $this->view->mainImage = '/files/images/'.$restaurant->main_image;
     
     // restaurant header image title
-    $this->view->mainImageTitle ='Name Image title';
+    $this->view->mainImageTitle = $restaurant->main_image_title;
      
     //Restaurant Logo
     $this->view->logo = '/files/images/'.$restaurant->logo_path;

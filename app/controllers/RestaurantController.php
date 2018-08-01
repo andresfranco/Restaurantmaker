@@ -52,6 +52,9 @@ class RestaurantController extends ControllerBase
       $this->tag->setDefault("email", $entity_object->getEmail());
       $this->tag->setDefault("website", $entity_object->getWebsite());
       $this->tag->setDefault("logo", $entity_object->getLogoPath());
+      $this->tag->setDefault("main_image", $entity_object->getMainImage());
+      $this->tag->setDefault("main_image_title", $entity_object->getMainImageTitle());
+      $this->tag->setDefault("favicon", $entity_object->getFavicon());  
       }
     }
 
@@ -69,6 +72,9 @@ class RestaurantController extends ControllerBase
       $entity->setAddressid($addressid);
       $entity->setWebsite($this->request->getPost("website"));
       $entity->setLogoPath($this->request->getPost("logo"));
+      $entity->setMainImage($this->request->getPost("main_image"));
+      $entity->setMainImageTitle($this->request->getPost("main_image_title"));
+      $entity->setFavicon($this->request->getPost("favicon"));
     }
 
 
@@ -207,6 +213,7 @@ class RestaurantController extends ControllerBase
     $this->view->images = $this->get_logo_images();
     $this->view->countries_data = $addressobj->get_country_data();
     $this->view->logo_path ='' ;
+    $this->view->favicon ='' ;
     $this->view->mode ='new';
   }
 
@@ -225,6 +232,9 @@ class RestaurantController extends ControllerBase
     $entity->setAddressid($address->getId());
     $entity->setWebsite($this->request->getPost("website"));
     $entity->setLogoPath($this->request->getPost("logo"));
+    $entity->setMainImage($this->request->getPost("main_image"));
+    $entity->setMainImageTitle($this->request->getPost("main_image_title"));
+    $entity->setFavicon($this->request->getPost("favicon"));
   }
   /**
   * @Route("/edit/{id}", methods={"GET"}, name="restaurantedit")
@@ -240,6 +250,8 @@ class RestaurantController extends ControllerBase
     $addressobj = new AddressController();
     $this->view->countries_data = $addressobj->get_country_data();
     $this->view->logo_path =$entity->logo_path ;
+    $this->view->favicon =$entity->favicon;
+    $this->view->main_image =$entity->main_image;
     $this->view->mode ='edit';
 
     $this->tag->setDefault("name", $entity->getName());
@@ -265,7 +277,12 @@ class RestaurantController extends ControllerBase
     $this->tag->setDefault("website", $entity->getWebsite());
 
     $this->tag->setDefault("logo", $entity->getLogoPath());
-
+    
+    $this->tag->setDefault("main_image", $entity->getMainImage());
+   
+    $this->tag->setDefault("main_image_title", $entity->getMainImageTitle());
+    
+    $this->tag->setDefault("favicon", $entity->getFavicon());
 
     $this->view->images = $this->get_logo_images();
   }

@@ -62,6 +62,46 @@ valid_email:'{{"restaurant.email.valid"|t}}'
 				{% endif %}
 			</div>
 		</div>
+    
+    <div class="form-group">
+			<label name="lbllogo" id="lblloko" class="control-label col-md-1 align_label_left">
+				<a href="#FaviconModal" id="faviconurl"  data-toggle="modal" ><i class="fa fa-file-image-o"></i>
+					{{' '}}{{'Favicon'|t}} </a>
+			</label>
+			<div class="col-md-2">
+			{{ text_field("favicon" ,"type" : "text","class":"form-control") }}
+			</div>
+			<div id ="favicon_image" class="col-md-2">
+				{% if mode =='edit' and favicon !="" %}
+        <img id="favicon_preview" src="{{url('files/images/'~favicon)}}" width="50px" heigh="50px"/>
+				{% endif %}
+			</div>
+		</div>
+    
+    <div class="form-group">
+			<label name="lbllogo" id="lblloko" class="control-label col-md-1 align_label_left">
+				<a href="#MainImageModal" id="mainimageurl"  data-toggle="modal" ><i class="fa fa-file-image-o"></i>
+					{{' '}}{{'Main Image'|t}} </a>
+			</label>
+			<div class="col-md-2">
+			{{ text_field("main_image" ,"type" : "text","class":"form-control") }}
+			</div>
+			<div id ="main_image_content" class="col-md-2">
+				{% if mode =='edit' and main_image !="" %}
+        <img id="main_image_preview" src="{{url('files/images/'~main_image)}}" width="50px" heigh="50px"/>
+				{% endif %}
+			</div>
+		</div>
+    
+       <div class="form-group">
+			<label name="lblimagetitle" id="lblimagetitle" class="control-label col-md-1 align_label_left">
+				{{'Main Image Title'|t}}
+			</label>
+			<div class="col-md-4">
+			{{ text_field("main_image_title", "type" : "text","class":"form-control") }}
+			</div>
+			</div>
+      
 
 			<div class="form-group">
 			<label name="lbladdress" id="lbladdress" class="control-label col-md-1 align_label_left" style="padding-right:0;">
@@ -186,7 +226,7 @@ valid_email:'{{"restaurant.email.valid"|t}}'
  </div>
  </div>
 
- <!-- Image Modal -->
+ <!-- Logo Modal -->
  <div id="ModalEditor" class="modal fade"  tabindex="-1" data-width="760" >
   <div class="modal-body">
 	<div class="col-md-12">
@@ -198,7 +238,7 @@ valid_email:'{{"restaurant.email.valid"|t}}'
 		<div class="col-md-12" style="background-color:white;">
 		{% for index,item in images %}
 		<div class="col-md-1" style="padding-top:15px;">
-	  <img  class="modal_hover" id ="{{item['name']}}" src="{{url('files/images/'~item['name'])}}"  height="100" width="100" onclick="selectImage(this.id);">
+	  <img  class="modal_hover" id ="{{item['name']}}" src="{{url('files/images/'~item['name'])}}"  height="100" width="100" onclick="selectLogoImage(this.id);">
 		</div>
 		{% endfor %}
 	  </div>
@@ -210,6 +250,59 @@ valid_email:'{{"restaurant.email.valid"|t}}'
 	 </div>
  </div>
 	</div>
+   </div>
+   
+   <!-- Favicon Modal -->
+ <div id="FaviconModal" class="modal fade"  tabindex="-1" data-width="760" >
+  <div class="modal-body">
+	<div class="col-md-12">
+	<div class="portlet box blue" >
+		<div class="portlet-title">
+		<div class="caption">{{'Images'|t}}</div>
+		</div>
+		<div class="portlet-body form" >
+		<div class="col-md-12" style="background-color:white;">
+		{% for index,item in images %}
+		<div class="col-md-1" style="padding-top:15px;">
+	  <img  class="modal_hover" id ="{{item['name']}}" src="{{url('files/images/'~item['name'])}}"  height="100" width="100" onclick="selectFavicon(this.id);">
+		</div>
+		{% endfor %}
+	  </div>
+		<br><br>
+		<div class="col-md-12" style="background-color:white; padding-left:30px;padding-top:30px;padding-bottom:30px;">
+		<button type="button" data-dismiss="modal" class="btn btn-default">{{'Close'|t}}</button>
+		</div>
+		</div>
+	 </div>
+ </div>
+	</div>
+  </div>
+  
+     <!-- Favicon Modal -->
+ <div id="MainImageModal" class="modal fade"  tabindex="-1" data-width="760" >
+  <div class="modal-body">
+	<div class="col-md-12">
+	<div class="portlet box blue" >
+		<div class="portlet-title">
+		<div class="caption">{{'Images'|t}}</div>
+		</div>
+		<div class="portlet-body form" >
+		<div class="col-md-12" style="background-color:white;">
+		{% for index,item in images %}
+		<div class="col-md-1" style="padding-top:15px;">
+	  <img  class="modal_hover" id ="{{item['name']}}" src="{{url('files/images/'~item['name'])}}"  height="100" width="100" onclick="selectMainImage(this.id);">
+		</div>
+		{% endfor %}
+	  </div>
+		<br><br>
+		<div class="col-md-12" style="background-color:white; padding-left:30px;padding-top:30px;padding-bottom:30px;">
+		<button type="button" data-dismiss="modal" class="btn btn-default">{{'Close'|t}}</button>
+		</div>
+		</div>
+	 </div>
+ </div>
+	</div>
+  </div>
 
  </div>
 </div>

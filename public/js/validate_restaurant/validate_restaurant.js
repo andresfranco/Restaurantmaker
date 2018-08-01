@@ -164,7 +164,7 @@ $(document).ready(function()
 
 });
 
-function selectImage(clicked_id)
+function selectLogoImage(clicked_id)
 {
   var base_url =get_url_path();
   var urlpath ="/files/images/"+clicked_id;
@@ -173,3 +173,24 @@ function selectImage(clicked_id)
   $('#ModalEditor').modal('hide');
 
 }
+
+function selectFavicon(clicked_id)
+{
+  var base_url =get_url_path();
+  var urlpath ="/files/images/"+clicked_id;
+  $("#favicon").val(clicked_id);
+  $('#favicon_image').html('<img id="favicon_preview" src="'+urlpath+'" width="50px" heigh="50px"/>')
+  $('#FaviconModal').modal('hide');
+
+}
+
+function selectMainImage(clicked_id)
+{
+  var base_url =get_url_path();
+  var urlpath ="/files/images/"+clicked_id;
+  $("#main_image").val(clicked_id);
+  $('#main_image_content').html('<img id="main_image_preview" src="'+urlpath+'" width="50px" heigh="50px"/>')
+  $('#MainImageModal').modal('hide');
+
+}
+

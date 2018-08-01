@@ -507,301 +507,133 @@
   <div class="col-sm-12 col-md-10 col-xs-12 col-lg-10 column_content">
   <div class="main_content">
   
-<div class="row row_container_form">
+   <h3 class="page-title" align ="left">
+	<?= $this->getDI()->get("translate")->_($title) ?><?= ' - ' ?><?= $restaurant_name ?><div align="right"><a href ="<?= $this->url->get('restaurant/list/' . $menu_id) ?>" class="btn btn blue"><?= $this->getDI()->get("translate")->_('Restaurants') ?> <i class="fa fa-arrow-right "></i> </a></div>
+	</h3>
+	<hr/>
+  <!-- GRID SEARCH -->
+	<div align="left" >
+	<?= $this->tag->form([$searchroute . '/' . $restaurantid, 'method' => 'post', 'autocomplete' => 'off']) ?>
 	<div class="row">
-     <h3><?= $this->getDI()->get("translate")->_($title) ?></h3>
-	</div>
-	<hr></hr>
-	<div class="row">
-	<!-- BEGIN FORM-->
-	<?= $this->tag->form([$routeform, 'method' => 'post', 'id' => 'appform', 'role' => 'form', 'class' => 'form-horizontal']) ?>
-	<!-- FORM ERROR MESSAGES-->
-	<?php $errorvar = $this->getContent(); ?>
-	<?php if (!empty($errorvar)) { ?>
-	<div class="alert alert-danger">
-	<button data-close="alert" class="close"></button>
-	<?= $this->getDI()->get("translate")->_($this->getContent()) ?>
+	<div class="form-group col-md-10" style="padding-left:0;">
+	<?php foreach ($searchcolumns as $index => $item) { ?>
+	<div class="col-md-4 col-sm-4" style="padding-left:0;">
+	<label><?= $this->getDI()->get("translate")->_($item['title']) ?></label>
+	<?= $this->tag->textField([$item['name'], 'size' => $item['size'], 'class' => 'form-control', 'placeholder' => '']) ?>
 	</div>
 	<?php } ?>
-	<!-- LOAD FORM CONTROLS-->
-		<div class="form-group">
-		<label name="lblname" id="lblname" class="control-label col-md-1 align_label_left">
-		<?= $this->getDI()->get("translate")->_('Name') ?><span class="required" aria-required="true">* </span>
-		</label>
-		<div class="col-md-4">
-		<?= $this->tag->textField(['name', 'type' => 'text', 'class' => 'form-control']) ?>
-		</div>
-		</div>
-        <div class="form-group">
-			<label name="lblphone" id="lblphone" class="control-label col-md-1 align_label_left">
-				<?= $this->getDI()->get("translate")->_('Phone') ?><span class="required" aria-required="true">* </span>
-			</label>
-			<div class="col-md-4">
-			<?= $this->tag->textField(['phone', 'type' => 'text', 'class' => 'form-control']) ?>
-			</div>
-			</div>
-
-			<div class="form-group">
-			<label name="lbllogo" id="lblloko" class="control-label col-md-1 align_label_left">
-				<a href="#ModalEditor" id="logourl"  data-toggle="modal" ><i class="fa fa-file-image-o"></i>
-					<?= ' ' ?><?= $this->getDI()->get("translate")->_('Logo') ?> </a>
-			</label>
-			<div class="col-md-2">
-			<?= $this->tag->textField(['logo', 'type' => 'text', 'class' => 'form-control']) ?>
-			</div>
-			<div id ="logo_image" class="col-md-2">
-				<?php if ($mode == 'edit' && $logo_path != '') { ?>
-        <img id="theImg" src="<?= $this->url->get('files/images/' . $logo_path) ?>" width="50px" heigh="50px"/>
-				<?php } ?>
-			</div>
-		</div>
-    
-    <div class="form-group">
-			<label name="lbllogo" id="lblloko" class="control-label col-md-1 align_label_left">
-				<a href="#FaviconModal" id="faviconurl"  data-toggle="modal" ><i class="fa fa-file-image-o"></i>
-					<?= ' ' ?><?= $this->getDI()->get("translate")->_('Favicon') ?> </a>
-			</label>
-			<div class="col-md-2">
-			<?= $this->tag->textField(['favicon', 'type' => 'text', 'class' => 'form-control']) ?>
-			</div>
-			<div id ="favicon_image" class="col-md-2">
-				<?php if ($mode == 'edit' && $favicon != '') { ?>
-        <img id="favicon_preview" src="<?= $this->url->get('files/images/' . $favicon) ?>" width="50px" heigh="50px"/>
-				<?php } ?>
-			</div>
-		</div>
-    
-    <div class="form-group">
-			<label name="lbllogo" id="lblloko" class="control-label col-md-1 align_label_left">
-				<a href="#MainImageModal" id="mainimageurl"  data-toggle="modal" ><i class="fa fa-file-image-o"></i>
-					<?= ' ' ?><?= $this->getDI()->get("translate")->_('Main Image') ?> </a>
-			</label>
-			<div class="col-md-2">
-			<?= $this->tag->textField(['main_image', 'type' => 'text', 'class' => 'form-control']) ?>
-			</div>
-			<div id ="main_image_content" class="col-md-2">
-				<?php if ($mode == 'edit' && $main_image != '') { ?>
-        <img id="main_image_preview" src="<?= $this->url->get('files/images/' . $main_image) ?>" width="50px" heigh="50px"/>
-				<?php } ?>
-			</div>
-		</div>
-    
-       <div class="form-group">
-			<label name="lblimagetitle" id="lblimagetitle" class="control-label col-md-1 align_label_left">
-				<?= $this->getDI()->get("translate")->_('Main Image Title') ?>
-			</label>
-			<div class="col-md-4">
-			<?= $this->tag->textField(['main_image_title', 'type' => 'text', 'class' => 'form-control']) ?>
-			</div>
-			</div>
-      
-
-			<div class="form-group">
-			<label name="lbladdress" id="lbladdress" class="control-label col-md-1 align_label_left" style="padding-right:0;">
-			<a href="#responsive" id="pencil"  data-toggle="modal" ><i class="fa fa-location-arrow"></i>
-				<?= ' ' ?><?= $this->getDI()->get("translate")->_('Address') ?> </a><span class="required" aria-required="true">* </span>
-			</label>
-			<div class="col-md-4">
-			<?= $this->tag->textArea(['rest_address', 'class' => 'form-control', 'readonly' => '']) ?>
-			<label id="erroraddress" name ="erroraddress"></label>
-			<?= $this->tag->textField(['addressid', 'type' => 'text', 'class' => 'form-control', 'style' => 'display:none;']) ?>
-		  </div>
-		  </div>
-
-		  <div class="form-group">
-			<label name="email" id="lblemail" class="control-label col-md-1 align_label_left">
-				<?= $this->getDI()->get("translate")->_('Email') ?><span class="required" aria-required="true">* </span>
-			</label>
-			<div class="col-md-4">
-			<?= $this->tag->textField(['email', 'type' => 'text', 'class' => 'form-control']) ?>
-			</div>
-			</div>
-
-			<div class="form-group">
-			<label name="website" id="lblwebsite" class="control-label col-md-1 align_label_left"><?= $this->getDI()->get("translate")->_('Website') ?></label>
-			<div class="col-md-4">
-			<?= $this->tag->textField(['website', 'type' => 'text', 'class' => 'form-control']) ?>
-			</div>
-			</div> 
-
-       <div class="col-md-offset-1 col-md-3" style="padding-left:0;">
-       <input id="save_restaurant_button"class="btn btn-primary" value="<?= $this->getDI()->get("translate")->_('Save') ?>" type="submit">
-	   <a href="<?= $this->url->get('restaurant/list') ?>" class="btn btn-default"><?= $this->getDI()->get("translate")->_('Cancel') ?></a>	</div>
-    </div>   
-	<!-- FORM ACTION BUTTONS-->
+	</div>
+	</div>
+	<div class="row search_button">
+	<div class="col-md-1" style="padding-left:0;">
+	<?= $this->tag->submitButton([$this->getDI()->get("translate")->_('Buscar'), 'class' => 'btn btn-primary']) ?>
+	</div>
+	
+	</div>
 	</form>
-	<!-- END FORM-->	
-</div>
-
-<!-- Modal Form-->
-<div id="responsive" class="modal fade" tabindex="-1" data-width="760" >
-<div id ="modalbody">
-<div class="row" style="background-color:white !important;">
-	   <div class="row" style="padding-bottom:10px; padding-left:20px; padding-right:20px;">
-       <h3><?= $this->getDI()->get("translate")->_('Restaurant Address') ?></h3>
-        <hr></hr>
-	    </div>
-	    <div class="row"style="padding-bottom:10px; padding-left:20px; padding-right:20px;">
- 		<form novalidate="novalidate" action="" id="modalform" class="form-horizontal" method="post" role="form">
-		<div class="form-group">
-		<label name="countryid" id="item['name']" class="control-label col-md-3 formlabel">
-		<?= $this->getDI()->get("translate")->_('Country') ?>	<span class="required" aria-required="true">* </span>    </label>
-		<div class="col-md-4">
-		 <select id="countryid" name="countryid" class="form-control">
-		<option value=""> <?= $this->getDI()->get("translate")->_('Select a Country') ?></option>
-		<?php foreach ($countries_data as $index => $item) { ?>
-		<option value="<?= $item['id'] ?>"> <?= $this->getDI()->get("translate")->_($item['country']) ?></option>
-		<?php } ?>
-		</select>
-		</div>
-		</div>
-
-		<div class="form-group">
-		<label name="stateid" id="item['name']" class="control-label col-md-3 formlabel">
-		<?= $this->getDI()->get("translate")->_('State') ?><span class="required" aria-required="true">* </span>    </label>
-		<div class="col-md-4">
-		<select id="stateid" name="stateid" class="form-control">
-		<option value=""> <?= $this->getDI()->get("translate")->_('Select a State') ?></option>
-		</select>
-		</div>
-		</div>
-
-		<div class="form-group">
-		<label name="cityid" id="item['name']" class="control-label col-md-3 formlabel">
-		<?= $this->getDI()->get("translate")->_('City') ?><span class="required" aria-required="true">* </span>    </label>
-		<div class="col-md-4">
-		<select id="cityid" name="cityid" class="form-control">
-		<option value=""><?= $this->getDI()->get("translate")->_('Select a City') ?></option>
-		</select>
-		</div>
-		</div>
-
-		<div class="form-group">
-		<label name="townshipid" id="item['name']" class="control-label col-md-3 formlabel">
-		<?= $this->getDI()->get("translate")->_('Township') ?><span class="required" aria-required="true">* </span>    </label>
-		<div class="col-md-4">
-		 <select id="townshipid" name="townshipid" class="form-control">
-		<option value=""><?= $this->getDI()->get("translate")->_('Select a Township') ?></option>
-		</select>
-		</div>
-		</div>
-
-		<div class="form-group">
-		<label name="neighborhoodid" id="item['name']" class="control-label col-md-3 formlabel">
-		<?= $this->getDI()->get("translate")->_('Neighborhood') ?><span class="required" aria-required="true">* </span>    </label>
-		<div class="col-md-4">
-		<select id="neighborhoodid" name="neighborhoodid" class="form-control">
-		<option value=""><?= $this->getDI()->get("translate")->_('Select a Neighborhood') ?></option>
-		</select>
-		</div>
-		</div>
-		<div class="form-group">
-		<label name="addresslbl" id="item['name']" class="control-label col-md-3 formlabel">
-		<?= $this->getDI()->get("translate")->_('Address') ?><span class="required" aria-required="true">* </span>    </label>
-		<div class="col-md-4">
-		<textarea id="address" name="address" class="form-control" maxlength="400"></textarea>
-		</div>
-		</div>
-		
-
-		<div class="form-actions">
-		<div class="row">
-		<div class="col-md-offset-3 col-md-4" style="padding-left:0;">
-		<button type="button" data-dismiss="modal" class="btn btn-primary"><?= $this->getDI()->get("translate")->_('Close') ?></button>
-		<button type="submit" id ="save_address_button" class="btn btn-default"><?= $this->getDI()->get("translate")->_('Save') ?></button>
-		</div>
-	    </div>
-		</div>
-		</form>
-	    </div>
- </div>
- </div>
- </div>
- </div>
-
- <!-- Logo Modal -->
- <div id="ModalEditor" class="modal fade"  tabindex="-1" data-width="760" >
-  <div class="modal-body">
-	<div class="col-md-12">
-	<div class="portlet box blue" >
-		<div class="portlet-title">
-		<div class="caption"><?= $this->getDI()->get("translate")->_('Images') ?></div>
-		</div>
-		<div class="portlet-body form" >
-		<div class="col-md-12" style="background-color:white;">
-		<?php foreach ($images as $index => $item) { ?>
-		<div class="col-md-1" style="padding-top:15px;">
-	  <img  class="modal_hover" id ="<?= $item['name'] ?>" src="<?= $this->url->get('files/images/' . $item['name']) ?>"  height="100" width="100" onclick="selectLogoImage(this.id);">
-		</div>
-		<?php } ?>
-	  </div>
-		<br><br>
-		<div class="col-md-12" style="background-color:white; padding-left:30px;padding-top:30px;padding-bottom:30px;">
-		<button type="button" data-dismiss="modal" class="btn btn-default"><?= $this->getDI()->get("translate")->_('Close') ?></button>
-		</div>
-		</div>
-	 </div>
- </div>
 	</div>
-   </div>
-   
-   <!-- Favicon Modal -->
- <div id="FaviconModal" class="modal fade"  tabindex="-1" data-width="760" >
-  <div class="modal-body">
-	<div class="col-md-12">
-	<div class="portlet box blue" >
-		<div class="portlet-title">
-		<div class="caption"><?= $this->getDI()->get("translate")->_('Images') ?></div>
-		</div>
-		<div class="portlet-body form" >
-		<div class="col-md-12" style="background-color:white;">
-		<?php foreach ($images as $index => $item) { ?>
-		<div class="col-md-1" style="padding-top:15px;">
-	  <img  class="modal_hover" id ="<?= $item['name'] ?>" src="<?= $this->url->get('files/images/' . $item['name']) ?>"  height="100" width="100" onclick="selectFavicon(this.id);">
-		</div>
-		<?php } ?>
-	  </div>
-		<br><br>
-		<div class="col-md-12" style="background-color:white; padding-left:30px;padding-top:30px;padding-bottom:30px;">
-		<button type="button" data-dismiss="modal" class="btn btn-default"><?= $this->getDI()->get("translate")->_('Close') ?></button>
-		</div>
-		</div>
-	 </div>
- </div>
-	</div>
-  </div>
-  
-     <!-- Favicon Modal -->
- <div id="MainImageModal" class="modal fade"  tabindex="-1" data-width="760" >
-  <div class="modal-body">
-	<div class="col-md-12">
-	<div class="portlet box blue" >
-		<div class="portlet-title">
-		<div class="caption"><?= $this->getDI()->get("translate")->_('Images') ?></div>
-		</div>
-		<div class="portlet-body form" >
-		<div class="col-md-12" style="background-color:white;">
-		<?php foreach ($images as $index => $item) { ?>
-		<div class="col-md-1" style="padding-top:15px;">
-	  <img  class="modal_hover" id ="<?= $item['name'] ?>" src="<?= $this->url->get('files/images/' . $item['name']) ?>"  height="100" width="100" onclick="selectMainImage(this.id);">
-		</div>
-		<?php } ?>
-	  </div>
-		<br><br>
-		<div class="col-md-12" style="background-color:white; padding-left:30px;padding-top:30px;padding-bottom:30px;">
-		<button type="button" data-dismiss="modal" class="btn btn-default"><?= $this->getDI()->get("translate")->_('Close') ?></button>
-		</div>
-		</div>
-	 </div>
- </div>
-	</div>
-  </div>
+  <!-- END GRID SEARCH-->
 
- </div>
-</div>
-</div>
-</div>
-
+	<?php if ($permissions['create'] == 'Y') { ?>
+	 <!-- NEW ITEM ICON-->
+	<div align="left"><?= $this->tag->linkTo([$newroute . '/' . $restaurantid, '<i class="fa fa-plus fa-lg"></i>']) ?></div>
+  <?php } ?>
+	<br>
+	<?php if ($noitems == '') { ?>
+	<table class="table table-bordered table-striped table-condensed flip-content">
+	<thead>
+	<tr>
+	<!-- GRID HEADER-->
+	<?php foreach ($headercolumns as $index => $item) { ?>
+	<th style="background-color:#eee;">
+	<span><?= $this->getDI()->get("translate")->_($item['title']) ?></span>
+	<div class="btn-group pull-right">
+	<button aria-expanded="false" type="button" class="btn btn-fit-height gray dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="1000" data-close-others="true">
+	<?php if ($order == 'asc') { ?>
+		<?php $order_class = 'fa fa-arrow-up'; ?>
+	<?php } else { ?>
+		<?php if ($order == 'desc') { ?>
+			<?php $order_class = 'fa fa-arrow-down'; ?>
+		<?php } else { ?>
+			<?php $order_class = 'fa fa-sort'; ?>
+		<?php } ?>
+	<?php } ?>
+	<i class="<?= $order_class ?>"></i>
+	</button>
+	<!-- GRID HEADER-->
+	<ul class="dropdown-menu pull-right" role="menu">
+	<li class="ms-hover">
+	<a href="<?= $this->url->get($obj->remove_slash_url($this->router->getRewriteUri())) . '?page=' . $page->current . '&order=' . $item['column_name'] . ' asc' ?>">
+	<i class="fa fa-arrow-up"></i>
+	<?= ' Asc' ?>
+	</a>
+	</li>
+	<li class="divider">
+	</li>
+	<li class="ms-hover">
+	<a href="<?= $this->url->get($obj->remove_slash_url($this->router->getRewriteUri())) . '?page=' . $page->current . '&order=' . $item['column_name'] . ' desc' ?>">
+	<i class="fa fa-arrow-down"></i>
+	<?= ' Desc' ?>
+	</a>
+	</li>
+	</ul>
+	</div>
+	</th>
+	<?php } ?>
+	<th></th>
+	<th></th>
+	</tr>
+	</thead>
+	<!-- END HEADER-->
+	<!-- GRID BODY -->
+	<tbody>
+	<?php if (isset($page->items)) { ?>
+		<?php foreach ($page->items as $entity) { ?>
+			<tr>
+			<?php foreach ($headercolumns as $index => $item) { ?>
+				<td width ="20%"><?= $entity->readAttribute($item['column_name']) ?></td>
+			<?php } ?>
+			<td width ="2%">
+				<?php if ($permissions['edit'] == 'Y') { ?>
+				<?= $this->tag->linkTo([$editroute . $entity->id . '/' . $restaurantid, '<i class="fa fa-edit fa-lg"></i>', 'class' => 'btn btn-icon-only green']) ?>
+				<?php } ?>
+			</td>
+			<td width ="2%">
+				<?php if ($permissions['delete'] == 'Y') { ?>
+				<?= $this->tag->linkTo([$showroute . $entity->id, '<i class="fa fa-remove fa-lg"></i>', 'class' => 'btn btn-icon-only red']) ?>
+				<?php } ?>
+			</td>
+			</tr>
+		<?php } ?>
+		<?php } ?>
+		</tbody>
+	<!--END GRID BODY -->
+		</table>
+		<!--END GRID PAGINATION -->
+		<div align="left"><?= $this->getDI()->get("translate")->_('Página') . ' ' . $page->current . ' ' . $this->getDI()->get("translate")->_('de') . ' ' . $page->total_pages ?></div>
+		<div align ="left">
+		<ul class="pagination">
+		<li><?= $this->tag->linkTo([$listroute . '/' . $restaurantid, '<i class="fa fa-angle-left"></i><i class="fa fa-angle-left"></i>']) ?></li>
+		<li><?= $this->tag->linkTo([$listroute . '/' . $restaurantid . '?page=' . $page->before, '<i class="fa fa-angle-left"></i>']) ?></li>
+		<?php foreach (range(1, $page->total_pages) as $i) { ?>
+		<?php if ($page->current == $i) { ?>
+		<?php $classitem = 'active'; ?>
+		<?php } else { ?>
+		<?php $classitem = ''; ?>
+		<?php } ?>
+		<li class="<?= $classitem ?>"><?= $this->tag->linkTo([$listroute . '?page=' . $i, $i]) ?></li>
+		<?php } ?>
+		<li><?= $this->tag->linkTo([$listroute . '/' . $restaurantid . '?page=' . $page->next, '<i class="fa fa-angle-right"></i>']) ?></li>
+		<li><?= $this->tag->linkTo([$listroute . '/' . $restaurantid . '?page=' . $page->last, '<i class="fa fa-angle-right"></i><i class="fa fa-angle-right"></i>']) ?></li>
+		</ul>
+		</div>
+    <!--END GRID PAGINATION -->
+	<?php } else { ?>
+	  <!--NO ITEMS VALIDATION -->
+		<div class="alert alert-warning alert-dismissable">
+		<strong><i class="glyphicon glyphicon-warning-sign"></i> <?= $this->getDI()->get("translate")->_($noitems) ?></strong>
+		</div>
+	<?php } ?>
 
   </div>
   </div>
@@ -818,22 +650,9 @@
 
 <!-- javaScripts --> 
   
-
   <script src="<?= $this->url->getStatic('tools/jquery/jquery2.2.0/jquery.min.js') ?>"></script>
   <script src="<?= $this->url->getStatic('tools/bootstrap/js/bootstrap.min.js') ?>"></script> 
   
-<?= $this->assets->outputJs('validate_forms_js') ?>
-<?= $this->assets->outputJs('validatejs') ?>
-<script>
-var validatemessages = {
-name:'<?= $this->getDI()->get("translate")->_('restaurant.name.required') ?>',
-address:'<?= $this->getDI()->get("translate")->_('restaurant.address.required') ?>',
-phone:'<?= $this->getDI()->get("translate")->_('restaurant.phone.required') ?>',
-email:'<?= $this->getDI()->get("translate")->_('restaurant.email.required') ?>',
-valid_email:'<?= $this->getDI()->get("translate")->_('restaurant.email.valid') ?>'
-};
-</script>
-
   <!-- End JavaScripts --> 
 </body>
 </html>

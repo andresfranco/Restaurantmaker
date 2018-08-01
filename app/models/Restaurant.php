@@ -39,6 +39,27 @@ class Restaurant extends \Phalcon\Mvc\Model
     protected $logo_path;
 
     /**
+     /**
+     *
+     * @var string
+     */
+    protected $main_image;
+
+    /**
+     /**
+     *
+     * @var string
+     */
+    protected $main_image_title;
+
+    /**
+     /**
+     *
+     * @var string
+     */
+    protected $favicon;
+
+    /**
      *
      * @var string
      */
@@ -135,6 +156,45 @@ class Restaurant extends \Phalcon\Mvc\Model
     public function setLogoPath($logo_path)
     {
         $this->logo_path = $logo_path;
+
+        return $this;
+    }
+  
+     /**
+     * Method to set the value of field main_image
+     *
+     * @param string $main_image
+     * @return $this
+     */
+    public function setMainImage($main_image)
+    {
+        $this->main_image = $main_image;
+
+        return $this;
+    }
+  
+    /**
+     * Method to set the value of field main_image_title
+     *
+     * @param string $main_image_title
+     * @return $this
+     */
+    public function setMainImageTitle($main_image_title)
+    {
+        $this->main_image_title = $main_image_title;
+
+        return $this;
+    }
+  
+   /**
+     * Method to set the value of field pavicon
+     *
+     * @param string $favicon
+     * @return $this
+     */
+    public function setFavicon($favicon)
+    {
+        $this->favicon = $favicon;
 
         return $this;
     }
@@ -265,6 +325,39 @@ class Restaurant extends \Phalcon\Mvc\Model
     public function getLogoPath()
     {
         return $this->logo_path;
+    }
+  
+     /**
+     * Returns the value of field main_image
+     *
+     * @param string $main_image
+     * @return $this
+     */
+    public function getMainImage()
+    {
+        return $this->main_image;
+    }
+  
+    /**
+     * Returns the value of field main_image_title
+     *
+     * @param string $main_image_title
+     * @return $this
+     */
+    public function getMainImageTitle()
+    {
+        return $this->main_image_title; 
+    }
+  
+   /**
+     *Returns the value of field pavicon
+     *
+     * @param string $favicon
+     * @return $this
+     */
+    public function getFavicon()
+    {
+        return $this->favicon;
     }
 
     /**
@@ -411,6 +504,9 @@ class Restaurant extends \Phalcon\Mvc\Model
             'phone' => 'phone',
             'email' => 'email',
             'logo_path' => 'logo_path',
+            'main_image'=>'main_image',
+            'main_image_title'=>'main_image_title',
+            'favicon'=>'favicon',
             'website' => 'website',
             'addressid' => 'addressid',
             'createuser' => 'createuser',
