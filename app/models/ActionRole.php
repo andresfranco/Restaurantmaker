@@ -1,5 +1,8 @@
 <?php
-use Phalcon\Mvc\Model\Validator\PresenceOf;
+use Phalcon\Mvc\Model;
+use Phalcon\Validation;
+use Phalcon\Validation\Validator\Uniqueness;
+use Phalcon\Validation\Validator\PresenceOf;
 class ActionRole extends \Phalcon\Mvc\Model
 {
 
@@ -241,13 +244,13 @@ class ActionRole extends \Phalcon\Mvc\Model
 
     public function validation()
     {
-      $this->validate(  new PresenceOf(array('field'=>'actionid' )));
-
-        if ($this->validationHasFailed() == true) {
-            return false;
-        }
-
-        return true;
+      $validator= new Validation();
+      
+      $validator->add( "actionid", new PresenceOf([ "message" => $this->di->get('translate')->_('actionrole.actionid.required')]));
+      
+      return $this->validate($validator);
+      
+     
     }
 
     public function getMessages()

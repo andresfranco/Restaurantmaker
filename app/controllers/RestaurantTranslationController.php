@@ -35,8 +35,8 @@ class RestaurantTranslationController extends ControllerBase
         ,array('name' => 'name','label'=>'Name translation'
         ,'required'=>'<span class="required" aria-required="true">* </span>'
         ,'label_error'=>'<span id ="restaurant_translationerror" name ="codeerror" class="has-error"></span>')
-        ,array('name' => 'description','label'=>'Description translation'
-        ,'required'=>'<span class="required" aria-required="true">* </span>'
+        ,array('name' => 'image_title','label'=>'Image title'
+        ,'required'=>'<span  aria-required="true">* </span>'
         ,'label_error'=>'<span id ="restaurant_translationerror" name ="codeerror" class="has-error"></span>')
 
         );
@@ -52,7 +52,7 @@ class RestaurantTranslationController extends ControllerBase
         $this->tag->setDefault("restaurantId", $entity_object->getrestaurantId());
         $this->tag->setDefault("languagecode", $entity_object->getLanguagecode());
         $this->tag->setDefault("name", $entity_object->getName());
-        $this->tag->setDefault("description", $entity_object->getDescription());
+        $this->tag->setDefault("image_title", $entity_object->getImageTitle());
       }
     }
 
@@ -61,7 +61,7 @@ class RestaurantTranslationController extends ControllerBase
       $entity->setrestaurantId($restaurantId);
       $entity->setLanguagecode($this->request->getPost("languagecode"));
       $entity->setName($this->request->getPost("name"));
-      $entity->setDescription($this->request->getPost("description"));
+      $entity->setImageTitle($this->request->getPost("image_title"));
     }
 
   public function set_grid_parameters($routelist)
@@ -122,10 +122,10 @@ class RestaurantTranslationController extends ControllerBase
   {
     $this->view->permissions =$this->check_user_actions(
     $userid
-    ,'Create restaurant Category'
-    ,'Edit restaurant Category'
-    ,'Manage restaurant Category'
-    ,'Delete restaurant Category');
+    ,'Create Restaurant'
+    ,'Edit Restaurant'
+    ,'Manage Restaurant'
+    ,'Delete Restaurant');
 
   }
 
@@ -152,7 +152,7 @@ class RestaurantTranslationController extends ControllerBase
     $query =$this->modelsManager->createBuilder()
              ->columns(array('rt.id as id','rt.restaurantId as restaurantId','rt.languagecode as languagecode','l.language as language','d.name as restaurant','rt.name'))
              ->from(array('rt' => 'RestaurantTranslation'))
-             ->join('restaurant', 'd.id = rt.restaurantId', 'd')
+             ->join('Restaurant', 'd.id = rt.restaurantId', 'd')
              ->join('Language', 'l.code = rt.languagecode', 'l')
              ->where('rt.restaurantId = :restaurantId:', array('restaurantId' =>$restaurantId ))
              ->AndWhere('d.name LIKE :restaurant:', array('restaurant' => '%' . $params_query['restaurant']. '%'))
@@ -188,7 +188,7 @@ class RestaurantTranslationController extends ControllerBase
   {
 
     $restaurant_data = $this->get_restaurantdata_by_id($restaurantId);
-    $this->view->form = new restaurantTranslationForm($entity,array());
+    $this->view->form = new RestaurantTranslationForm($entity,array());
     $this->view->routelist =$routelist;
     $this->view->routeform =$routeform;
     $this->view->title =$title;
@@ -204,13 +204,13 @@ class RestaurantTranslationController extends ControllerBase
 
   public function get_restaurantdata_by_id($restaurantId)
   {
-    $restaurant_data = restaurant ::findFirst($restaurantId)->toArray();
+    $restaurant_data = Restaurant::findFirst($restaurantId)->toArray();
     return $restaurant_data;
 
   }
 
   /**
-  * @Route("/new/{restaurantId}", methods={"GET"}, name="restaurantenew")
+  * @Route("/new/{restaurantId}", methods={"GET"}, name="restaurant_translation_new")
   */
   public function newAction($restaurantId)
   {
@@ -248,7 +248,7 @@ class RestaurantTranslationController extends ControllerBase
     $this->get_assets();
     $this->set_tags('edit',$entity);
     $this->view->id = $entity->id;
-
+    $this->view->restaurantId=$restaurantId;
     $this->set_form_routes_custom(
     $this->crud_params['save_route'].$id
     ,$this->crud_params['route_list']

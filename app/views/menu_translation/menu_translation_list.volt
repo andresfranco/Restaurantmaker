@@ -2,12 +2,12 @@
 
 {% block content %}
    <h3 class="page-title" align ="left">
-	{{title|t}}{{' - '}}{{restaurant_name}}<div align="right"><a href ="{{url('restaurant/list')}}" class="btn btn blue">{{'Restaurants'|t}} <i class="fa fa-arrow-right "></i> </a></div>
+	{{title|t}}{{' - '}}{{restaurant_name}}<div align="right"><a href ="{{url('menu/list')}}" class="btn btn blue">{{'Menu'|t}} <i class="fa fa-arrow-right "></i> </a></div>
 	</h3>
 	<hr/>
   <!-- GRID SEARCH -->
 	<div align="left" >
-	{{ form(searchroute~'/'~restaurantId, "method":"post", "autocomplete" : "off") }}
+	{{ form(searchroute~'/'~menuId, "method":"post", "autocomplete" : "off") }}
 	<div class="row">
 	<div class="form-group col-md-10" style="padding-left:0;">
 	{% for index,item in searchcolumns %}
@@ -27,15 +27,11 @@
 	</form>
 	</div>
   <!-- END GRID SEARCH-->
- 
-
- 
 	{% if permissions['create']=='Y' %}
 	 <!-- NEW ITEM ICON-->
-	<div align="left">{{ link_to(newroute~'/'~restaurantId,'<i class="fa fa-plus fa-lg"></i>')}}</div>
+	<div align="left">{{ link_to(newroute~'/'~menuId,'<i class="fa fa-plus fa-lg"></i>')}}</div>
   {% endif %}
 	<br>
-
 	{% if noitems ==""%}
 	<table class="table table-bordered table-striped table-condensed flip-content">
 	<thead>
@@ -92,7 +88,7 @@
 			{% endfor %}
 			<td width ="2%">
 				{% if permissions['edit']=='Y' %}
-				{{link_to(editroute~entity.id~'/'~restaurantId,'<i class="fa fa-edit fa-lg"></i>','class':'btn btn-icon-only green')}}
+				{{link_to(editroute~entity.id~'/'~menuId,'<i class="fa fa-edit fa-lg"></i>','class':'btn btn-icon-only green')}}
 				{% endif %}
 			</td>
 			<td width ="2%">
@@ -110,8 +106,8 @@
 		<div align="left">{{ 'Página'|t~' '~ page.current ~' '~'de'|t ~' '~page.total_pages }}</div>
 		<div align ="left">
 		<ul class="pagination">
-		<li>{{ link_to(listroute~'/'~restaurantId,'<i class="fa fa-angle-left"></i><i class="fa fa-angle-left"></i>') }}</li>
-		<li>{{ link_to(listroute~'/'~restaurantId~"?page="~page.before, '<i class="fa fa-angle-left"></i>') }}</li>
+		<li>{{ link_to(listroute~'/'~menuId,'<i class="fa fa-angle-left"></i><i class="fa fa-angle-left"></i>') }}</li>
+		<li>{{ link_to(listroute~'/'~menuId~"?page="~page.before, '<i class="fa fa-angle-left"></i>') }}</li>
 		{% for i in 1..page.total_pages %}
 		{% if page.current == i %}
 		{% set classitem ='active' %}
@@ -120,8 +116,8 @@
 		{% endif %}
 		<li class="{{classitem}}">{{ link_to(listroute~"?page="~i, i) }}</li>
 		{% endfor %}
-		<li>{{ link_to(listroute~'/'~restaurantId~"?page="~page.next, '<i class="fa fa-angle-right"></i>') }}</li>
-		<li>{{ link_to(listroute~'/'~restaurantId~"?page="~page.last, '<i class="fa fa-angle-right"></i><i class="fa fa-angle-right"></i>') }}</li>
+		<li>{{ link_to(listroute~'/'~menuId~"?page="~page.next, '<i class="fa fa-angle-right"></i>') }}</li>
+		<li>{{ link_to(listroute~'/'~menuId~"?page="~page.last, '<i class="fa fa-angle-right"></i><i class="fa fa-angle-right"></i>') }}</li>
 		</ul>
 		</div>
     <!--END GRID PAGINATION -->

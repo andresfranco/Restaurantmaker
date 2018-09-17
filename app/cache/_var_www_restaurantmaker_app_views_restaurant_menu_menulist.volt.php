@@ -45,12 +45,12 @@
                  <?php $languagename = $item->language; ?>
              <?php } ?>
           <?php } ?>
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <img src="<?= $this->url->getStatic('img/flags/' . $flag) ?>" alt=""><?= ' ' ?><?= $this->getDI()->get("translate")->_($languagename) ?><span class="caret"></span></a>
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <img src="<?= $this->url->getStatic('/img/flags/' . $flag) ?>" alt=""><?= ' ' ?><?= $this->getDI()->get("translate")->_($languagename) ?><span class="caret"></span></a>
       <ul class="dropdown-menu">
         <?php foreach ($languages as $item) { ?>
         <li>
         <a href="<?= $this->url->get('setlang') . '/' . $item->code ?>">
-        <img src="<?= $this->url->getStatic('img/flags/' . $item->flag) ?>" alt=""><?= ' ' ?><?= $this->getDI()->get("translate")->_($item->language) ?> </a>
+        <img src="<?= $this->url->getStatic('/img/flags/' . $item->flag) ?>" alt=""><?= ' ' ?><?= $this->getDI()->get("translate")->_($item->language) ?> </a>
         </li>
         <?php } ?>
       </ul>
@@ -580,6 +580,7 @@
 	<?php } ?>
 	<th></th>
 	<th></th>
+  <th></th>
 	</tr>
 	</thead>
 	<!-- END HEADER-->
@@ -591,6 +592,11 @@
 			<?php foreach ($headercolumns as $index => $item) { ?>
 				<td width ="40%"><?= $entity->readAttribute($item['column_name']) ?></td>
 			<?php } ?>
+      <td width ="2%">
+				<?php if ($permissions['edit'] == 'Y') { ?>
+				<?= $this->tag->linkTo(['menu_translation/list/' . $entity->id, '<i class="fa fa-language fa-lg"></i>', 'class' => 'btn btn-icon-only yellow']) ?>
+				<?php } ?>
+			</td>
 			<td width ="2%">
 				<?php if ($permissions['edit'] == 'Y') { ?>
 				<?= $this->tag->linkTo(['dish/list/' . $entity->id, '<i class="fa fa-list fa-lg"></i>', 'class' => 'btn btn-icon-only yellow']) ?>

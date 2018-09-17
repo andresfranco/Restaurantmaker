@@ -74,6 +74,7 @@
 	{% endfor %}
 	<th></th>
 	<th></th>
+  <th></th>
 	</tr>
 	</thead>
 	<!-- END HEADER-->
@@ -85,6 +86,11 @@
 			{% for index,item in headercolumns %}
 				<td width ="40%">{{ entity.readAttribute(item['column_name'])}}</td>
 			{% endfor %}
+      <td width ="2%">
+				{% if permissions['edit']=='Y' %}
+				{{link_to('menu_translation/list/'~entity.id,'<i class="fa fa-language fa-lg"></i>','class':'btn btn-icon-only yellow')}}
+				{% endif %}
+			</td>
 			<td width ="2%">
 				{% if permissions['edit']=='Y' %}
 				{{link_to('dish/list/'~entity.id,'<i class="fa fa-list fa-lg"></i>','class':'btn btn-icon-only yellow')}}

@@ -508,12 +508,12 @@
   <div class="main_content">
   
    <h3 class="page-title" align ="left">
-	<?= $this->getDI()->get("translate")->_($title) ?><?= ' - ' ?><?= $restaurant_name ?><div align="right"><a href ="<?= $this->url->get('restaurant/list/' . $menu_id) ?>" class="btn btn blue"><?= $this->getDI()->get("translate")->_('Restaurants') ?> <i class="fa fa-arrow-right "></i> </a></div>
+	<?= $this->getDI()->get("translate")->_($title) ?><?= ' - ' ?><?= $restaurant_name ?><div align="right"><a href ="<?= $this->url->get('restaurant/list') ?>" class="btn btn blue"><?= $this->getDI()->get("translate")->_('Restaurants') ?> <i class="fa fa-arrow-right "></i> </a></div>
 	</h3>
 	<hr/>
   <!-- GRID SEARCH -->
 	<div align="left" >
-	<?= $this->tag->form([$searchroute . '/' . $restaurantid, 'method' => 'post', 'autocomplete' => 'off']) ?>
+	<?= $this->tag->form([$searchroute . '/' . $restaurantId, 'method' => 'post', 'autocomplete' => 'off']) ?>
 	<div class="row">
 	<div class="form-group col-md-10" style="padding-left:0;">
 	<?php foreach ($searchcolumns as $index => $item) { ?>
@@ -533,12 +533,15 @@
 	</form>
 	</div>
   <!-- END GRID SEARCH-->
+ 
 
+ 
 	<?php if ($permissions['create'] == 'Y') { ?>
 	 <!-- NEW ITEM ICON-->
-	<div align="left"><?= $this->tag->linkTo([$newroute . '/' . $restaurantid, '<i class="fa fa-plus fa-lg"></i>']) ?></div>
+	<div align="left"><?= $this->tag->linkTo([$newroute . '/' . $restaurantId, '<i class="fa fa-plus fa-lg"></i>']) ?></div>
   <?php } ?>
 	<br>
+
 	<?php if ($noitems == '') { ?>
 	<table class="table table-bordered table-striped table-condensed flip-content">
 	<thead>
@@ -595,7 +598,7 @@
 			<?php } ?>
 			<td width ="2%">
 				<?php if ($permissions['edit'] == 'Y') { ?>
-				<?= $this->tag->linkTo([$editroute . $entity->id . '/' . $restaurantid, '<i class="fa fa-edit fa-lg"></i>', 'class' => 'btn btn-icon-only green']) ?>
+				<?= $this->tag->linkTo([$editroute . $entity->id . '/' . $restaurantId, '<i class="fa fa-edit fa-lg"></i>', 'class' => 'btn btn-icon-only green']) ?>
 				<?php } ?>
 			</td>
 			<td width ="2%">
@@ -613,8 +616,8 @@
 		<div align="left"><?= $this->getDI()->get("translate")->_('Página') . ' ' . $page->current . ' ' . $this->getDI()->get("translate")->_('de') . ' ' . $page->total_pages ?></div>
 		<div align ="left">
 		<ul class="pagination">
-		<li><?= $this->tag->linkTo([$listroute . '/' . $restaurantid, '<i class="fa fa-angle-left"></i><i class="fa fa-angle-left"></i>']) ?></li>
-		<li><?= $this->tag->linkTo([$listroute . '/' . $restaurantid . '?page=' . $page->before, '<i class="fa fa-angle-left"></i>']) ?></li>
+		<li><?= $this->tag->linkTo([$listroute . '/' . $restaurantId, '<i class="fa fa-angle-left"></i><i class="fa fa-angle-left"></i>']) ?></li>
+		<li><?= $this->tag->linkTo([$listroute . '/' . $restaurantId . '?page=' . $page->before, '<i class="fa fa-angle-left"></i>']) ?></li>
 		<?php foreach (range(1, $page->total_pages) as $i) { ?>
 		<?php if ($page->current == $i) { ?>
 		<?php $classitem = 'active'; ?>
@@ -623,8 +626,8 @@
 		<?php } ?>
 		<li class="<?= $classitem ?>"><?= $this->tag->linkTo([$listroute . '?page=' . $i, $i]) ?></li>
 		<?php } ?>
-		<li><?= $this->tag->linkTo([$listroute . '/' . $restaurantid . '?page=' . $page->next, '<i class="fa fa-angle-right"></i>']) ?></li>
-		<li><?= $this->tag->linkTo([$listroute . '/' . $restaurantid . '?page=' . $page->last, '<i class="fa fa-angle-right"></i><i class="fa fa-angle-right"></i>']) ?></li>
+		<li><?= $this->tag->linkTo([$listroute . '/' . $restaurantId . '?page=' . $page->next, '<i class="fa fa-angle-right"></i>']) ?></li>
+		<li><?= $this->tag->linkTo([$listroute . '/' . $restaurantId . '?page=' . $page->last, '<i class="fa fa-angle-right"></i><i class="fa fa-angle-right"></i>']) ?></li>
 		</ul>
 		</div>
     <!--END GRID PAGINATION -->

@@ -129,10 +129,10 @@ class RestaurantController extends ControllerBase
   {
     $this->view->permissions =$this->check_user_actions(
     $userid
-    ,'Create Action'
-    ,'Edit Action'
-    ,'Manage Action'
-    ,'Delete Action');
+    ,'Create Restaurant'
+    ,'Edit Restaurant'
+    ,'Manage Restaurant'
+    ,'Delete Restaurant');
 
   }
 

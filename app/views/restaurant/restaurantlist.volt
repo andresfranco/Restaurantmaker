@@ -74,6 +74,7 @@
 	{% endfor %}
 	<th></th>
 	<th></th>
+  <th></th>
 	</tr>
 	</thead>
 	<!-- END HEADER-->
@@ -83,8 +84,13 @@
 		{% for entity in page.items %}
 			<tr>
 			{% for index,item in headercolumns %}
-				<td width ="20%">{{ entity.readAttribute(item['column_name'])}}</td>
+				<td width ="15%">{{ entity.readAttribute(item['column_name'])}}</td>
 			{% endfor %}
+      	<td width ="2%">
+				{% if permissions['edit']=='Y' %}
+				{{link_to('restaurant_translation/list/'~entity.id,'<i class="fa fa-language fa-lg"></i>','class':'btn btn-icon-only yellow')}}
+				{% endif %}
+			</td>
 			<td width ="2%">
 				{% if permissions['edit']=='Y' %}
 				{{link_to(editroute~entity.id,'<i class="fa fa-edit fa-lg"></i>','class':'btn btn-icon-only green')}}

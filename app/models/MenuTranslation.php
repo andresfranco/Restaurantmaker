@@ -3,7 +3,7 @@ use Phalcon\Mvc\Model;
 use Phalcon\Validation;
 use Phalcon\Validation\Validator\Uniqueness;
 use Phalcon\Validation\Validator\PresenceOf;
-class RestaurantTranslation extends \Phalcon\Mvc\Model
+class MenuTranslation extends \Phalcon\Mvc\Model
 {
 
     /**
@@ -16,7 +16,7 @@ class RestaurantTranslation extends \Phalcon\Mvc\Model
      *
      * @var integer
      */
-    protected $restaurantId;
+    protected $menuId;
   
      
     /**
@@ -35,7 +35,13 @@ class RestaurantTranslation extends \Phalcon\Mvc\Model
      *
      * @var string
      */
-    protected $image_title;
+    protected $title;
+  
+    /**
+     *
+     * @var string
+     */
+    protected $description;
 
  
     /**
@@ -76,14 +82,14 @@ class RestaurantTranslation extends \Phalcon\Mvc\Model
     }
   
     /**
-     * Method to set the value of field restaurantId
+     * Method to set the value of field menuId
      *
-     * @param integer $restaurantId
+     * @param integer $menuId
      * @return $this
      */
-    public function setRestaurantId($restaurantId)
+    public function setMenuId($menuId)
     {
-        $this->restaurantId = $restaurantId;
+        $this->menuId = $menuId;
 
         return $this;
     }
@@ -115,19 +121,30 @@ class RestaurantTranslation extends \Phalcon\Mvc\Model
     }
 
     /**
-     * Method to set the value of field image_title
+     * Method to set the value of field title
      *
-     * @param string $image_title
+     * @param string $title
      * @return $this
      */
-    public function setImageTitle($image_title)
+    public function setTitle($title)
     {
-        $this->image_title = $image_title;
+        $this->title = $title;
 
         return $this;
     }
 
-    
+    /**
+     * Method to set the value of field description
+     *
+     * @param string $description
+     * @return $this
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
 
     /**
      * Method to set the value of field createuser
@@ -192,13 +209,13 @@ class RestaurantTranslation extends \Phalcon\Mvc\Model
     }
   
     /**
-     * Returns the value of field restaurantId
+     * Returns the value of field menuId
      *
      * @return integer
      */
-    public function getRestaurantId()
+    public function getMenuId()
     {
-        return $this->restaurantId;
+        return $this->menuId;
     }
 
     /**
@@ -223,15 +240,24 @@ class RestaurantTranslation extends \Phalcon\Mvc\Model
     }
 
     /**
-     * Returns the value of field image_title
+     * Returns the value of field title
      *
      * @return string
      */
-    public function getImageTitle()
+    public function getTitle()
     {
-        return $this->image_title;
+        return $this->title;
     }
-
+    
+    /**
+     * Returns the value of field description
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
    
     /**
      * Returns the value of field createuser
@@ -279,7 +305,7 @@ class RestaurantTranslation extends \Phalcon\Mvc\Model
     public function initialize()
     {
         $this->belongsTo('languagecode', 'Language', 'code', array('alias' => 'Language'));
-        $this->belongsTo('restaurantId', 'Restaurant', 'id', array('alias' => 'Restaurant'));
+        $this->belongsTo('menuId', 'Menu', 'id', array('alias' => 'Menu'));
     }
 
     /**
@@ -289,7 +315,7 @@ class RestaurantTranslation extends \Phalcon\Mvc\Model
      */
     public function getSource()
     {
-        return 'restaurant_translation';
+        return 'menu_translation';
     }
 
     /**
@@ -324,10 +350,11 @@ class RestaurantTranslation extends \Phalcon\Mvc\Model
     {
         return array(
             'id' => 'id',
-            'restaurantId' => 'restaurantId',
+            'menuId' => 'menuId',
             'languagecode' => 'languagecode',
             'name' => 'name',
-            'image_title' => 'image_title',
+            'title' => 'title',
+            'description' => 'description',
             'createuser' => 'createuser',
             'modifyuser' => 'modifyuser',
             'createdate' => 'createdate',
@@ -338,19 +365,20 @@ class RestaurantTranslation extends \Phalcon\Mvc\Model
     public function validation()
     {
        $validator= new Validation();
-       $validator->add(["languagecode","name", "image_title"],
+       $validator->add(["languagecode","name", "title","description"],
        new PresenceOf(
         [
           "message" =>
           [
             "languagecode" => $this->di->get('translate')->_('language.required'),
             "name" => $this->di->get('translate')->_('name.required'),
-            "image_title" => $this->di->get('translate')->_('restaurant.imagetitle.required')
+            "title" => $this->di->get('translate')->_('menu.title.required'),
+            "description" => $this->di->get('translate')->_('menu.description.required')
            ]
         ]
         ));
       
-      $validator->add(["restaurantId","languagecode"],new Uniqueness(["model" => $this,"message" => $this->di->get('translate')->_('restaurant_translation.language.exist')]));
+      $validator->add(["menuId","languagecode"],new Uniqueness(["model" => $this,"message" => $this->di->get('translate')->_('menu_translation.language.exist')]));
       return $this->validate($validator);
     }
 

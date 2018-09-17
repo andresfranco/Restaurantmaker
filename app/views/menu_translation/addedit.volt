@@ -1,13 +1,31 @@
 {% extends "layouts/masterpage_standard.volt" %}
+{% block head %}
+ {{super()}}
+	<link href="{{static_url('tools/bootstrap-summernote/summernote.css') }}" rel="stylesheet" type="text/css" />
+{% endblock %}
 {% block javascripts %}
 {{super() }}
 {{assets.outputJs('validate_forms_js')}}
 {{assets.outputJs('validatejs')}}
+<script src="{{static_url('tools/bootstrap-summernote/summernote.min.js')}}"></script>
 <script>
 var validatemessages = {
-	name:'{{"restaurant_translation.name.required"|t}}',
-	image_title:'{{"restaurant_translation.image_title.required"|t}}'
+	name:'{{"menu.name.required"|t}}',
+	title:'{{"menu.title.required"|t}}',
+  description:'{{"menu.description.required"|t}}'
 };
+</script>
+<script type="text/javascript">
+$(document).ready(function() {
+ $('#descriptioncontent').val($('#summernote').code());	
+$('#summernote').summernote({
+	height: "250px",
+	width:"600px",
+  onChange:function() {
+   $('#descriptioncontent').val($('#summernote').code());
+    }
+});
+});
 </script>
 {% endblock %}
 {% block content %}
@@ -37,13 +55,18 @@ var validatemessages = {
 		<div class="col-md-4">
 		{{ form.render(item['name'],["class":"form-control"]) }}
 		<!-- LOAD CONTROL ERROR LABEL-->
+		<!-- LOAD CONTROL ERROR LABEL-->
+		 {% if item['name']=='description'%}
+       <label id="lbldescription" name ="lbldescription"></label>
+     {% endif %}
 		{{item['label_error']|t}}
 		</div>
 		</div>
 	{% endfor %}
+       <textarea id ="descriptioncontent" name="descriptioncontent" style="visibility:hidden;height:0;"></textarea>
        <div class="col-md-offset-2 col-md-3" style="padding-left:0;">
        	<input type="submit" class="btn btn-primary" value="{{'Guardar'|t}}"></input>
-		{{ link_to(routelist~'/'~restaurantId,cancel_button_name|t,"class":"btn btn-default") }}
+		{{ link_to(routelist~'/'~menuId,cancel_button_name|t,"class":"btn btn-default") }}
        </div>
     </div>   
 	<!-- FORM ACTION BUTTONS-->

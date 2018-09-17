@@ -3,12 +3,6 @@
 {{super() }}
 {{assets.outputJs('validate_forms_js')}}
 {{assets.outputJs('validatejs')}}
-<script>
-var validatemessages = {
-	name:'{{"restaurant_translation.name.required"|t}}',
-	image_title:'{{"restaurant_translation.image_title.required"|t}}'
-};
-</script>
 {% endblock %}
 {% block content %}
 <div class="row row_container_form">
@@ -30,20 +24,19 @@ var validatemessages = {
 	<!-- LOAD FORM CONTROLS-->
 	{% for index,item in formcolumns %}
 		<div class="form-group">
-		<label name="{{item['name']}}" id ="item['name']" class="control-label col-md-2 align_label_left">
+		<label name="{{item['name']}}" id ="item['name']" class="control-label col-md-1 align_label_left">
 		{{item['label']|t}}
-		{{item['required']}}
         </label>
 		<div class="col-md-4">
-		{{ form.render(item['name'],["class":"form-control"]) }}
+			{{ form.render(item['name'],["class":"form-control",'disabled':'""']) }}
 		<!-- LOAD CONTROL ERROR LABEL-->
 		{{item['label_error']|t}}
 		</div>
 		</div>
 	{% endfor %}
-       <div class="col-md-offset-2 col-md-3" style="padding-left:0;">
-       	<input type="submit" class="btn btn-primary" value="{{'Guardar'|t}}"></input>
-		{{ link_to(routelist~'/'~restaurantId,cancel_button_name|t,"class":"btn btn-default") }}
+       <div class="col-md-offset-1 col-md-3" style="padding-left:0;">
+       	<button class="btn btn-danger">{{delete_button_name|t}}</button>
+		{{ link_to(routelist,cancel_button_name|t,"class":"btn btn-default") }}
        </div>
     </div>   
 	<!-- FORM ACTION BUTTONS-->

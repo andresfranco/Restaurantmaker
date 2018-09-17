@@ -507,11 +507,12 @@
   <div class="col-sm-12 col-md-10 col-xs-12 col-lg-10 column_content">
   <div class="main_content">
   
-   <h3 class="page-title" align ="left"><?= $this->getDI()->get("translate")->_($title) ?></h3>
+   <h3 class="page-title" align ="left"><?= $this->getDI()->get("translate")->_($title) ?> (<?= $role ?>)</h3>
+     <div align="right"><a href ="<?= $this->url->get('role/list') ?>" class="btn btn blue"><?= $this->getDI()->get("translate")->_('Roles') ?> <i class="fa fa-arrow-right "></i> </a></div>
 	<hr/>
   <!-- GRID SEARCH -->
 	<div align="left" >
-	<?= $this->tag->form([$searchroute, 'method' => 'post', 'autocomplete' => 'off']) ?>
+	<?= $this->tag->form([$searchroute . '/' . $roleid, 'method' => 'post', 'autocomplete' => 'off']) ?>
 	<div class="row">
 	<div class="form-group col-md-10" style="padding-left:0;">
 	<?php foreach ($searchcolumns as $index => $item) { ?>
@@ -532,10 +533,9 @@
 	</div>
   <!-- END GRID SEARCH-->
 
-	<?php if ($permissions['create'] == 'Y') { ?>
 	 <!-- NEW ITEM ICON-->
-	<div align="left"><?= $this->tag->linkTo([$newroute, '<i class="fa fa-plus fa-lg"></i>']) ?></div>
-  <?php } ?>
+	<div align="left"><?= $this->tag->linkTo([$newroute . '/' . $roleid, '<i class="fa fa-plus fa-lg"></i>']) ?></div>
+
 	<br>
 	<?php if ($noitems == '') { ?>
 	<table class="table table-bordered table-striped table-condensed flip-content">
@@ -561,7 +561,7 @@
 	<!-- GRID HEADER-->
 	<ul class="dropdown-menu pull-right" role="menu">
 	<li class="ms-hover">
-	<a href="<?= '..' . $this->router->getRewriteUri() . '?page=' . $page->current . '&order=' . $item['column_name'] . ' asc' ?>">
+	<a href="<?= $this->url->get($obj->remove_slash_url($this->router->getRewriteUri())) . '?page=' . $page->current . '&order=' . $item['column_name'] . ' asc' ?>">
 	<i class="fa fa-arrow-up"></i>
 	<?= ' Asc' ?>
 	</a>
@@ -569,7 +569,7 @@
 	<li class="divider">
 	</li>
 	<li class="ms-hover">
-	<a href="<?= '..' . $this->router->getRewriteUri() . '?page=' . $page->current . '&order=' . $item['column_name'] . ' desc' ?>">
+	<a href="<?= $this->url->get($obj->remove_slash_url($this->router->getRewriteUri())) . '?page=' . $page->current . '&order=' . $item['column_name'] . ' desc' ?>">
 	<i class="fa fa-arrow-down"></i>
 	<?= ' Desc' ?>
 	</a>
@@ -579,8 +579,6 @@
 	</th>
 	<?php } ?>
 	<th></th>
-	<th></th>
-  <th></th>
 	</tr>
 	</thead>
 	<!-- END HEADER-->
@@ -590,23 +588,9 @@
 		<?php foreach ($page->items as $entity) { ?>
 			<tr>
 			<?php foreach ($headercolumns as $index => $item) { ?>
-				<td width ="15%"><?= $entity->readAttribute($item['column_name']) ?></td>
+				<td width ="40%"><?= $entity->readAttribute($item['column_name']) ?></td>
 			<?php } ?>
-      	<td width ="2%">
-				<?php if ($permissions['edit'] == 'Y') { ?>
-				<?= $this->tag->linkTo(['restaurant_translation/list/' . $entity->id, '<i class="fa fa-language fa-lg"></i>', 'class' => 'btn btn-icon-only yellow']) ?>
-				<?php } ?>
-			</td>
-			<td width ="2%">
-				<?php if ($permissions['edit'] == 'Y') { ?>
-				<?= $this->tag->linkTo([$editroute . $entity->id, '<i class="fa fa-edit fa-lg"></i>', 'class' => 'btn btn-icon-only green']) ?>
-				<?php } ?>
-			</td>
-			<td width ="2%">
-				<?php if ($permissions['delete'] == 'Y') { ?>
-				<?= $this->tag->linkTo([$showroute . $entity->id, '<i class="fa fa-remove fa-lg"></i>', 'class' => 'btn btn-icon-only red']) ?>
-				<?php } ?>
-			</td>
+			<td width ="2%"><?= $this->tag->linkTo([$showroute . $entity->roleid . '-' . $entity->roleid, '<i class="fa fa-remove fa-lg"></i>', 'class' => 'btn btn-icon-only red']) ?></td>
 			</tr>
 		<?php } ?>
 		<?php } ?>
