@@ -85,6 +85,11 @@
 	{% for index,item in headercolumns %}
 	<td width ="40%">{{ entity.readAttribute(item['column_name'])}}</td>
 	{% endfor %}
+  <td width ="2%">
+    {% if permissions['edit']=='Y' %}
+    {{link_to('event_translation/list/'~entity.id,'<i class="fa fa-language fa-lg"></i>','class':'btn btn-icon-only yellow')}}
+    {% endif %}
+  </td>
 	<td width ="2%">
 	{% if permissions['edit']=='Y' %}
 	{{link_to('eventgallery/list/'~entity.id,'<i class="fa fa-photo fa-lg"></i>','class':'btn btn-icon-only yellow')}}

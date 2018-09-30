@@ -1,11 +1,11 @@
 {% extends "layouts/masterpage_standard.volt" %}
 
 {% block content %}
-   <h3 class="page-title" align ="left">{{title|t}}</h3>
+   <h3 class="page-title" align ="left">{{title|t}} ({{event_name}})</h3><div align="right"><a href ="{{url('event/list' )}}" class="btn btn blue">{{'Events'|t}} <i class="fa fa-arrow-right "></i> </a></div>
 	<hr/>
   <!-- GRID SEARCH -->
 	<div align="left" >
-	{{ form(searchroute, "method":"post", "autocomplete" : "off") }}
+	{{ form(searchroute~'/'~eventid, "method":"post", "autocomplete" : "off") }}
 	<div class="row">
 	<div class="form-group col-md-10" style="padding-left:0;">
 	{% for index,item in searchcolumns %}
@@ -28,7 +28,7 @@
 
 	{% if permissions['create']=='Y' %}
 	 <!-- NEW ITEM ICON-->
-	<div align="left">{{ link_to(newroute,'<i class="fa fa-plus fa-lg"></i>')}}</div>
+	<div align="left">{{ link_to(newroute~'/'~eventid,'<i class="fa fa-plus fa-lg"></i>')}}</div>
   {% endif %}
 	<br>
 	{% if noitems ==""%}
@@ -55,7 +55,7 @@
 	<!-- GRID HEADER-->
 	<ul class="dropdown-menu pull-right" role="menu">
 	<li class="ms-hover">
-	<a href="{{ '..'~ router.getRewriteUri() ~'?page='~page.current~'&order='~item['column_name']~' asc'}}">
+	<a href="{{ url(obj.remove_slash_url(router.getRewriteUri()))~'?page='~page.current~'&order='~item['column_name']~' asc'}}">
 	<i class="fa fa-arrow-up"></i>
 	{{' Asc'}}
 	</a>
@@ -63,7 +63,7 @@
 	<li class="divider">
 	</li>
 	<li class="ms-hover">
-	<a href="{{ '..'~ router.getRewriteUri() ~'?page='~page.current~'&order='~item['column_name']~' desc'}}">
+	<a href="{{url(obj.remove_slash_url(router.getRewriteUri()))~'?page='~page.current~'&order='~item['column_name']~' desc'}}">
 	<i class="fa fa-arrow-down"></i>
 	{{' Desc'}}
 	</a>
@@ -85,14 +85,9 @@
 			{% for index,item in headercolumns %}
 				<td width ="20%">{{ entity.readAttribute(item['column_name'])}}</td>
 			{% endfor %}
-      	<td width ="2%">
-				{% if permissions['edit']=='Y' %}
-				{{link_to('category_translation/list/'~entity.id,'<i class="fa fa-language fa-lg"></i>','class':'btn btn-icon-only yellow')}}
-				{% endif %}
-			</td>
 			<td width ="2%">
 				{% if permissions['edit']=='Y' %}
-				{{link_to(editroute~entity.id,'<i class="fa fa-edit fa-lg"></i>','class':'btn btn-icon-only green')}}
+				{{link_to(editroute~entity.id~'/'~eventid,'<i class="fa fa-edit fa-lg"></i>','class':'btn btn-icon-only green')}}
 				{% endif %}
 			</td>
 			<td width ="2%">
@@ -110,18 +105,18 @@
 		<div align="left">{{ 'Página'|t~' '~ page.current ~' '~'de'|t ~' '~page.total_pages }}</div>
 		<div align ="left">
 		<ul class="pagination">
-		<li>{{ link_to(listroute,'<i class="fa fa-angle-left"></i><i class="fa fa-angle-left"></i>') }}</li>
-		<li>{{ link_to(listroute~"?page="~page.before, '<i class="fa fa-angle-left"></i>') }}</li>
+		<li>{{ link_to(listroute~'/'~eventid,'<i class="fa fa-angle-left"></i><i class="fa fa-angle-left"></i>') }}</li>
+		<li>{{ link_to(listroute~'/'~eventid~"?page="~page.before, '<i class="fa fa-angle-left"></i>') }}</li>
 		{% for i in 1..page.total_pages %}
 		{% if page.current == i %}
 		{% set classitem ='active' %}
 		{% else %}
 		{% set classitem ='' %}
 		{% endif %}
-		<li class="{{classitem}}">{{ link_to(listroute~"?page="~i, i) }}</li>
+		<li class="{{classitem}}">{{ link_to(listroute~'/'~eventid~"?page="~i, i) }}</li>
 		{% endfor %}
-		<li>{{ link_to(listroute~"?page="~page.next, '<i class="fa fa-angle-right"></i>') }}</li>
-		<li>{{ link_to(listroute~"?page="~page.last, '<i class="fa fa-angle-right"></i><i class="fa fa-angle-right"></i>') }}</li>
+		<li>{{ link_to(listroute~'/'~eventid~"?page="~page.next, '<i class="fa fa-angle-right"></i>') }}</li>
+		<li>{{ link_to(listroute~'/'~eventid~"?page="~page.last, '<i class="fa fa-angle-right"></i><i class="fa fa-angle-right"></i>') }}</li>
 		</ul>
 		</div>
     <!--END GRID PAGINATION -->

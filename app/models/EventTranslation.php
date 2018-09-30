@@ -18,12 +18,19 @@ class EventTranslation extends \Phalcon\Mvc\Model
      * @var integer
      */
     protected $eventid;
+  
+    /**
+     *
+     * @var string
+     */
+    protected $languagecode;
+
 
     /**
      *
      * @var string
      */
-    protected $name;
+    protected $name_translation;
 
     /**
      *
@@ -86,16 +93,29 @@ class EventTranslation extends \Phalcon\Mvc\Model
 
         return $this;
     }
-
-    /**
-     * Method to set the value of field name
+  
+     /**
+     * Method to set the value of field languagecode
      *
-     * @param string $name
+     * @param string $languagecode
      * @return $this
      */
-    public function setName($name)
+    public function setLanguagecode($languagecode)
     {
-        $this->name = $name;
+        $this->languagecode = $languagecode;
+
+        return $this;
+    }
+
+    /**
+     * Method to set the value of field $name_translation
+     *
+     * @param string $name_translation
+     * @return $this
+     */
+    public function setNameTranslation($name)
+    {
+        $this->name_translation = $name_translation;
 
         return $this;
     }
@@ -198,16 +218,25 @@ class EventTranslation extends \Phalcon\Mvc\Model
     {
         return $this->eventid;
     }
-
-
+    
     /**
-     * Returns the value of field name
+     * Returns the value of field languagecode
      *
      * @return string
      */
-    public function getName()
+    public function getLanguagecode()
     {
-        return $this->name;
+        return $this->languagecode;
+    }
+
+    /**
+     * Returns the value of field name_translation
+     *
+     * @return string
+     */
+    public function getNameTranslation()
+    {
+        return $this->name_translation;
     }
 
     /**
@@ -323,7 +352,8 @@ class EventTranslation extends \Phalcon\Mvc\Model
         return array(
             'id' => 'id',
             'eventid'=>'eventid',
-            'name' => 'name',
+            'languagecode'=>'languagecode',
+            'name' => 'name_translation',
             'location' => 'location',
             'description' => 'description',
             'createuser' => 'createuser',
@@ -337,12 +367,12 @@ class EventTranslation extends \Phalcon\Mvc\Model
     {
      
        $validator= new Validation();
-       $validator->add(["name","location","description"],
+       $validator->add(["name_translation","location","description"],
        new PresenceOf(
         [
           "message" =>
           [
-            "name" => $this->di->get('translate')->_('event.name.required'),
+            "name_translation" => $this->di->get('translate')->_('event.name.required'),
             "location" => $this->di->get('translate')->_('event.location.required'),
             "description" => $this->di->get('translate')->_('event.description.required')
            ]

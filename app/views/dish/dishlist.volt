@@ -86,7 +86,7 @@
 			{% for index,item in headercolumns %}
 				<td width ="15%">{{ entity.readAttribute(item['column_name'])}}</td>
 			{% endfor %}
-			<td width ="2%">
+       	<td width ="2%">
 				{% if permissions['edit']=='Y' %}
 				{{link_to('dish_translation/list/'~entity.id,'<i class="fa fa-language fa-lg"></i>','class':'btn btn-icon-only yellow')}}
 				{% endif %}

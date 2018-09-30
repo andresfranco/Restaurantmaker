@@ -92,6 +92,19 @@ class CategoryTranslation extends \Phalcon\Mvc\Model
 
         return $this;
     }
+    
+   /**
+     * Method to set the value of field category
+     *
+     * @param string $category
+     * @return $this
+     */
+    public function setCategory($category)
+    {
+        $this->category= $category;
+
+        return $this;
+    }
 
     
 
@@ -173,9 +186,19 @@ class CategoryTranslation extends \Phalcon\Mvc\Model
      *
      * @return integer
      */
-    public function getCategoryid()
+    public function getCategoryId()
     {
         return $this->categoryid;
+    }
+  
+     /**
+     * Returns the value of field category
+     *
+     * @return string
+     */
+    public function getCategory()
+    {
+        return $this->category;
     }
 
     
@@ -273,6 +296,7 @@ class CategoryTranslation extends \Phalcon\Mvc\Model
             'id' => 'id',
             'languagecode' => 'languagecode',
             'categoryid' => 'categoryid',
+            'category' => 'category',
             'createuser' => 'createuser',
             'modifyuser' => 'modifyuser',
             'createdate' => 'createdate',
@@ -282,7 +306,7 @@ class CategoryTranslation extends \Phalcon\Mvc\Model
     public function validation()
     {
        $validator= new Validation();
-       $validator->add(["languagecode","title_translation"],
+       $validator->add(["languagecode","category"],
        new PresenceOf(
         [
           "message" =>

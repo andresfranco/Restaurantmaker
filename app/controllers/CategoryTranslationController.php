@@ -46,7 +46,7 @@ class CategoryTranslationController extends ControllerBase
     {
       if($entity_object)
       {
-        $this->tag->setDefault("categoryid", $entity_object->getCategoryid());
+        $this->tag->setDefault("categoryid", $entity_object->getCategoryId());
         $this->tag->setDefault("languagecode", $entity_object->getLanguagecode());
         $this->tag->setDefault("category", $entity_object->getCategory());
       }
@@ -68,7 +68,7 @@ class CategoryTranslationController extends ControllerBase
     ,'show_route'=>'category_translation/show/'
     ,'search_route'=>'category_translation/search'
     ,'route_list'=>$routelist
-    ,'view_name'=>'category_translation/category_translation_list'
+    ,'view_name'=>'category_translation/categoryTranslationList'
     ,'numberPage'=>1
     ,'pagelimit'=>10
     ,'noitems_message'=>'category_translation.notfound'
@@ -76,11 +76,11 @@ class CategoryTranslationController extends ControllerBase
     ,'header_columns'=>array(
       array('column_name' => 'category','title' => 'Category','class'=>'')
       ,array('column_name' => 'language','title' => 'Language','class'=>'')
-      ,array('column_name' => 'translation','title' => 'Translate Category','class'=>''))
+      ,array('column_name' => 'translation','title' => 'Translated Category','class'=>''))
     ,'search_columns'=>array(
       array('name' => 'category','title' => 'Category','size'=>30,'div_class'=>"input-control full-size",'label_class'=>'search')
       ,array('name' => 'language','title' => 'Language','size'=>30,'div_class'=>"input-control full-size",'label_class'=>'search')
-      ,array('name' => 'translation','title' => 'Translate title','size'=>30,'div_class'=>"input-control full-size",'label_class'=>'search')
+      ,array('name' => 'translation','title' => 'Translated Category','size'=>30,'div_class'=>"input-control full-size",'label_class'=>'search')
 
     )
   ];
@@ -89,27 +89,27 @@ class CategoryTranslationController extends ControllerBase
 
 
   /**
-  * @Route("/list/{articleid}", methods={"GET","POST"}, name="category_translation_list")
+  * @Route("/list/{categoryid}", methods={"GET","POST"}, name="categoryTranslationList")
   */
-  public function listAction($articleid)
+  public function listAction($categoryid)
   {
     $order=$this->set_grid_order();
     $grid_values =$this->set_grid_parameters('category_translation/list');
     $query= $this->modelsManager->createBuilder()
-             ->columns(array('at.id as id','at.articleid as articleid','at.languagecode as languagecode','l.language as language','a.title as article','at.title_translation as translation'))
-             ->from(array('at' => 'CategoryTranslation'))
-             ->join('Article', 'a.id = at.articleid', 'a')
-             ->join('Language', 'l.code = at.languagecode', 'l')
-             ->where('at.articleid = :articleid:', array('articleid' =>$articleid))
+             ->columns(array('ct.id as id','dc.category as category','l.language as language','ct.category as translation'))
+             ->from(array('ct' => 'CategoryTranslation'))
+             ->join('DishCategory', 'dc.id = ct.categoryid', 'dc')
+             ->join('Language', 'l.code = ct.languagecode', 'l')
+             ->where('ct.categoryid = :categoryid:', array('categoryid' =>$categoryid))
              ->orderBy($order)
              ->getQuery()
              ->execute();
     $this->set_grid_values($query,$grid_values);
     $this->check_all_permissions($this->session->get('userid'));
-    $this->view->articleid = $articleid;
-    $category_data = $this->get_articledata_by_id($articleid);
-    $this->view->category_name =$category_data['title'];
-    $this->view->category_id = $category_data['id'];
+    $this->view->categoryid = $categoryid;
+    $category_data = $this->getCategoryDataById($categoryid);
+    $this->view->category =$category_data['category'];
+    $this->view->categoryId = $category_data['id'];
     $this->view->obj =$this;
   }
 
@@ -126,9 +126,9 @@ class CategoryTranslationController extends ControllerBase
 
 
   /**
-  * @Route("/search/{articleid}", methods={"GET","POST"}, name="category_translationsearch")
+  * @Route("/search/{categoryid}", methods={"GET","POST"}, name="category_translationsearch")
   */
-  public function searchAction($articleid)
+  public function searchAction($categoryid)
 
   {
 
@@ -136,33 +136,32 @@ class CategoryTranslationController extends ControllerBase
 
     $grid_values =$this->set_grid_parameters('category_translation/search');
 
-    $search_values =array(array('name'=>'article','value'=>$this->request->getPost("article"))
+    $search_values =array(array('name'=>'category','value'=>$this->request->getPost("category"))
 
     ,array('name'=>'language','value'=>$this->request->getPost("language"))
-    ,array('name'=>'title','value'=>$this->request->getPost("translation"))
+    ,array('name'=>'translation','value'=>$this->request->getPost("translation"))
      );
 
     $params_query =$this->set_search_grid_post_values($search_values);
 
-    $query =$this->modelsManager->createBuilder()
-             ->columns(array('at.id as id','at.articleid as articleid','at.languagecode as languagecode','l.language as language','a.title as article','at.title_translation as translation'))
-             ->from(array('at' => 'CategoryTranslation'))
-             ->join('Article', 'a.id = at.articleid', 'a')
-             ->join('Language', 'l.code = at.languagecode', 'l')
-             ->where('at.articleid = :articleid:', array('articleid' =>$articleid))
-             ->AndWhere('a.title LIKE :article:', array('article' => '%' . $params_query['article']. '%'))
+    $query= $this->modelsManager->createBuilder()
+             ->columns(array('ct.id as id','dc.category','l.language as language','ct.category as translation'))
+             ->from(array('ct' => 'CategoryTranslation'))
+             ->join('DishCategory', 'dc.id = ct.categoryid', 'dc')
+             ->join('Language', 'l.code = ct.languagecode', 'l')
+             ->AndWhere('dc.category LIKE :category:', array('category' => '%' . $params_query['category']. '%'))
              ->AndWhere('l.language LIKE :language:', array('language' => '%' . $params_query['language']. '%'))
-             ->AndWhere('at.title_translation LIKE :title:', array('title' => '%' . $params_query['title']. '%'))
+             ->AndWhere('ct.category LIKE :translation:', array('translation' => '%' . $params_query['translation']. '%'))
              ->orderBy($order)
              ->getQuery()
              ->execute();
 
     $this->set_grid_values($query,$grid_values);
     $this->check_all_permissions($this->session->get('userid'));
-    $this->view->articleid = $articleid;
-    $category_data = $this->get_articledata_by_id($articleid);
-    $this->view->category_name =$category_data['title'];
-    $this->view->category_id = $category_data['articleid'];
+    $this->view->categoryid = $categoryid;
+    $category_data = $this->getCategoryDataById($categoryid);
+    $this->view->category =$category_data['category'];
+    $this->view->categoryId = $category_data['id'];
     $this->view->obj =$this;
 
   }
@@ -180,10 +179,10 @@ class CategoryTranslationController extends ControllerBase
 
   public function set_form_routes_custom($routeform,$routelist,$title
   ,$view_name,$mode,$entity,$form_name
-  ,$form_columns,$save_button_name,$cancel_button_name,$delete_button_name,$articleid)
+  ,$form_columns,$save_button_name,$cancel_button_name,$delete_button_name,$categoryid)
   {
 
-    $category_data = $this->get_articledata_by_id($articleid);
+    $category_data = $this->getCategoryDataById($categoryid);
     $this->view->form = new CategoryTranslationForm($entity,array());
     $this->view->routelist =$routelist;
     $this->view->routeform =$routeform;
@@ -192,29 +191,28 @@ class CategoryTranslationController extends ControllerBase
     $this->view->save_button_name =$save_button_name;
     $this->view->cancel_button_name =$cancel_button_name;
     $this->view->delete_button_name =$delete_button_name;
-    $this->view->articleid =$category_data['id'];
-    $this->view->category_name =$category_data['title'];
+    $this->view->categoryId =$category_data['id'];
+    $this->view->category =$category_data['category'];
     $this->view->mode =$mode;
     $this->view->pick($view_name);
   }
 
-  public function get_articledata_by_id($articleid)
+  public function getCategoryDataById($categoryid)
   {
-    $category_data = Article::findFirst($articleid)->toArray();
+    $category_data = DishCategory::findFirst($categoryid)->toArray();
     return $category_data;
 
   }
 
   /**
-  * @Route("/new/{articleid}", methods={"GET"}, name="dishenew")
+  * @Route("/new/{categoryid}", methods={"GET"}, name="dishenew")
   */
-  public function newAction($articleid)
+  public function newAction($categoryid)
   {
-    
     $entity =null;
     $this->get_assets();
     $this->set_form_routes_custom(
-    $this->crud_params['create_route'].'/'.$articleid
+    $this->crud_params['create_route'].'/'.$categoryid
     ,$this->crud_params['route_list']
     ,$this->crud_params['new_title']
     ,$this->crud_params['add_edit_view']
@@ -225,15 +223,15 @@ class CategoryTranslationController extends ControllerBase
     ,$this->crud_params['save_button_name']
     ,$this->crud_params['cancel_button_name']
     ,''
-    ,$articleid);
+    ,$categoryid);
 
     $this->tag->setDefault("content", $this->request->getPost("articlecontent"));
   }
 
   /**
-  * @Route("/edit/{id}/{articleid}", methods={"GET"}, name="dishedit")
+  * @Route("/edit/{id}/{categoryid}", methods={"GET"}, name="dishedit")
   */
-  public function editAction($id,$articleid)
+  public function editAction($id,$categoryid)
   {
     $entity =$this->set_entity(
     $id
@@ -257,11 +255,11 @@ class CategoryTranslationController extends ControllerBase
     ,$this->crud_params['save_button_name']
     ,$this->crud_params['cancel_button_name']
     ,''
-    ,$articleid
+    ,$categoryid
     );
   }
 
-  public function execute_entity_action_custom($entity,$controller,$action,$params,$redirect_route,$mode,$articleid)
+  public function execute_entity_action_custom($entity,$controller,$action,$params,$redirect_route,$mode,$categoryid)
   {
   $form_action =$entity->save();
    if ($mode =='delete')
@@ -278,17 +276,17 @@ class CategoryTranslationController extends ControllerBase
          return $this->dispatcher->forward(array(
              "controller" => $controller,
              "action" => $action,
-             "params"=>array($articleid)
+             "params"=>array($categoryid)
 
          ));
    }
 
-   $this->response->redirect('category_translation/list/'.$articleid);
+   $this->response->redirect('category_translation/list/'.$categoryid);
   }
   /**
-  * @Route("/create/{articleid}", methods={"POST"}, name="dishcreate")
+  * @Route("/create/{categoryid}", methods={"POST"}, name="dishcreate")
   */
-  public function createAction($articleid)
+  public function createAction($categoryid)
   {
     $entity = $this->set_entity(
     ''
@@ -298,14 +296,14 @@ class CategoryTranslationController extends ControllerBase
     ,$this->crud_params['action_list']
     ,'create');
 
-    $this->set_post_values($entity,$articleid);
+    $this->set_post_values($entity,$categoryid);
     $this->audit_fields($entity,'create');
 
 
     $this->execute_entity_action_custom($entity
     ,$this->crud_params['controller']
     ,'new',array($entity),$this->crud_params['action_list']
-    ,'create',$articleid);
+    ,'create',$categoryid);
   }
 
   /**
@@ -321,14 +319,14 @@ class CategoryTranslationController extends ControllerBase
     ,$this->crud_params['action_list']
     ,'update');
 
-    $this->set_post_values($entity,$entity->getArticleid());
+    $this->set_post_values($entity,$entity->getcategoryId());
     $this->audit_fields($entity,'edit');
 
     $this->execute_entity_action_custom(
     $entity
     ,$this->crud_params['controller']
     ,'edit',array($entity->id)
-    ,$this->crud_params['action_list'],'update',$entity->getArticleid());
+    ,$this->crud_params['action_list'],'update',$entity->getcategoryId());
   }
 
   /**
@@ -348,7 +346,7 @@ class CategoryTranslationController extends ControllerBase
 
     $this->set_form_routes_custom(
     $this->crud_params['delete_route'].$id
-    ,$this->crud_params['route_list'].'/'.$entity->getArticleid()
+    ,$this->crud_params['route_list'].'/'.$entity->getcategoryId()
     ,$this->crud_params['delete_message']
     ,$this->crud_params['show_view'] ,'show'
     ,$entity
@@ -380,7 +378,7 @@ class CategoryTranslationController extends ControllerBase
     ,'show'
     ,array('id'=>$id)
     ,$this->crud_params['action_list']
-    ,'delete',$entity->getArticleid());
+    ,'delete',$entity->getcategoryId());
   }
 
 }
