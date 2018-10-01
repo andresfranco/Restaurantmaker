@@ -45,12 +45,12 @@
                  <?php $languagename = $item->language; ?>
              <?php } ?>
           <?php } ?>
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <img src="<?= $this->url->getStatic('img/flags/' . $flag) ?>" alt=""><?= ' ' ?><?= $this->getDI()->get("translate")->_($languagename) ?><span class="caret"></span></a>
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <img src="<?= $this->url->getStatic('/img/flags/' . $flag) ?>" alt=""><?= ' ' ?><?= $this->getDI()->get("translate")->_($languagename) ?><span class="caret"></span></a>
       <ul class="dropdown-menu">
         <?php foreach ($languages as $item) { ?>
         <li>
         <a href="<?= $this->url->get('setlang') . '/' . $item->code ?>">
-        <img src="<?= $this->url->getStatic('img/flags/' . $item->flag) ?>" alt=""><?= ' ' ?><?= $this->getDI()->get("translate")->_($item->language) ?> </a>
+        <img src="<?= $this->url->getStatic('/img/flags/' . $item->flag) ?>" alt=""><?= ' ' ?><?= $this->getDI()->get("translate")->_($item->language) ?> </a>
         </li>
         <?php } ?>
       </ul>
@@ -501,81 +501,32 @@
 </div>
      
     
-<h3 class="page-title" align ="left">
-	<?= 'MANTENIMIENTO DEL SISTEMA' ?>
-</h3>
-<hr/>
+
 
     <!-- End Accordion Menu --> 
   <!-- Main Content--> 
   <div class="col-sm-12 col-md-10 col-xs-12 col-lg-10 column_content">
   <div class="main_content">
   
-	<div class="tiles">
-	<div class="tile bg-green">
-	<div class="tile-body">
-	<i class="fa fa-bar-chart-o"></i>
-	</div>
-	<div class="tile-object">
-	<div class="name"> Idiomas </div>
-	<div class="number"> </div>
-	</div>
-	</div>
-	<div class="tile bg-green">
-	<div class="tile-body">
-	<i class="fa fa-bar-chart-o"></i>
-	</div>
-	<div class="tile-object">
-	<div class="name"> Restaurantes </div>
-	<div class="number"> </div>
-	</div>
-	</div>
-	<div class="tile bg-green">
-	<div class="tile-body">
-	<i class="fa fa-bar-chart-o"></i>
-	</div>
-	<div class="tile-object">
-	<div class="name"> Menú</div>
-	<div class="number"> </div>
-	</div>
-	</div>
-	<div class="tile bg-green">
-	<div class="tile-body">
-	<i class="fa fa-bar-chart-o"></i>
-	</div>
-	<div class="tile-object">
-	<div class="name"> Eventos</div>
-	<div class="number"> </div>
-	</div>
-	</div>
-	<div class="tile bg-green">
-	<div class="tile-body">
-	<i class="fa fa-bar-chart-o"></i>
-	</div>
-	<div class="tile-object">
-	<div class="name"> Multimedia</div>
-	<div class="number"> </div>
-	</div>
-	</div>
-	<div class="tile bg-green">
-	<div class="tile-body">
-	<i class="fa fa-bar-chart-o"></i>
-	</div>
-	<div class="tile-object">
-	<div class="name"> Seguridad </div>
-	<div class="number"> </div>
-	</div>
-	</div>
-	<div class="tile bg-green">
-	<div class="tile-body">
-	<i class="fa fa-bar-chart-o"></i>
-	</div>
-	<div class="tile-object">
-	<div class="name"> <?= $this->tag->linkTo(['address/menu', 'Direcciones']) ?> </div>
-	<div class="number"> </div>
-	</div>
-	</div>
-	</div>
+<div class="row">
+<h3 class="page-title" align ="left">
+	<?= $this->getDI()->get("translate")->_('restaurants.title') ?>
+</h3>
+<hr/>
+<?php foreach ($restaurants as $restaurant) { ?>
+  <div class="col-sm-6 col-md-3 col-lg-3">
+    <div class="card">
+     <a href="<?= '/front_end/' . $restaurant->id ?>">
+       <div class="card-block well">
+          <img id="main_image" src="<?= $this->url->get('files/images/' . $restaurant->main_image) ?>"width="300px" height="150px"/>
+          <h5 class="text-bold"> <b><?= $restaurant->name ?></b></h5>
+       </div>
+      </a> 
+   </div>
+ </div>
+<?php } ?>
+
+</div>
 
   </div>
   </div>

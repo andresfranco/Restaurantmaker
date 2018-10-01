@@ -113,7 +113,7 @@ class EventTranslation extends \Phalcon\Mvc\Model
      * @param string $name_translation
      * @return $this
      */
-    public function setNameTranslation($name)
+    public function setNameTranslation($name_translation)
     {
         $this->name_translation = $name_translation;
 

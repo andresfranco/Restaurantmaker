@@ -577,21 +577,8 @@
 <?= $this->assets->outputJs('validatejs') ?>
 <script>
 var validatemessages = {
-	title:'<?= $this->getDI()->get("translate")->_('category_translation.title.required') ?>',
-	content:'<?= $this->getDI()->get("translate")->_('category_translation.content.required') ?>'
+	category:'<?= $this->getDI()->get("translate")->_('category.required') ?>'
 };
-</script>
-<script type="text/javascript">
-$(document).ready(function() {
- $('#categorycontent').val($('#summernote').code());	
-$('#summernote').summernote({
-	height: "250px",
-	width:"600px",
-  onChange:function() {
-   $('#categorycontent').val($('#summernote').code());
-    }
-});
-});
 </script>
 
   <!-- End JavaScripts --> 

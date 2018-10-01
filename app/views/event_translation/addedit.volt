@@ -10,8 +10,9 @@
 {{assets.outputJs('validatejs')}}
 <script>
 var validatemessages = {
-	title:'{{"event_translation.title.required"|t}}',
-	content:'{{"event_translation.content.required"|t}}'
+	name:'{{"event.name.required"|t}}',
+	location:'{{"event.location.required"|t}}',
+	description:'{{"event.description.required"|t}}',
 };
 </script>
 <script type="text/javascript">
@@ -54,7 +55,7 @@ $('#summernote').summernote({
 		<div class="col-md-4">
 		{{ form.render(item['name'],["class":"form-control"]) }}
 		<!-- LOAD CONTROL ERROR LABEL-->
-		 {% if item['name']=='content'%}
+		 {% if item['name']=='description'%}
         <label id="lblcontent" name ="lblcontent"></label>
         {% endif %}
 		{{item['label_error']|t}}

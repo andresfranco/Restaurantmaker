@@ -66,7 +66,7 @@ class EventTranslationController extends ControllerBase
       $entity->setLanguagecode($this->request->getPost("languagecode"));
       $entity->setNameTranslation($this->request->getPost("name"));
       $entity->setLocation($this->request->getPost("location"));
-      $entity->setDescription($this->request->getPost("description"));
+      $entity->setDescription($this->request->getPost("eventcontent"));
     }
 
   public function set_grid_parameters($routelist)
@@ -233,6 +233,7 @@ class EventTranslationController extends ControllerBase
     ,$this->crud_params['cancel_button_name']
     ,''
     ,$eventid);
+     $this->tag->setDefault("description", $this->request->getPost("eventcontent"));
   }
 
   /**
@@ -262,8 +263,8 @@ class EventTranslationController extends ControllerBase
     ,$this->crud_params['save_button_name']
     ,$this->crud_params['cancel_button_name']
     ,''
-    ,$eventid
-    );
+    ,$eventid);
+     
   }
 
   public function execute_entity_action_custom($entity,$controller,$action,$params,$redirect_route,$mode,$eventid)

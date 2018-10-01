@@ -10,21 +10,8 @@
 {{assets.outputJs('validatejs')}}
 <script>
 var validatemessages = {
-	title:'{{"category_translation.title.required"|t}}',
-	content:'{{"category_translation.content.required"|t}}'
+	category:'{{"category.required"|t}}'
 };
-</script>
-<script type="text/javascript">
-$(document).ready(function() {
- $('#categorycontent').val($('#summernote').code());	
-$('#summernote').summernote({
-	height: "250px",
-	width:"600px",
-  onChange:function() {
-   $('#categorycontent').val($('#summernote').code());
-    }
-});
-});
 </script>
 {% endblock %}
 {% block content %}

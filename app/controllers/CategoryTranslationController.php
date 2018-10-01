@@ -78,8 +78,8 @@ class CategoryTranslationController extends ControllerBase
       ,array('column_name' => 'language','title' => 'Language','class'=>'')
       ,array('column_name' => 'translation','title' => 'Translated Category','class'=>''))
     ,'search_columns'=>array(
-      array('name' => 'category','title' => 'Category','size'=>30,'div_class'=>"input-control full-size",'label_class'=>'search')
-      ,array('name' => 'language','title' => 'Language','size'=>30,'div_class'=>"input-control full-size",'label_class'=>'search')
+    
+      array('name' => 'language','title' => 'Language','size'=>30,'div_class'=>"input-control full-size",'label_class'=>'search')
       ,array('name' => 'translation','title' => 'Translated Category','size'=>30,'div_class'=>"input-control full-size",'label_class'=>'search')
 
     )
@@ -149,7 +149,7 @@ class CategoryTranslationController extends ControllerBase
              ->from(array('ct' => 'CategoryTranslation'))
              ->join('DishCategory', 'dc.id = ct.categoryid', 'dc')
              ->join('Language', 'l.code = ct.languagecode', 'l')
-             ->AndWhere('dc.category LIKE :category:', array('category' => '%' . $params_query['category']. '%'))
+             
              ->AndWhere('l.language LIKE :language:', array('language' => '%' . $params_query['language']. '%'))
              ->AndWhere('ct.category LIKE :translation:', array('translation' => '%' . $params_query['translation']. '%'))
              ->orderBy($order)

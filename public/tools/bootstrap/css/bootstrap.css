@@ -5819,6 +5819,7 @@ button.list-group-item-danger.active:focus {
   padding: 9px;
   border-radius: 3px;
 }
+.well:hover{background-color: #0B38B1; color:white;}
 .close {
   float: right;
   font-size: 21px;
@@ -5829,6 +5830,7 @@ button.list-group-item-danger.active:focus {
   opacity: 0.2;
   filter: alpha(opacity=20);
 }
+
 .close:hover,
 .close:focus {
   color: #000;

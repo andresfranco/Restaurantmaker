@@ -1,74 +1,25 @@
 {% extends "layouts/masterpage_standard.volt" %}
 {% block pagetitle %}
-<h3 class="page-title" align ="left">
-	{{'MANTENIMIENTO DEL SISTEMA'}}
-</h3>
-<hr/>
+
 {% endblock %}
 {% block content %}
-	<div class="tiles">
-	<div class="tile bg-green">
-	<div class="tile-body">
-	<i class="fa fa-bar-chart-o"></i>
-	</div>
-	<div class="tile-object">
-	<div class="name"> Idiomas </div>
-	<div class="number"> </div>
-	</div>
-	</div>
-	<div class="tile bg-green">
-	<div class="tile-body">
-	<i class="fa fa-bar-chart-o"></i>
-	</div>
-	<div class="tile-object">
-	<div class="name"> Restaurantes </div>
-	<div class="number"> </div>
-	</div>
-	</div>
-	<div class="tile bg-green">
-	<div class="tile-body">
-	<i class="fa fa-bar-chart-o"></i>
-	</div>
-	<div class="tile-object">
-	<div class="name"> Menú</div>
-	<div class="number"> </div>
-	</div>
-	</div>
-	<div class="tile bg-green">
-	<div class="tile-body">
-	<i class="fa fa-bar-chart-o"></i>
-	</div>
-	<div class="tile-object">
-	<div class="name"> Eventos</div>
-	<div class="number"> </div>
-	</div>
-	</div>
-	<div class="tile bg-green">
-	<div class="tile-body">
-	<i class="fa fa-bar-chart-o"></i>
-	</div>
-	<div class="tile-object">
-	<div class="name"> Multimedia</div>
-	<div class="number"> </div>
-	</div>
-	</div>
-	<div class="tile bg-green">
-	<div class="tile-body">
-	<i class="fa fa-bar-chart-o"></i>
-	</div>
-	<div class="tile-object">
-	<div class="name"> Seguridad </div>
-	<div class="number"> </div>
-	</div>
-	</div>
-	<div class="tile bg-green">
-	<div class="tile-body">
-	<i class="fa fa-bar-chart-o"></i>
-	</div>
-	<div class="tile-object">
-	<div class="name"> {{ link_to("address/menu",'Direcciones')}} </div>
-	<div class="number"> </div>
-	</div>
-	</div>
-	</div>
+<div class="row">
+<h3 class="page-title" align ="left">
+	{{'restaurants.title'|t}}
+</h3>
+<hr/>
+{% for restaurant in restaurants %}
+  <div class="col-sm-6 col-md-3 col-lg-3">
+    <div class="card">
+     <a href="{{"/front_end/"~restaurant.id}}">
+       <div class="card-block well">
+          <img id="main_image" src="{{url('files/images/'~restaurant.main_image)}}"width="300px" height="150px"/>
+          <h5 class="text-bold"> <b>{{ restaurant.name }}</b></h5>
+       </div>
+      </a> 
+   </div>
+ </div>
+{% endfor %}
+
+</div>
 {% endblock %}
