@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<title>{{website_title|t}}</title>
+<title>{{restaurantTranslations.name}}</title>
 {% block fonts %}
 {{ assets.outputCss('frontend_fonts') }}
 {% endblock %}
@@ -32,7 +32,7 @@
         <!-- Logo Starts -->
         <a class="navbar-brand" href="#home">
         <img src="{{logo}}" alt="logo" width="93px" height="100px">
-        <span style="font: 1em Lobster,Arial,Helvetica;color:#00b504;font-weight:bold;">{{main_page_title}}</span>
+        <span style="font: 1em Lobster,Arial,Helvetica;color:#00b504;font-weight:bold;">{{restaurantTranslations.name}}</span>
         </a>
         <!-- #Logo Ends -->
         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
@@ -91,7 +91,7 @@
   <div class="caption">
     <div class="caption-wrapper">
     <div class="caption-info">
-    <h1 class="animated bounceInUp">{{mainImageTitle}}</h1>
+    <h1 class="animated bounceInUp">{{restaurantTranslations.image_title}}</h1>
     <p class="animated bounceInLeft"> </p>
     <a href="#menu" class="explore animated bounceInDown"><i class="fa fa-angle-down  fa-3x"></i></a>
     </div>
@@ -107,13 +107,13 @@
 <!-- Cirlce Starts -->
 <div id="menu"  class="container spacer about">
 
-<h2 class="text-center wowload fadeInUp">{{menuTitle}}</h2>
+<h2 class="text-center wowload fadeInUp">{{menuTranslations.title}}</h2>
 <div class="row">
   <div class="col-sm-6 wowload fadeInLeft">
-   <p>{{menuDescription}}</p>
+   <p>{{menuTranslations.description}}</p>
   </div>
   <div class="col-sm-6 wowload fadeInRight">
-  <h4><i class="fa fa-bars"></i> Menu</h4>
+  <h4><i class="fa fa-bars"></i> {{menuTranslations.name}}</h4>
   <!-- menus -->
   <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
     <div class="panel panel-default">

@@ -18,31 +18,15 @@ class FrontEndController extends ControllerBase
 
   {
     $restaurant = Restaurant::findFirst($restaurantid);
-    
-    
     $this->getAssets();
-     $this->view->website_title =$restaurant->name;
     //Restaurant Favicon 
-     $this->view->favicon_url = '/files/images/'.$restaurant->favicon;
-    
+    $this->view->favicon_url = '/files/images/'.$restaurant->favicon;
     //Restaurant Main Image Slider
-    $this->view->mainImage = '/files/images/'.$restaurant->main_image;
-    
-    // restaurant header image title
-    $this->view->mainImageTitle = $restaurant->main_image_title;
-     
+    $this->view->mainImage = '/files/images/'.$restaurant->main_image;   
     //Restaurant Logo
     $this->view->logo = '/files/images/'.$restaurant->logo_path;
-    
-     // Restaurant Name
-     $this->view->main_page_title =$restaurant->name;
-    
-    
     //Front End Languages
-     $languages = Language::find(); 
-     $this->view->languages = $languages; 
-    
-    
+     $this->view->languages = Language::find();
     //Get Main Menu 
     $menu = $this->getActiveMenu($restaurantid);
     
@@ -52,11 +36,74 @@ class FrontEndController extends ControllerBase
     
     $this->view->pick('front_end/themes/default/default_theme');
     
-     
-    //
-     
+    // Restaurant  Data
+    $restaurantData = $this->checkRestaurantTranslation($this->getRestaurantTranslationData($restaurantid));
+    $this->view->restaurantTranslations = $restaurantData;
     
+    //Main Menu Data
+    $menu = $this->getActiveMenu($restaurantid);
+    $menuData =$this->checkMenuTranslation($this->getMenuTranslationData($restaurantid,$menu));
+    $this->view->menuTranslations = $menuData;
+    
+    $dishes =$this->getMenuDishes($menu->id);
+   // $dishesData = 
+     
   }
+  
+  public function checkRestaurantTranslation($restaurantData){
+    if(!is_object($restaurantData)) {
+        $restaurantData->name ="restaurant.translation.name.data.required";
+        $restaurantData->image_title="restaurant.translation.image_title.data.required";
+    }
+     return $restaurantData;
+  }
+  
+  public function checkMenuTranslation($menuData){
+    if(!is_object($menuData)) {
+        $menuData->title="menu.translation.title.data.required";
+        $menuData->name="menu.translation.name.data.required";
+        $menuData->description="menu.translation.description.data.required";
+    }
+     return $menuData;
+  }
+  
+  public function getRestaurantTranslationData($restaurantid)
+  {   
+      $languagecode= $this->getSelectedLanguage();
+      $restaurantTranslation = RestaurantTranslation::findFirst(
+    [
+        "restaurantId = :restaurantid: AND languagecode = :languagecode:",
+        "bind" => ["restaurantid" => $restaurantid,"languagecode" => $languagecode]
+    ]
+    );
+      //var_dump($this->getRestaurantTranslationData($restaurantid));
+    return $restaurantTranslation;
+  }
+  
+  public function getMenuTranslationData($restaurantid,$menu){
+      $languagecode= $this->getSelectedLanguage();
+      $menuData = MenuTranslation::findFirst(
+    [
+        "menuId = :menuid: AND languagecode = :languagecode:",
+        "bind" => ["menuid" => $menu->id,"languagecode" => $languagecode]
+    ]
+    );
+      //var_dump($this->getRestaurantTranslationData($restaurantid));
+    return $menuData;
+  }
+  
+  
+  public function getSelectedLanguage()
+  { 
+    $languagecode ='en';
+    if($this->session->get('language'))
+    { 
+      $languagecode =$this->session->get('language'); 
+    }
+    return $languagecode;
+  }
+    
+  
   
   public function getActiveMenu($restaurantId){
     
@@ -81,7 +128,11 @@ class FrontEndController extends ControllerBase
             ->execute();
       return $dishes;   
   }
-
+  
+  
+  
+  
+ 
   public function getAssets()
   {
     $this->assets->collection('frontend_js')
@@ -124,6 +175,28 @@ class FrontEndController extends ControllerBase
     //gallery
     ->addCss('frontend/themes/default/assets/gallery/blueimp-gallery.min.css')
     ->addCss('frontend/themes/default/assets/style.css');
+  }
+  
+
+  
+  public function getRestaurantData($restaurantid){
+    $restaurant = Restaurant::findFirst($restaurantid);
+    return $restaurant;
+  }
+  public function getMenuData($restaurantid){
+    $menu = Menu::findFirst($restaurantid);
+    return $menu;
+  }
+  
+  public function getMenuCategories(){
+    $categories = DishCategory::find();
+    return $category;
+  }
+  
+  public function getDishData($menuid){
+    $dishes = Dish::findByMenuid($menuid);
+    return $dishes;
+    
   }
 
 }
