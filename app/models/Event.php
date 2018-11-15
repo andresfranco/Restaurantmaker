@@ -18,12 +18,34 @@ class Event extends \Phalcon\Mvc\Model
      * @var string
      */
     protected $name;
+  
+    /**
+     /**
+     *
+     * @var string
+     */
+    protected $main_image;
+
 
     /**
      *
      * @var string
      */
     protected $location;
+  
+    /**
+     *
+     * @var string
+     */
+    protected $active;
+  
+    
+     /**
+     *
+     * @var string
+     */
+    protected $main_event;
+
 
     /**
      *
@@ -92,6 +114,20 @@ class Event extends \Phalcon\Mvc\Model
 
         return $this;
     }
+  
+    
+     /**
+     * Method to set the value of field main_image
+     *
+     * @param string $main_image
+     * @return $this
+     */
+    public function setMainImage($main_image)
+    {
+        $this->main_image = $main_image;
+
+        return $this;
+    }
 
     /**
      * Method to set the value of field location
@@ -102,6 +138,32 @@ class Event extends \Phalcon\Mvc\Model
     public function setLocation($location)
     {
         $this->location = $location;
+
+        return $this;
+    }
+  
+  /**
+     * Method to set the value of field active
+     *
+     * @param string $active
+     * @return $this
+     */
+    public function setActive($active)
+    {
+        $this->active = $active;
+
+        return $this;
+    }
+  
+   /**
+     * Method to set the value of field main_event
+     *
+     * @param string $main_event
+     * @return $this
+     */
+    public function setMainEvent($main_event)
+    {
+        $this->main_event = $main_event;
 
         return $this;
     }
@@ -216,6 +278,17 @@ class Event extends \Phalcon\Mvc\Model
     {
         return $this->name;
     }
+     
+     /**
+     * Returns the value of field main_image
+     *
+     * @param string $main_image
+     * @return $this
+     */
+    public function getMainImage()
+    {
+        return $this->main_image;
+    }
 
     /**
      * Returns the value of field location
@@ -225,6 +298,28 @@ class Event extends \Phalcon\Mvc\Model
     public function getLocation()
     {
         return $this->location;
+    }
+  
+    
+   /**
+     * Returns the value of field active
+     *
+     * @return string
+     */
+    public function getActive()
+    {
+        return $this->active;
+    }
+  
+        
+   /**
+     * Returns the value of field main_event
+     *
+     * @return string
+     */
+    public function getMainEvent()
+    {
+        return $this->main_event;
     }
 
     /**
@@ -348,7 +443,10 @@ class Event extends \Phalcon\Mvc\Model
         return array(
             'id' => 'id',
             'name' => 'name',
+            'main_image'=>'main_image',
             'location' => 'location',
+            'active' => 'active',
+            'main_event'=>'main_event',
             'start_date' => 'start_date',
             'finish_date' => 'finish_date',
             'description' => 'description',

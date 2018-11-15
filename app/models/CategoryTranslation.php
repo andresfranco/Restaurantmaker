@@ -3,6 +3,7 @@ use Phalcon\Mvc\Model;
 use Phalcon\Validation;
 use Phalcon\Validation\Validator\Uniqueness;
 use Phalcon\Validation\Validator\PresenceOf;
+use Phalcon\Mvc\Model\Resultset\Simple as Resultset;
 class CategoryTranslation extends \Phalcon\Mvc\Model
 {
 
@@ -320,6 +321,23 @@ class CategoryTranslation extends \Phalcon\Mvc\Model
     
       $validator->add(["categoryid","languagecode"],new Uniqueness(["model" => $this,"message" => $this->di->get('translate')->_('category_translation.language.exist')]));
       return $this->validate($validator);
+    }
+  
+  
+   public static function  getTranslatedCategoryByDish($menuid=0,$languagecode='en')
+    {
+        // A raw SQL statement
+        $sql = "CALL getTranslatedCategoryByDish('$menuid', '$languagecode');";
+
+        // Base model
+        $categoryTranslation = new CategoryTranslation();
+
+        // Execute the query
+        return new Resultset(
+            null,
+            $categoryTranslation,
+            $categoryTranslation->getReadConnection()->query($sql)
+        );
     }
 
 

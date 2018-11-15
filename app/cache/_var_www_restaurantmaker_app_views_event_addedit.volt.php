@@ -52,12 +52,12 @@
                  <?php $languagename = $item->language; ?>
              <?php } ?>
           <?php } ?>
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <img src="<?= $this->url->getStatic('img/flags/' . $flag) ?>" alt=""><?= ' ' ?><?= $this->getDI()->get("translate")->_($languagename) ?><span class="caret"></span></a>
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <img src="<?= $this->url->getStatic('/img/flags/' . $flag) ?>" alt=""><?= ' ' ?><?= $this->getDI()->get("translate")->_($languagename) ?><span class="caret"></span></a>
       <ul class="dropdown-menu">
         <?php foreach ($languages as $item) { ?>
         <li>
         <a href="<?= $this->url->get('setlang') . '/' . $item->code ?>">
-        <img src="<?= $this->url->getStatic('img/flags/' . $item->flag) ?>" alt=""><?= ' ' ?><?= $this->getDI()->get("translate")->_($item->language) ?> </a>
+        <img src="<?= $this->url->getStatic('/img/flags/' . $item->flag) ?>" alt=""><?= ' ' ?><?= $this->getDI()->get("translate")->_($item->language) ?> </a>
         </li>
         <?php } ?>
       </ul>
@@ -558,6 +558,21 @@
      <?php } ?>
      </div>
 	<?php } ?>
+  <div class="form-group">
+			<label name="lbllogo" id="lblloko" class="control-label col-md-2 formlabel">
+				<a href="#MainImageModal" id="mainimageurl"  data-toggle="modal" ><i class="fa fa-file-image-o"></i>
+					<?= ' ' ?><?= $this->getDI()->get("translate")->_('Main Image') ?> </a>
+			</label>
+			<div class="col-md-4">
+			<?= $this->tag->textField(['main_image', 'type' => 'text', 'class' => 'form-control']) ?>
+			</div>
+			<div id ="main_image_content" class="col-md-2">
+				<?php if ($mode == 'edit' && $main_image != '') { ?>
+        <img id="main_image_preview" src="<?= $this->url->get('files/images/' . $main_image) ?>" width="50px" heigh="50px"/>
+				<?php } ?>
+			</div>
+		</div>
+      
        <div class="col-md-offset-2 col-md-3" style="padding-left:0;">
        	<input type="submit" class="btn btn-primary" value="<?= $this->getDI()->get("translate")->_('Guardar') ?>"></input>
 		<?= $this->tag->linkTo([$routelist, $this->getDI()->get("translate")->_($cancel_button_name), 'class' => 'btn btn-default']) ?>
@@ -567,6 +582,31 @@
 	</form>
 	<!-- END FORM-->	
 </div>
+
+<div id="MainImageModal" class="modal fade"  tabindex="-1" data-width="760" >
+  <div class="modal-body">
+	<div class="col-md-12">
+	<div class="portlet box blue" >
+		<div class="portlet-title">
+		<div class="caption"><?= $this->getDI()->get("translate")->_('Images') ?></div>
+		</div>
+		<div class="portlet-body form" >
+		<div class="col-md-12" style="background-color:white;">
+		<?php foreach ($images as $index => $item) { ?>
+		<div class="col-md-1" style="padding-top:15px;">
+	  <img  class="modal_hover" id ="<?= $item['name'] ?>" src="<?= $this->url->get('files/images/' . $item['name']) ?>"  height="100" width="100" onclick="selectMainImage(this.id);">
+		</div>
+		<?php } ?>
+	  </div>
+		<br><br>
+		<div class="col-md-12" style="background-color:white; padding-left:30px;padding-top:30px;padding-bottom:30px;">
+		<button type="button" data-dismiss="modal" class="btn btn-default"><?= $this->getDI()->get("translate")->_('Close') ?></button>
+		</div>
+		</div>
+	 </div>
+ </div>
+	</div>
+  </div>
 
   </div>
   </div>

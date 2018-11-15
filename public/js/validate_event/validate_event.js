@@ -61,3 +61,19 @@ $(function() {
     });
 
   });
+function get_url_path()
+  {
+    var l = window.location;
+    var base_url = l.protocol + "//" + l.host + "/" + l.pathname.split('/')[1];
+    return base_url;
+  }
+function selectMainImage(clicked_id)
+{
+  var base_url =get_url_path();
+  var urlpath ="/files/images/"+clicked_id;
+  $("#main_image").val(clicked_id);
+  $('#main_image_content').html('<img id="main_image_preview" src="'+urlpath+'" width="50px" heigh="50px"/>')
+  $('#MainImageModal').modal('hide');
+
+}
+

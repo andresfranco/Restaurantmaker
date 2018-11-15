@@ -58,6 +58,7 @@ class EventController extends ControllerBase
       $this->tag->setDefault("start_date", $entity_object->getStartDate());
       $this->tag->setDefault("finish_date", $entity_object->getFinishDate());
       $this->tag->setDefault("description", $entity_object->getDescription());
+       $this->tag->setDefault("main_image", $entity_object->getMainImage());  
       }
     }
 
@@ -69,6 +70,7 @@ class EventController extends ControllerBase
       $entity->setStartDate($this->request->getPost("start_date"));
       $entity->setFinishDate($this->request->getPost("finish_date"));
       $entity->setDescription($this->request->getPost("description"));
+      $entity->setMainImage($this->request->getPost("main_image"));
     }
 
   public function set_grid_parameters($routelist)
@@ -200,6 +202,8 @@ class EventController extends ControllerBase
     ,$this->crud_params['save_button_name']
     ,$this->crud_params['cancel_button_name']
     ,'');
+     $this->view->mode ='new';
+    $this->view->images = $this->getEventImages();
   }
 
   /**
@@ -230,6 +234,9 @@ class EventController extends ControllerBase
     ,$this->crud_params['cancel_button_name']
     ,''
     );
+    $this->view->mode ='edit';
+    $this->view->images = $this->getEventImages();
+    $this->view->main_image =$entity->main_image;
   }
 
   /**
@@ -327,5 +334,14 @@ class EventController extends ControllerBase
     ,$this->crud_params['action_list']
     ,'delete');
   }
+  
+    public function getEventImages()
+     {
+       $files = File::find(array(
+        "conditions" => "type like '%image%'"
+    ));
+       return $files->toArray();
+
+     }
 
 }

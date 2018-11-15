@@ -21,6 +21,7 @@
 </head>
 
 <body>
+
 <div class="topbar animated fadeInLeftBig"></div>
 
 <!-- Header Starts -->
@@ -104,140 +105,45 @@
 
 
 
+
+
 <!-- Cirlce Starts -->
 <div id="menu"  class="container spacer about">
 
 <h2 class="text-center wowload fadeInUp"><?= $menuTranslations->title ?></h2>
 <div class="row">
-  <div class="col-sm-6 wowload fadeInLeft">
-   <p><?= $menuTranslations->description ?></p>
-  </div>
-  <div class="col-sm-6 wowload fadeInRight">
+  <div class="col-sm-12 wowload fadeInRight">
   <h4><i class="fa fa-bars"></i> <?= $menuTranslations->name ?></h4>
   <!-- menus -->
   <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+  
+ <?php if ($categoryTranslations) { ?> 
+ <?php foreach ($categoryTranslations as $category) { ?>
+  
     <div class="panel panel-default">
       <div class="panel-heading" role="tab">
       <h4 class="panel-title">
-      <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-      <i class="fa fa-coffee"></i> Bebidas no alcoholicas
+      <a data-toggle="collapse" data-parent="#accordion" href="<?= '#collapse' . $category['categoryid'] ?>" aria-expanded="true" aria-controls="<?= 'collapse' . $category['categoryid'] ?>">
+      <i class="fa fa-coffee"></i><?= $category['category'] ?>
       </a>
       </h4>
       </div>
-      <div id="collapseOne" class="panel-collapse collapse" role="tabpanel">
+      <div id="<?= 'collapse' . $category['categoryid'] ?>" class="panel-collapse collapse" role="tabpanel">
       <div class="panel-body">
-      <div class="clearfix food-list"><div class="pull-left">Té</div><span class="pull-right">$ 2.50</span></div>
-      <div class="clearfix food-list"><div class="pull-left">Café</div><span class="pull-right">$ 2.00</span></div>
-      <div class="clearfix food-list"><div class="pull-left">Sodas</div><span class="pull-right">$ 2.00</span></div>
-      <div class="clearfix food-list"><div class="pull-left">Botella de Agua</div><span class="pull-right">$ 2.00</span></div>
+       <?php foreach ($dishTranslations as $dish) { ?>
+         <?php if ($category['categoryid'] == $dish->categoryid) { ?>
+          <div class="clearfix food-list"><div class="pull-left"><?= $dish->name ?></div><span class="pull-right"><?= '$' . $dish->price ?></span></div>
+        <?php } ?> 
+       <?php } ?>   
       </div>
       </div>
     </div>
-    <div class="panel panel-default">
-      <div class="panel-heading" role="tab">
-      <h4 class="panel-title">
-      <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-      <i class="fa fa-beer"></i> Cervezas Nacionales
-      </a>
-      </h4>
-      </div>
-      <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel">
-      <div class="panel-body">
-      <div class="clearfix food-list"><div class="pull-left">Panamá</div><span class="pull-right">$ 2.00</span></div>
-      <div class="clearfix food-list"><div class="pull-left">Balboa</div><span class="pull-right">$ 2.00</span></div>
-      <div class="clearfix food-list"><div class="pull-left">Atlas</div><span class="pull-right">$ 2.00</span></div>
-      <div class="clearfix food-list"><div class="pull-left">507</div><span class="pull-right">$ 2.00</span></div>
-      <div class="clearfix food-list"><div class="pull-left">Soberana</div><span class="pull-right">$ 2.00</span></div>
-      <div class="clearfix food-list"><div class="pull-left">Fula</div><span class="pull-right">$ 3.00</span></div>
-      <div class="clearfix food-list"><div class="pull-left">ChivoPerro</div><span class="pull-right">$ 3.00</span></div>
-      </div>
-      </div>
-    </div>
-    <div class="panel panel-default">
-      <div class="panel-heading" role="tab">
-      <h4 class="panel-title">
-      <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-      <i class="fa fa-beer"></i> Cervezas Importadas
-      </a>
-      </h4>
-      </div>
-      <div id="collapseThree" class="panel-collapse collapse" role="tabpanel">
-      <div class="panel-body">
-      <div class="clearfix food-list"><div class="pull-left">Stella</div><span class="pull-right">$ 5.00</span></div>
-      <div class="clearfix food-list"><div class="pull-left">Dellirium</div><span class="pull-right">$ 5.00</span></div>
-      <div class="clearfix food-list"><div class="pull-left">Lucifer</div><span class="pull-right">$ 5.00</span></div>
-      <div class="clearfix food-list"><div class="pull-left">Paulaner</div><span class="pull-right">$ 5.00</span></div>
-      </div>
-      </div>
-    </div>
-
-    <div class="panel panel-default">
-      <div class="panel-heading" role="tab">
-      <h4 class="panel-title">
-      <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-      <i class="glyphicon glyphicon-glass"></i>Tragos y Cocktails
-      </a>
-      </h4>
-      </div>
-      <div id="collapseFour" class="panel-collapse collapse" role="tabpanel">
-      <div class="panel-body">
-      <div class="clearfix food-list"><div class="pull-left">Vodka Smirnoff</div><span class="pull-right">$ 5.00</span></div>
-      <div class="clearfix food-list"><div class="pull-left">Mojito</div><span class="pull-right">$ 5.00</span></div>
-      <div class="clearfix food-list"><div class="pull-left">Ron abuelo</div><span class="pull-right">$ 5.00</span></div>
-      <div class="clearfix food-list"><div class="pull-left">Margarita</div><span class="pull-right">$ 5.00</span></div>
-      </div>
-      </div>
-    </div>
-
-    <div class="panel panel-default">
-      <div class="panel-heading" role="tab">
-      <h4 class="panel-title">
-      <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapsebottles" aria-expanded="false" aria-controls="collapseFour">
-      <i class="glyphicon glyphicon-glass"></i>Botellas de Licor
-      </a>
-      </h4>
-      </div>
-      <div id="collapsebottles" class="panel-collapse collapse" role="tabpanel">
-      <div class="panel-body">
-      <div class="clearfix food-list"><div class="pull-left">Vodka Smirnoff</div><span class="pull-right">$ 35.00</span></div>
-      <div class="clearfix food-list"><div class="pull-left">Flor de caña</div><span class="pull-right">$ 35.00</span></div>
-      <div class="clearfix food-list"><div class="pull-left">Seco Herrerano</div><span class="pull-right">$ 35.00</span></div>
-      <div class="clearfix food-list"><div class="pull-left">Wisky Old Park</div><span class="pull-right">$ 55.00</span></div>
-      </div>
-      </div>
-    </div>
-
-    <div class="panel panel-default">
-      <div class="panel-heading" role="tab">
-      <h4 class="panel-title">
-      <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
-      <i class="fa fa-cutlery"></i>Entradas
-      </a>
-      </h4>
-      </div>
-      <div id="collapseFive" class="panel-collapse collapse" role="tabpanel">
-      <div class="panel-body">
-      <div class="clearfix food-list"><div class="pull-left">Ceviche de Camaron</div><span class="pull-right">$ 10.00</span></div>
-      <div class="clearfix food-list"><div class="pull-left">Ceviche de corvina</div><span class="pull-right">$ 10.00</span></div>
-      </div>
-      </div>
-    </div>
-    <div class="panel panel-default">
-      <div class="panel-heading" role="tab">
-      <h4 class="panel-title">
-      <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseSix" aria-expanded="false" aria-controls="collapseFive">
-      <i class="fa fa-cutlery"></i>Platos Fuertes
-      </a>
-      </h4>
-      </div>
-      <div id="collapseSix" class="panel-collapse collapse" role="tabpanel">
-      <div class="panel-body">
-      <div class="clearfix food-list"><div class="pull-left">Hamburguesa Doble Angus</div><span class="pull-right">$ 10.00</span></div>
-      <div class="clearfix food-list"><div class="pull-left">Langostinos al ajillo</div><span class="pull-right">$ 10.00</span></div>
-      </div>
-      </div>
-    </div>
-  </div>
+ 
+ <?php } ?>
+ <?php } else { ?>
+ <p><?= 'No categories translations set' ?></p>
+ <?php } ?>
+</div>
 <!-- menus -->
 </div>
 </div>
@@ -253,7 +159,7 @@
   <img src="<?= $this->url->getStatic('frontend/themes/default/images/portfolio/1.jpg') ?>" alt="img01"/>
   <figcaption>
   <h2>Pedidos Online</h2>
-  <p><a href="<?= $this->url->getStatic('frontend/themes/default/images/portfolio/1.jpg') ?>"title="1" data-gallery>Hacer pedido</a></p>
+  <p><a href=""title="1" data-gallery>Hacer pedido</a></p>
   </figcaption>
   </figure>
   <figure class="effect-oscar  wowload fadeInUp">
@@ -334,28 +240,7 @@
   
 
   
-  <!-- team -->
-  <h3 class="text-center  wowload fadeInUp">Nuestro Staff</h3>
-  <p class="text-center  wowload fadeInLeft">Estamos haciendo lo posible para darte una excelente atención</p>
-  <div class="row grid team  wowload fadeInUpBig">
-    <div class=" col-sm-3 col-xs-6">
-    <figure class="effect-chico">
-    <img src="<?= $this->url->getStatic('frontend/themes/default/images/team/19.jpg') ?>" alt="img01" class="img-responsive" />
-    <figcaption>
-    <p><b>name1</b><br>position1</p>
-    </figcaption>
-    </figure>
-    </div>
-    <div class=" col-sm-3 col-xs-6">
-    <figure class="effect-chico">
-    <img src="<?= $this->url->getStatic('frontend/themes/default/images/team/18.jpg') ?>" alt="img01"/>
-    <figcaption>
-    <p><b>Name2</b><br>position2</p>
-    </figcaption>
-    </figure>
-    </div>
-  </div>
-<!-- team -->
+
 </div>
 
 
@@ -429,7 +314,6 @@
 
   <script src="<?= $this->url->getStatic('tools/jquery/jquery2.2.0/jquery.min.js') ?>"></script>
   <script src="<?= $this->url->getStatic('tools/bootstrap/js/bootstrap.min.js') ?>"></script>
-  <?= $this->assets->outputCJs('frontend_js') ?>
 
 </body>
 

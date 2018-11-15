@@ -79,6 +79,21 @@ $('#datetimepicker2').datetimepicker({
      {% endif %}
      </div>
 	{% endfor %}
+  <div class="form-group">
+			<label name="lbllogo" id="lblloko" class="control-label col-md-2 formlabel">
+				<a href="#MainImageModal" id="mainimageurl"  data-toggle="modal" ><i class="fa fa-file-image-o"></i>
+					{{' '}}{{'Main Image'|t}} </a>
+			</label>
+			<div class="col-md-4">
+			{{ text_field("main_image" ,"type" : "text","class":"form-control") }}
+			</div>
+			<div id ="main_image_content" class="col-md-2">
+				{% if mode =='edit' and main_image !="" %}
+        <img id="main_image_preview" src="{{url('files/images/'~main_image)}}" width="50px" heigh="50px"/>
+				{% endif %}
+			</div>
+		</div>
+      
        <div class="col-md-offset-2 col-md-3" style="padding-left:0;">
        	<input type="submit" class="btn btn-primary" value="{{'Guardar'|t}}"></input>
 		{{ link_to(routelist,cancel_button_name|t,"class":"btn btn-default") }}
@@ -88,4 +103,29 @@ $('#datetimepicker2').datetimepicker({
 	</form>
 	<!-- END FORM-->	
 </div>
+
+<div id="MainImageModal" class="modal fade"  tabindex="-1" data-width="760" >
+  <div class="modal-body">
+	<div class="col-md-12">
+	<div class="portlet box blue" >
+		<div class="portlet-title">
+		<div class="caption">{{'Images'|t}}</div>
+		</div>
+		<div class="portlet-body form" >
+		<div class="col-md-12" style="background-color:white;">
+		{% for index,item in images %}
+		<div class="col-md-1" style="padding-top:15px;">
+	  <img  class="modal_hover" id ="{{item['name']}}" src="{{url('files/images/'~item['name'])}}"  height="100" width="100" onclick="selectMainImage(this.id);">
+		</div>
+		{% endfor %}
+	  </div>
+		<br><br>
+		<div class="col-md-12" style="background-color:white; padding-left:30px;padding-top:30px;padding-bottom:30px;">
+		<button type="button" data-dismiss="modal" class="btn btn-default">{{'Close'|t}}</button>
+		</div>
+		</div>
+	 </div>
+ </div>
+	</div>
+  </div>
 {% endblock %}
